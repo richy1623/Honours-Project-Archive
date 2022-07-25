@@ -76,7 +76,8 @@
          <a href="{concat ($basedir, 'about.html')}">About</a> | 
          <a href="{concat ($basedir, 'users.html')}">Authors</a> | 
          <a href="{concat ($basedir, 'search.html')}">Search</a> | 
-         <a href="{concat ($basedir, 'contact.html')}">Contact Us</a></div>
+         <a href="{concat ($basedir, 'contact.html')}">Contact Us</a> | 
+         <a href="{concat ($basedir, 'createprojects.html')}">Create Project</a></div>
    </div>
 </xsl:template>
 
