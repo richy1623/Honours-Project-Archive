@@ -1,0 +1,7 @@
+.*
+log/*.log
+simpledl/
+public_html/
+db/
+*~
+!/.gitignore
