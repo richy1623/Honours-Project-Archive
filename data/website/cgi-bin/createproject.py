@@ -3,6 +3,7 @@
 # Import modules for CGI handling 
 import cgi, cgitb 
 from util.pythonHTML import *
+from util.usermanagement import createuser
 import os
 import traceback
 
@@ -23,42 +24,7 @@ student4 = form.getvalue('student4')
 #return html
 
 header()
-h('Attempting to create project...')
-
-def createuser(studentnumber, project):
-	try:
-		f = open('../../db/counter/users.counter', 'r+')
-		counter = str(int(f.readline())+1)
-		f.seek(0)
-		f.write(counter)
-		f.truncate()
-		f.close()
-		if os.path.exists('../../data/users/'+counter+'.email.xml'):
-			h('user already exists for this counter')
-			return
-		try:
-			f = open('../../data/users/'+counter+'.email.xml', 'w')
-			f.write('<email>'+studentnumber+'@myuct.ac.za</email>')
-			f.close()
-			
-			f = open('../../data/users/'+counter+'.profile.xml', 'w')
-			f.write('<profile></profile>')
-			f.close()
-			
-			f = open('../../data/users/'+counter+'.name.xml', 'w')
-			f.write('<name>'+studentnumber+'</name>')
-			f.close()
-			
-			f = open('../../data/users/'+counter+'.permissions.xml', 'w')
-			f.write('<permissions>'+project+'</permissions>')
-			f.close()
-			
-			p('User: ' + studentnumber + ' has been added successfully.')
-		except IOError:
-			h('unable to create user files')
-	except BaseException as err:
-		h('Unable to find counter file')
-		
+h('Attempting to create project...')		
 
 if projectname==None or projectcode==None or year==None:
 	h('Please fill in all project fields')
