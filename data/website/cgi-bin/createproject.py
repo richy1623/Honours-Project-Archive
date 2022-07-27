@@ -4,6 +4,7 @@
 import cgi, cgitb 
 from util.pythonHTML import *
 import os
+import traceback
 
 # Create instance of FieldStorage 
 form = cgi.FieldStorage() 
@@ -22,7 +23,42 @@ student4 = form.getvalue('student4')
 #return html
 
 header()
-h('tryung')
+h('Attempting to create project...')
+
+def createuser(studentnumber, project):
+	try:
+		f = open('../../db/counter/users.counter', 'r+')
+		counter = str(int(f.readline())+1)
+		f.seek(0)
+		f.write(counter)
+		f.truncate()
+		f.close()
+		if os.path.exists('../../data/users/'+counter+'.email.xml'):
+			h('user already exists for this counter')
+			return
+		try:
+			f = open('../../data/users/'+counter+'.email.xml', 'w')
+			f.write('<email>'+studentnumber+'@myuct.ac.za</email>')
+			f.close()
+			
+			f = open('../../data/users/'+counter+'.profile.xml', 'w')
+			f.write('<profile></profile>')
+			f.close()
+			
+			f = open('../../data/users/'+counter+'.name.xml', 'w')
+			f.write('<name>'+studentnumber+'</name>')
+			f.close()
+			
+			f = open('../../data/users/'+counter+'.permissions.xml', 'w')
+			f.write('<permissions>'+project+'</permissions>')
+			f.close()
+			
+			p('User: ' + studentnumber + ' has been added successfully.')
+		except IOError:
+			h('unable to create user files')
+	except BaseException as err:
+		h('Unable to find counter file')
+		
 
 if projectname==None or projectcode==None or year==None:
 	h('Please fill in all project fields')
@@ -43,19 +79,20 @@ try:
 	file.close()
 	
 	file = open('../../data/spreadsheets/collections.csv', 'a')
+	#TODO Propper info
 	file.write(projectcode+year+','+'\n')
 	file.close()
-	file = open('../../data/spreadsheets/students.csv', 'a')
-	file.write(student1+','+projectcode+'\n')
-	if not student2==None:
-		file.write(student2+','+projectcode+'\n')
-		if not student3==None:
-			file.write(student3+','+projectcode+'\n')
-			if not student4==None:
-				file.write(student4+','+projectcode+'\n')
-	file.close()
+	if not os.path.exists('../../data/spreadsheets/'+year):
+		os.mkdir('../../data/spreadsheets/'+year)
 	
-	h('All good')
+	createuser(student1, projectcode)
+	if not student2==None:
+		createuser(student2, projectcode)
+		if not student3==None:
+			createuser(student3, projectcode)
+			if not student4==None:
+				createuser(student4, projectcode)
+	p('Project: ' + projectname + ' has been added successfully.')
 except IOError:
 	h('Unable to find file')
 finally:

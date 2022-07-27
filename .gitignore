@@ -1,4 +1,5 @@
 .*
+data/users/
 log/*.log
 simpledl/
 public_html/
