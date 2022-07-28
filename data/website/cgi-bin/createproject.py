@@ -52,15 +52,14 @@ try:
 		os.mkdir('../../data/spreadsheets/'+year)
 	if not os.path.exists('../../data/projects/'+year):
 		os.mkdir('../../data/projects/'+year)
-	os.mkdir('../../data/projects/'+year+'/'+projectcode)
 	
-	createuser(student1, projectcode)
+	createuser(student1, projectcode, year)
 	if not student2==None:
-		createuser(student2, projectcode)
+		createuser(student2, projectcode, year)
 		if not student3==None:
-			createuser(student3, projectcode)
+			createuser(student3, projectcode, year)
 			if not student4==None:
-				createuser(student4, projectcode)
+				createuser(student4, projectcode, year)
 	p('Project: ' + projectname + ' has been added successfully.')
 except IOError:
 	h('Unable to find file')

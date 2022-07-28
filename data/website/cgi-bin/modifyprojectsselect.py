@@ -18,39 +18,35 @@ projectcode  = form.getvalue('projectcode')
 header()
 h('Modify Projects')		
 
-if year!=None:
-	h(year)
-if projectcode!=None:
-	h(projectcode)
-
 try:
 	table = []
 	years=[]
 	projects=[]
 	students=[]
+	yearindex=-1
+	projectindex=-1
 	path='../../data/projects/'
-	for file in os.listdir(path):
+	for index, file in enumerate(sorted(os.listdir(path))):
 		if file==year:
-			years.append('<strong>'+file+'</strong>')
-		else:
-			years.append(file)
+			yearindex=index
+		years.append(file)
 	if year!=None:
 		path = path+year+'/'
-		for file in os.listdir(path):
+		for index, file in enumerate(sorted(os.listdir(path))):
+			file=file.rpartition('.')[0]
 			if file==projectcode:
-				projects.append('<strong>'+file+'</strong>')
-			else:
-				projects.append(file)
+				projectindex=index
+			projects.append(file)
 		if projectcode!=None:
-			path = path+projectcode+'/'
-			file = open(path+'students.txt')
-			for line in file.readlines():
+			file = open(path+projectcode+'.txt')
+			for line in sorted(file.readlines()):
 				students.append(line)
 			file.close()
 	table.append(years)
 	table.append(projects)
 	table.append(students)
-	tablegen2(table)
+	tablegen2(table, yearindex, projectindex)
+	invisrefresh()
 except Exception as e:
 	p(str(traceback.format_exc()))
 close()

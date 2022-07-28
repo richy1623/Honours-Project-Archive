@@ -32,18 +32,18 @@ def createuser(studentnumber, project, year):
 			f.write('<permissions>'+project+'</permissions>')
 			f.close()
 			
-			f = open(userdir+'../projects/'+year+'/'+project, 'a')
-			f.write(studentnumber)
+			f = open(usrdir+'../projects/'+year+'/'+project+'.txt', 'a')
+			f.write(studentnumber+'\n')
 			f.close()
 			
 			p('User: ' + studentnumber + ' has been added successfully.')
-		except IOError:
-			h('unable to create user files')
+		except IOError as err:
+			h('unable to create user files: '+str(err))
 	except BaseException as err:
-		h('Unable to find counter file')
+		h('Unable to find counter file'+str(err))
 
-def deleteuser(studentnumber):
-	studentnumber = '<name>'+studentnumber+'</name>'
+def deleteuser(studentnumber, year, project):
+	studentnumbermod = '<name>'+studentnumber+'</name>'
 	if not os.path.exists(usrdir):
 		return False
 	userid = -1
@@ -53,7 +53,7 @@ def deleteuser(studentnumber):
 			try:
 				f = open(usrdir+filename, 'r')
 				#print(filename, f.readline(),studentnumber)
-				if f.readline()==studentnumber:
+				if f.readline()==studentnumbermod:
 					f.close()
 					userid=filename.split('.')[0]
 					break
@@ -62,21 +62,23 @@ def deleteuser(studentnumber):
 				print(e)
 				continue
 	try:
-		f = open(userdir+'../projects/'+year+'/'+project, 'r')
+		f = open(usrdir+'../projects/'+year+'/'+project+'.txt', 'r')
 		students = f.readlines()
 		f.close()
-		
-		f = open(userdir+'../projects/'+year+'/'+project, 'w')
+		p('#'.join(students))
+		f = open(usrdir+'../projects/'+year+'/'+project+'.txt', 'w')
 		for student in students:
+			student=student.strip()
+			p(str(student)+','+studentnumber+','+str(student!=studentnumber))
 			if student!=studentnumber:
-				f.write(student+'/n')
+				f.write(student+'\n')
 		f.close()
 	except Exception as e:
 		print(e)
 		return False
 	if userid==-1:
 		return True
-	for filename in ['.name.xml', '.email.xml', '.password.xml', '.permissions.xml', '.token.txt']:
+	for filename in ['.name.xml', '.email.xml', '.password.xml', '.permissions.xml', 'profile.xml', '.token.txt']:
 		if os.path.exists(usrdir+userid+filename):
 			os.remove(usrdir+userid+filename)
 	return True
