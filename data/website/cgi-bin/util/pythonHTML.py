@@ -52,7 +52,7 @@ def modtable(arr):
 			maxlen=2
 		else:
 			maxlen=1
-	elif len(arr[0])>=len(arr[1]):
+	elif len(arr[0])>=len(arr[2]):
 		maxlen=0
 	else:
 		maxlen=2
