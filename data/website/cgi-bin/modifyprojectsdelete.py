@@ -22,7 +22,7 @@ h('Deleting User... '+str(student))
 	
 if student==None or year==None or project==None:
 	h('Student not specified')
-	a('http://docs.simpledl.net/createprojects.html')
+	a('http://docs.simpledl.net/modifyprojectsselect.py')
 	close()
 	exit()
 	

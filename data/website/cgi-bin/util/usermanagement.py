@@ -48,11 +48,9 @@ def deleteuser(studentnumber, year, project):
 		return False
 	userid = -1
 	for filename in os.listdir(usrdir):
-		#print(filename, filename.split('.')[1]=='name')
 		if filename.split('.')[1]=='name':
 			try:
 				f = open(usrdir+filename, 'r')
-				#print(filename, f.readline(),studentnumber)
 				if f.readline()==studentnumbermod:
 					f.close()
 					userid=filename.split('.')[0]
@@ -65,11 +63,9 @@ def deleteuser(studentnumber, year, project):
 		f = open(usrdir+'../projects/'+year+'/'+project+'.txt', 'r')
 		students = f.readlines()
 		f.close()
-		p('#'.join(students))
 		f = open(usrdir+'../projects/'+year+'/'+project+'.txt', 'w')
 		for student in students:
 			student=student.strip()
-			p(str(student)+','+studentnumber+','+str(student!=studentnumber))
 			if student!=studentnumber:
 				f.write(student+'\n')
 		f.close()
@@ -82,4 +78,15 @@ def deleteuser(studentnumber, year, project):
 		if os.path.exists(usrdir+userid+filename):
 			os.remove(usrdir+userid+filename)
 	return True
-			
+	
+def getProject(userid):
+	if userid=='':
+		return ''
+	try:
+		f = open(usrdir+userid+'.permissions.xml', 'r')
+		project=f.readline()
+		f.close()
+		return project[13:-14]
+	except:
+		p('Cannot find user permission file')
+		return ''

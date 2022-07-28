@@ -40,18 +40,13 @@ try:
 		if line.split(',')[0]==(projectcode+year):
 			h('Project Already Exists')
 			close()
-			file.close()
-			exit()
-	file.close()
-	
-	file = open('../../data/spreadsheets/collections.csv', 'a')
-	#TODO Propper info
-	file.write(projectcode+year+','+'\n')
-	file.close()
+c
 	if not os.path.exists('../../data/spreadsheets/'+year):
 		os.mkdir('../../data/spreadsheets/'+year)
 	if not os.path.exists('../../data/projects/'+year):
-		os.mkdir('../../data/projects/'+year)
+		os.mkdir('../../db/projects/'+year)
+	if not os.path.exists('../../db/projects/'+year+'/'+projectcode):
+		os.makedirs('../../db/projects/'+year+'/'+projectcode)
 	
 	createuser(student1, projectcode, year)
 	if not student2==None:

@@ -24,6 +24,8 @@ for y in range(3):
 	for i in range(1,21):
 		if i%20 in [1,2,4,7,11,12,14,17]:
 			projectcount+=1
+			if not os.path.exists('../../db/projects/'+str(year)+'/project'+str(projectcount)):
+				os.makedirs('../../db/projects/'+str(year)+'/project'+str(projectcount))
 		i=i+20*y
 		i=str(i)
 		f = open(usrdir+usercount+'.email.xml', 'w')

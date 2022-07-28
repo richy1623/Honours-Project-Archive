@@ -6,4 +6,5 @@ public_html/
 db/
 *~
 data/website/cgi-bin/util/__pycache__/*
+data/projects/*
 !/.gitignore
