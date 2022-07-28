@@ -50,6 +50,9 @@ try:
 	file.close()
 	if not os.path.exists('../../data/spreadsheets/'+year):
 		os.mkdir('../../data/spreadsheets/'+year)
+	if not os.path.exists('../../data/projects/'+year):
+		os.mkdir('../../data/projects/'+year)
+	os.mkdir('../../data/projects/'+year+'/'+projectcode)
 	
 	createuser(student1, projectcode)
 	if not student2==None:

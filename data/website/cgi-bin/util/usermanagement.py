@@ -4,7 +4,7 @@ from util.pythonHTML import *
 
 usrdir = '../../data/users/'
 
-def createuser(studentnumber, project):
+def createuser(studentnumber, project, year):
 	try:
 		f = open('../../db/counter/users.counter', 'r+')
 		counter = str(int(f.readline())+1)
@@ -32,6 +32,10 @@ def createuser(studentnumber, project):
 			f.write('<permissions>'+project+'</permissions>')
 			f.close()
 			
+			f = open(userdir+'../projects/'+year+'/'+project, 'a')
+			f.write(studentnumber)
+			f.close()
+			
 			p('User: ' + studentnumber + ' has been added successfully.')
 		except IOError:
 			h('unable to create user files')
@@ -57,6 +61,19 @@ def deleteuser(studentnumber):
 			except Exception as e:
 				print(e)
 				continue
+	try:
+		f = open(userdir+'../projects/'+year+'/'+project, 'r')
+		students = f.readlines()
+		f.close()
+		
+		f = open(userdir+'../projects/'+year+'/'+project, 'w')
+		for student in students:
+			if student!=studentnumber:
+				f.write(student+'/n')
+		f.close()
+	except Exception as e:
+		print(e)
+		return False
 	if userid==-1:
 		return True
 	for filename in ['.name.xml', '.email.xml', '.password.xml', '.permissions.xml', '.token.txt']:

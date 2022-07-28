@@ -46,10 +46,10 @@
     <hr/>
 
     <p>
-      <a href="newuser.html">* Apply for a new account</a>
+      <a href="cgi-bin/modifyprojectsselect.py">* Modify a project</a>
     </p>
     <p>
-      <a href="forgotp.html">* Reset your password</a>
+      <a href="index.html">* Go back to homepage</a>
     </p>
 
   </div>
