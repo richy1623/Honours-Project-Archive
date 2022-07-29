@@ -14,10 +14,10 @@ def close():
 	print("</html>")
 
 def p(string):
-	print('<p>'+string+'</p>')
+	print('<p>'+str(string)+'</p>')
 
 def h(string):
-	print('<h1>'+string+'</h1>')
+	print('<h1>'+str(string)+'</h1>')
 
 def br():
 	print('<br />')
@@ -26,7 +26,7 @@ def a(string):
 	print(makelink(string, string))
 	
 def makelink(link, text):
-	return '<a href="'+link+'">'+text+'</a>'	
+	return '<a href="'+link+'">'+str(text)+'</a>'	
 	
 def makelinkonclick(link, onclick, text):
 	return '<a onclick="'+onclick+'"href="'+link+'" target="_blank">'+text+'</a>'
@@ -102,7 +102,10 @@ def tablegen2(arr, yearindex, projectindex):
 	tablegen(table)
 
 def tablegen3(arr, selected):
-	for index, s in selected:
+	if arr == []:
+		p('No files in directory')
+		return
+	for index, s in enumerate(selected):
 		arr[index][s] = strong(arr[index][s])
 	table = modtable(arr)
 	tablegen(table)

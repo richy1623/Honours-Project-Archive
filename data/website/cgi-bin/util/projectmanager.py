@@ -68,15 +68,23 @@ def createproject(projectname, projectcode, year, students):
 
 
 
-def displayprojectfiles(projectyear, openpath):
+def displayprojectfiles(year, project, openpath):
 	try:
 		table = []
-		path='../../db/projects/'+projectyear[1]+'/'+projectyear[0]+'/'
+		path='../../db/projects/'+year+'/'+project+'/'
 		selected = []
+		p(str(os.getcwd()))
+		p(path)
+		p('*'.join(openpath))
 		
 		for directory in range(len(openpath)):
 			col = sorted(os.listdir(path+'/'.join(openpath[:directory])))
-			selected.append(col.find(openpath[directory]))
+			selected.append(col.index(openpath[directory]))
 			table.append(col)
+		
+		col = sorted(os.listdir(path+'/'.join(openpath)))
+		table.append(col)
+		
+		tablegen3(table, selected)
 	except Exception as e:
 		p(str(traceback.format_exc()))

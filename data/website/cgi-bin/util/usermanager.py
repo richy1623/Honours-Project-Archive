@@ -46,7 +46,7 @@ def deleteuser(studentnumber, year, project):
 		if filename.split('.')[1]=='name':
 			try:
 				f = open(usrdir+filename, 'r')
-				if f.readline()==studentnumbermod:
+				if f.readline().strip()==studentnumbermod:
 					f.close()
 					userid=filename.split('.')[0]
 					break
@@ -82,7 +82,7 @@ def getstudentid(studentnumber):
 		if filename.split('.')[1]=='name':
 			try:
 				f = open(usrdir+filename, 'r')
-				if f.readline()==studentnumbermod:
+				if f.readline().strip()==studentnumbermod:
 					f.close()
 					return filename.split('.')[0]
 				f.close()
@@ -99,22 +99,27 @@ def getallstudents():
 		if filename.split('.')[1]=='name':
 			try:
 				f = open(usrdir+filename, 'r')
-				students.append(f.readline()[6:-7])
+				students.append(f.readline().strip()[6:-7])
 				f.close()
 			except Exception as e:
 				print(e)
 				continue
 	return sorted(students)
 
-def getProjectYear(userid):
+def getYearAndProject(userid):
 	if userid=='':
-		return []
+		p('No user ID provided')
+		return ('','')
 	try:
 		f = open(usrdir+userid+'.permissions.xml', 'r')
-		project=f.readline()
-		year=f.readline()
+		project=f.readline().strip()
+		year=f.readline().strip()
 		f.close()
-		return [project[6:-7], year[6:-7]]
+		return (project[6:-7], year[6:-7])
 	except:
 		p('Cannot find user permission file')
-		return []
+		return ('','')
+		
+#TODO Remove
+def getYearAndProject2(string):
+	return ('2020', 'project1')

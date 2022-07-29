@@ -28,6 +28,8 @@ try:
 	path='../../data/projects/'
 	if not os.path.exists(path):
 		os.mkdir(path)
+	if os.listdir(path)==[]:
+		p('No projects currently exist to be modified')
 	for index, file in enumerate(sorted(os.listdir(path))):
 		if file==year:
 			yearindex=index

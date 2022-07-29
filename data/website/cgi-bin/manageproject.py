@@ -27,13 +27,13 @@ except:
 	p(str(traceback.format_exc()))
 #get project from cookies
 uid = getUserID2()
-projectyear=getProjectYear(uid)
+(year, project)=getYearAndProject2(uid)
 
 #return html
 
 header()
 h('Manage Projects')		
 
-displayprojectfiles(projectyear, opendirs)
+displayprojectfiles(year, project, opendirs)
 
 close()
