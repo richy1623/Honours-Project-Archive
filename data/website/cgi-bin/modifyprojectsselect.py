@@ -26,6 +26,8 @@ try:
 	yearindex=-1
 	projectindex=-1
 	path='../../data/projects/'
+	if not os.path.exists(path):
+		os.mkdir(path)
 	for index, file in enumerate(sorted(os.listdir(path))):
 		if file==year:
 			yearindex=index
