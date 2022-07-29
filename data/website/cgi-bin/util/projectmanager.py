@@ -30,6 +30,9 @@ def addusertoproject(studentnumber, studentid, year, project):
 	
 def createproject(projectname, projectcode, year, students):
 	try:
+		if not os.path.exists(usrdir+'../projects/'):
+			os.mkdir(usrdir+'../projects/')
+		
 		f = open('../../data/spreadsheets/collections.csv', 'r')
 		f.readline()
 
