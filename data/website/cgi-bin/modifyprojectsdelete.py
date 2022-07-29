@@ -5,7 +5,7 @@ import cgi, cgitb
 import os
 import traceback
 from util.pythonHTML import *
-from util.usermanagement import deleteuser
+from util.usermanager import deleteuser
 
 # Create instance of FieldStorage 
 form = cgi.FieldStorage() 

@@ -41,7 +41,8 @@ for y in range(3):
 		f.close()
 		
 		f = open(usrdir+usercount+'.permissions.xml', 'w')
-		f.write('<permissions>project'+str(projectcount)+'</permissions>')
+		f.write('<code>project'+str(projectcount)+'</code>\n')
+		f.write('<year>'+str(year)+'</year>')
 		f.close()
 		
 		f = open(usrdir+'../projects/'+str(year)+'/project'+str(projectcount)+'.txt', 'a')

@@ -4,7 +4,7 @@ from util.pythonHTML import *
 
 usrdir = '../../data/users/'
 
-def createuser(studentnumber, project, year):
+def createuser(studentnumber):
 	try:
 		f = open('../../db/counter/users.counter', 'r+')
 		counter = str(int(f.readline())+1)
@@ -14,7 +14,7 @@ def createuser(studentnumber, project, year):
 		f.close()
 		if os.path.exists(usrdir+counter+'.email.xml'):
 			h('user already exists for this counter')
-			return
+			return ''
 		try:
 			f = open(usrdir+counter+'.email.xml', 'w')
 			f.write('<email>'+studentnumber+'@myuct.ac.za</email>')
@@ -28,19 +28,14 @@ def createuser(studentnumber, project, year):
 			f.write('<name>'+studentnumber+'</name>')
 			f.close()
 			
-			f = open(usrdir+counter+'.permissions.xml', 'w')
-			f.write('<permissions>'+project+'</permissions>')
-			f.close()
-			
-			f = open(usrdir+'../projects/'+year+'/'+project+'.txt', 'a')
-			f.write(studentnumber+'\n')
-			f.close()
-			
 			p('User: ' + studentnumber + ' has been added successfully.')
+			return counter
 		except IOError as err:
 			h('unable to create user files: '+str(err))
+			return ''
 	except BaseException as err:
 		h('Unable to find counter file'+str(err))
+		return ''
 
 def deleteuser(studentnumber, year, project):
 	studentnumbermod = '<name>'+studentnumber+'</name>'
@@ -78,15 +73,48 @@ def deleteuser(studentnumber, year, project):
 		if os.path.exists(usrdir+userid+filename):
 			os.remove(usrdir+userid+filename)
 	return True
-	
-def getProject(userid):
-	if userid=='':
+
+def getstudentid(studentnumber):
+	studentnumbermod = '<name>'+studentnumber+'</name>'
+	if not os.path.exists(usrdir):
 		return ''
+	for filename in os.listdir(usrdir):
+		if filename.split('.')[1]=='name':
+			try:
+				f = open(usrdir+filename, 'r')
+				if f.readline()==studentnumbermod:
+					f.close()
+					return filename.split('.')[0]
+				f.close()
+			except Exception as e:
+				print(e)
+				continue
+	return ''
+	
+def getallstudents():
+	students=[]
+	if not os.path.exists(usrdir):
+		return students
+	for filename in os.listdir(usrdir):
+		if filename.split('.')[1]=='name':
+			try:
+				f = open(usrdir+filename, 'r')
+				students.append(f.readline()[6:-7])
+				f.close()
+			except Exception as e:
+				print(e)
+				continue
+	return sorted(students)
+
+def getProjectYear(userid):
+	if userid=='':
+		return []
 	try:
 		f = open(usrdir+userid+'.permissions.xml', 'r')
 		project=f.readline()
+		year=f.readline()
 		f.close()
-		return project[13:-14]
+		return [project[6:-7], year[6:-7]]
 	except:
 		p('Cannot find user permission file')
-		return ''
+		return []

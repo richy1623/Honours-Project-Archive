@@ -77,7 +77,8 @@
          <a href="{concat ($basedir, 'users.html')}">Authors</a> | 
          <a href="{concat ($basedir, 'search.html')}">Search</a> | 
          <a href="{concat ($basedir, 'contact.html')}">Contact Us</a> | 
-         <a href="{concat ($basedir, 'createprojects.html')}">Create Project</a></div>
+         <a href="{concat ($basedir, 'createprojects.html')}">Assign Project(Admin)</a> | 
+         <a href="{concat ($basedir, 'cgi-bin/manageproject.py')}">Manage Project</a></div>
    </div>
 </xsl:template>
 

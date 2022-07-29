@@ -3,7 +3,7 @@
 # Import modules for CGI handling 
 import cgi, cgitb 
 from util.pythonHTML import *
-from util.usermanagement import createuser
+from util.projectmanager import *
 import os
 import traceback
 
@@ -16,10 +16,11 @@ projectname = form.getvalue('projectname')
 projectcode  = form.getvalue('projectcode')
 year = form.getvalue('projectyear')
 #Student Data
-student1 = form.getvalue('student1')
-student2 = form.getvalue('student2')
-student3 = form.getvalue('student3')
-student4 = form.getvalue('student4')
+students = []
+for i in range(4):
+	student = form.getvalue('student'+str(i))
+	if student!=None:
+		students.append(student)
 
 #return html
 
@@ -32,32 +33,13 @@ if projectname==None or projectcode==None or year==None:
 	close()
 	exit()
 
-try:
-	file = open('../../data/spreadsheets/collections.csv', 'r')
-	file.readline()
-
-	for line in file:
-		if line.split(',')[0]==(projectcode+year):
-			h('Project Already Exists')
-			close()
-c
-	if not os.path.exists('../../data/spreadsheets/'+year):
-		os.mkdir('../../data/spreadsheets/'+year)
-	if not os.path.exists('../../data/projects/'+year):
-		os.mkdir('../../db/projects/'+year)
-	if not os.path.exists('../../db/projects/'+year+'/'+projectcode):
-		os.makedirs('../../db/projects/'+year+'/'+projectcode)
-	
-	createuser(student1, projectcode, year)
-	if not student2==None:
-		createuser(student2, projectcode, year)
-		if not student3==None:
-			createuser(student3, projectcode, year)
-			if not student4==None:
-				createuser(student4, projectcode, year)
+success = createproject(projectname, projectcode, year, students)
+if success:
 	p('Project: ' + projectname + ' has been added successfully.')
-except IOError:
-	h('Unable to find file')
-finally:
-	close()
+else:
+	p('Project: ' + projectname + ' was unable to be added.')
+
+a('http://docs.simpledl.net/')
+
+close()
 

@@ -47,6 +47,7 @@ try:
 	table.append(students)
 	tablegen2(table, yearindex, projectindex)
 	invisrefresh()
+	br()
 	a('http://docs.simpledl.net')
 except Exception as e:
 	p(str(traceback.format_exc()))

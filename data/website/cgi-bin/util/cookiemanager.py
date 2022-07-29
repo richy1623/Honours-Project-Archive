@@ -1,10 +1,9 @@
 import os
+import traceback
 
 from util.pythonHTML import *
 
-usrdir = '../../data/users/'
-	
-def getcookies();
+def getcookies():
 	cookies={}
 	if 'HTTP_COOKIE' in os.environ:
 		for cookie in environ['HTTP_COOKIE'].split('; '):
@@ -13,8 +12,14 @@ def getcookies();
 	return cookies
 	
 def getUserID():
-	cookies=getcookies()
-	if cookies!={}:
-		return cookies['userID']
-	else:
-		return ''
+	try:
+		cookies=getcookies()
+		if cookies!={}:
+			return cookies['userID']
+		else:
+			return ''
+	except:
+		p(str(traceback.format_exc()))
+		
+def getUserID2():
+	return '1'
