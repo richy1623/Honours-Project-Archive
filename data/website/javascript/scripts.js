@@ -66,3 +66,11 @@ function openfile(){
 		window.open(url,"_self")
 	}
 }
+
+function addfile(){
+	let selectfile = selectedbutton.innerText;
+	if(path !== undefined && path !== null && selectfile !== undefined && selectfile !== null){
+		window.open("addfile.py?year="+year+"&path="+path+"&filename="+selectfile, "Add File", "width="+width+",height="+height);
+		showrefresh();
+	}
+}

@@ -4,10 +4,8 @@
 
 import cgi, cgitb 
 import traceback
-#import sys
-#sys.path.append('cgi-bin')
-#from util.pythonHTML import *
-#from util.projectmanager import deletefile
+from util.pythonHTML import *
+from util.projectmanager import deletefile
 
 # Create instance of FieldStorage 
 form = cgi.FieldStorage() 
@@ -20,21 +18,23 @@ filename  = form.getvalue('filename')
 #return html
 
 header()
-h('Deleting Project... '+str(filename))
-	
-if filename==None or year==None or path==None:
-	h('Project not specified')
+h('Deleting File from Project')
+
+if filename==None or year==None:
+	h('File not specified')
 	a('http://docs.simpledl.net/manageproject.py')
 	close()
 	exit()
-	
-try:
-	#if deletefile(year, path, filename):
-	#	p('Successfuly deleted '+filename)
-	#else:
-	#	p('Failed to delete '+filename)
-	print('hello')
-except Exception as e:
-	p(str(traceback.format_exc()))
-close()
 
+#path is alowed to be an empty string
+if path==None:
+	path=''
+
+try:
+	if deletefile(year, path, filename):
+		p('Successfuly deleted '+filename)
+	else:
+		p('Failed to delete '+filename)
+except:
+	p(traceback.format_exc())
+close()

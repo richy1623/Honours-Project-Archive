@@ -122,14 +122,22 @@ def projectmenu():
 	h('Menu', 2)
 	print(makebutton('openfile', [], 'Open'))
 	print(makebutton('deletefile', [], 'Delete'))
-	print(makebutton('addtofile', [], 'Add to'))
+	print(makebutton('addfile', [], 'Add to'))
 	print(makebutton('renamefile', [], 'Rename'))
 	print(makebutton('submitfile', [], 'Submit'))
 	print('</div>')
 	invisrefresh()
 	#script('alert("ok");')
 
-
+def createuploadform(filecontextnames, filecontextvalues):
+	print('<form enctype = "multipart/form-data" action = "addfile.py" method = "post">')
+	print('<p>Upload File: <input type = "file" name = "uploadfile" /></p>')
+	print('<input type="checkbox" name="unzip" value="True" /><label>Unzip this file</label>')
+	print('<p><input type = "submit" value = "Upload" /></p>')
+	for i in range(len(filecontextnames)):
+		print(' <input type="hidden" name="'+filecontextnames[i]+'" value="'+filecontextvalues[i]+'">')
+	print('</form>')
+	
 def modbuttons(arr, selected):
 	path=[]
 	for i in range(len(arr)):

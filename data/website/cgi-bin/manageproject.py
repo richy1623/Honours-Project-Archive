@@ -38,4 +38,8 @@ h('Files', 2)
 displayprojectfiles(year, project, opendirs)
 projectmenu()
 
+br()
+br()
+print(makelink('http://docs.simpledl.net','Home'))
+
 close()
