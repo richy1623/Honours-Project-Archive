@@ -121,18 +121,23 @@ def projectmenu():
 	print('<div class="menu">')
 	h('Menu', 2)
 	print(makebutton('openfile', [], 'Open'))
-	print(makebutton('delete', [], 'Delete'))
-	print(makebutton('addto', [], 'Add to'))
-	print(makebutton('rename', [], 'Rename'))
-	print(makebutton('submit', [], 'Submit'))
+	print(makebutton('deletefile', [], 'Delete'))
+	print(makebutton('addtofile', [], 'Add to'))
+	print(makebutton('renamefile', [], 'Rename'))
+	print(makebutton('submitfile', [], 'Submit'))
 	print('</div>')
+	invisrefresh()
 	#script('alert("ok");')
-	
+
+
 def modbuttons(arr, selected):
+	path=[]
 	for i in range(len(arr)):
+		if i<len(selected):
+			path.append(arr[i][selected[i]])
 		for index, item in enumerate(arr[i]):
-			identity='button'+str(i)+str(index)
-			arr[i][index] = makebuttonidentity('setfile', [identity, arr[i][index]], arr[i][index], identity)
+			identity='button'+str(i)+str(index) #to set the id html property
+			arr[i][index] = makebuttonidentity('selectfile', [identity, '/'.join(path[:i])], arr[i][index], identity)
 	
 	for index, s in enumerate(selected):
 		arr[index][s] = strong(arr[index][s])

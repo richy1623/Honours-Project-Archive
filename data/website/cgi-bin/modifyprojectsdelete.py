@@ -32,6 +32,6 @@ try:
 	else:
 		p('Failed to delete '+student)
 except Exception as e:
-	p(str(traceback.format_exc()))
+	p(traceback.format_exc())
 close()
 
