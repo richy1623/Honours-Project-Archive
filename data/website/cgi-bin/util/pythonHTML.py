@@ -16,8 +16,8 @@ def close():
 def p(string):
 	print('<p>'+str(string)+'</p>')
 
-def h(string):
-	print('<h1>'+str(string)+'</h1>')
+def h(string, level=1):
+	print('<h'+str(level)+'>'+str(string)+'</h'+str(level)+'>')
 
 def br():
 	print('<br />')
@@ -36,6 +36,14 @@ def strong(string):
 
 def makebutton(function, params, text):
 	return '<button onclick="'+function+'('+','.join(['\''+str(i).strip()+'\'' for i in params])+')">'+text+'</button>'
+
+def makebuttonidentity(function, params, text, identity):
+	return '<button id="'+identity+'" onclick="'+function+'('+','.join(['\''+str(i).strip()+'\'' for i in params])+')">'+text+'</button>'
+
+def script(function):
+	print('<script type="text/javascript">')
+	print(function)
+	print('</script>')
 
 def invisrefresh():
 	print('<button id="refresh-invis" onClick="window.location.reload();" style="display:none">Refresh Page</button>')
@@ -105,7 +113,26 @@ def tablegen3(arr, selected):
 	if arr == []:
 		p('No files in directory')
 		return
-	for index, s in enumerate(selected):
-		arr[index][s] = strong(arr[index][s])
+	modbuttons(arr, selected)
 	table = modtable(arr)
 	tablegen(table)
+	
+def projectmenu():
+	print('<div class="menu">')
+	h('Menu', 2)
+	print(makebutton('openfile', [], 'Open'))
+	print(makebutton('delete', [], 'Delete'))
+	print(makebutton('addto', [], 'Add to'))
+	print(makebutton('rename', [], 'Rename'))
+	print(makebutton('submit', [], 'Submit'))
+	print('</div>')
+	#script('alert("ok");')
+	
+def modbuttons(arr, selected):
+	for i in range(len(arr)):
+		for index, item in enumerate(arr[i]):
+			identity='button'+str(i)+str(index)
+			arr[i][index] = makebuttonidentity('setfile', [identity, arr[i][index]], arr[i][index], identity)
+	
+	for index, s in enumerate(selected):
+		arr[index][s] = strong(arr[index][s])

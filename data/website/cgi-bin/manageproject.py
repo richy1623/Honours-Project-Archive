@@ -33,7 +33,9 @@ uid = getUserID2()
 
 header()
 h('Manage Projects')		
-
+br()
+h('Files', 2)
 displayprojectfiles(year, project, opendirs)
+projectmenu()
 
 close()
