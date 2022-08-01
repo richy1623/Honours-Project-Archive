@@ -104,7 +104,7 @@ def deletefile(year, path, filename):
 	try:
 		if os.path.exists(prjdir+year+'/'+path+'/'+filename):
 			if os.path.isdir(prjdir+year+'/'+path+'/'+filename):
-				shutil.rmtree('path')
+				shutil.rmtree(prjdir+year+'/'+path+'/'+filename)
 			else:
 				os.remove(prjdir+year+'/'+path+'/'+filename)
 			return True
