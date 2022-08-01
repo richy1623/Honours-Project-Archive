@@ -141,3 +141,11 @@ def addfiletoproject(year, path, filename, uploadfile, unzip):
 	except:
 		p(traceback.format_exc())
 		return False
+		
+def renamefile(year, path, oldfilename, newfilename):
+	if os.path.exists(prjdir+year+'/'+path+'/'+oldfilename):
+		os.rename(prjdir+year+'/'+path+'/'+oldfilename, prjdir+year+'/'+path+'/'+newfilename)
+		return True
+	else:
+		p('Path '+strong(prjdir+year+'/'+path+'/'+oldfilename)+' does not exist')
+		return False

@@ -47,6 +47,12 @@ function deletefile(){
 		}
 	}
 }
+function renamefile(){
+	if(path !== undefined && path !== null){
+		window.open("renamefile.py?year="+year+"&path="+path+"&oldfilename="+selectedbutton.innerText, "Rename File", "width="+width+",height="+height);
+		showrefresh();
+	}
+}
 function openfile(){
 	let selectfile = selectedbutton.innerText;
 	if(path !== undefined && path !== null && selectfile !== undefined && selectfile !== null){

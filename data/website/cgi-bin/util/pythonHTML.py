@@ -138,6 +138,17 @@ def createuploadform(filecontextnames, filecontextvalues):
 		print(' <input type="hidden" name="'+filecontextnames[i]+'" value="'+filecontextvalues[i]+'">')
 	print('</form>')
 	
+def createrenamefileform(year, path, oldfilename):
+	p('Renaming file '+oldfilename)
+	print('<form action="renamefile.py">')
+	print('<label>New name for the file:</label><input type="text" name="newfilename" />')
+	print('<input type="hidden" name="year" value="'+year+'" />')
+	print('<input type="hidden" name="path" value="'+path+'" />')
+	print('<input type="hidden" name="oldfilename" value="'+oldfilename+'" />')
+	br()
+	print('<input type="submit" value="Rename">')
+	print('</form>')
+	
 def modbuttons(arr, selected):
 	path=[]
 	for i in range(len(arr)):
