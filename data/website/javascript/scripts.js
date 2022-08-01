@@ -1,6 +1,7 @@
 let width=500;
 let height=500;
 var selectedbutton;
+var oldcolor;
 var path;
 var year;
 
@@ -30,13 +31,14 @@ function selectfile(identity, newpath){
 	resetcolor()
 	selectedbutton=document.getElementById(identity);
 	if(selectedbutton !== undefined && selectedbutton !== null){
-		selectedbutton.style.backgroundColor='#FF0000';
+		oldcolor=selectedbutton.style.backgroundColor;
+		selectedbutton.style.backgroundColor='#0AA1DD';
 		path=newpath
 	}
 }
 function resetcolor(){
 	if(selectedbutton !== undefined && selectedbutton !== null){
-		selectedbutton.style.backgroundColor='#FFFFFF';
+		selectedbutton.style.backgroundColor=oldcolor;
 	}
 }
 function deletefile(){
@@ -80,3 +82,11 @@ function addfile(){
 		showrefresh();
 	}
 }
+function highlightdir(identity2){
+	let pathbutton=document.getElementById(identity2);
+	if(pathbutton !== undefined && pathbutton !== null){
+		pathbutton.style.backgroundColor='#79DAE8';
+	}else{
+		console.log(identity2+' not found')
+	}
+} 

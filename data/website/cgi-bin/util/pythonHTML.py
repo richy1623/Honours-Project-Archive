@@ -2,7 +2,7 @@ def header(scripts=[]):
 	print("Content-type:text/html\r\n\r\n")
 	print("<html>")
 	print("<head>")
-	print("<title>Hello - Second CGI Program</title>")
+	print("<title>Honours Archive</title>")
 	print('<script src="/javascript/scripts.js"></script>')
 	for i in scripts:
 		print('<script>'+i+'</script>')
@@ -88,6 +88,22 @@ def modtable(arr):
 				row.append('')
 		table.append(row)
 	return table
+		
+def highlightprojectdir(dirid):
+	script('highlightdir("'+dirid+'")')
+	
+def highlightpath(selected)	:
+	for index, s in enumerate(selected):
+		highlightprojectdir('button'+str(index)+str(s))
+
+def modbuttons(arr, selected):
+	path=[]
+	for i in range(len(arr)):
+		if i<len(selected):
+			path.append(arr[i][selected[i]])
+		for index, item in enumerate(arr[i]):
+			identity='button'+str(i)+str(index) #to set the id html property
+			arr[i][index] = makebuttonidentity('selectfile', [identity, '/'.join(path[:i])], arr[i][index], identity)
 
 def modlinks(arr, yearindex, projectindex):
 	for i in range(len(arr[2])):
@@ -116,6 +132,7 @@ def tablegen3(arr, selected):
 	modbuttons(arr, selected)
 	table = modtable(arr)
 	tablegen(table)
+	highlightpath(selected)
 	
 def projectmenu():
 	print('<div class="menu">')
@@ -148,15 +165,5 @@ def createrenamefileform(year, path, oldfilename):
 	br()
 	print('<input type="submit" value="Rename">')
 	print('</form>')
-	
-def modbuttons(arr, selected):
-	path=[]
-	for i in range(len(arr)):
-		if i<len(selected):
-			path.append(arr[i][selected[i]])
-		for index, item in enumerate(arr[i]):
-			identity='button'+str(i)+str(index) #to set the id html property
-			arr[i][index] = makebuttonidentity('selectfile', [identity, '/'.join(path[:i])], arr[i][index], identity)
-	
-	for index, s in enumerate(selected):
-		arr[index][s] = strong(arr[index][s])
+
+

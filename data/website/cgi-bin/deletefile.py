@@ -28,13 +28,13 @@ if filename==None or year==None:
 
 #path is alowed to be an empty string
 if path==None:
-	path=''
-
-try:
-	if deletefile(year, path, filename):
-		p('Successfuly deleted '+filename)
-	else:
-		p('Failed to delete '+filename)
-except:
-	p(traceback.format_exc())
+	p('Unable to delete root file directory')
+else:
+	try:
+		if deletefile(year, path, filename):
+			p('Successfuly deleted '+filename)
+		else:
+			p('Failed to delete '+filename)
+	except:
+		p(traceback.format_exc())
 close()
