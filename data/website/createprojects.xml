@@ -47,6 +47,8 @@
 
     <p>
       <a href="cgi-bin/modifyprojectsselect.py">* Modify a project</a>
+    </p><p>
+      <a href="cgi-bin/addprojectscsv.py">* Add multiple projects with a CSV file</a>
     </p>
     <p>
       <a href="index.html">* Go back to homepage</a>

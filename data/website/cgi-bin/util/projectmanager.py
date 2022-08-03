@@ -149,3 +149,18 @@ def renamefile(year, path, oldfilename, newfilename):
 	else:
 		p('Path '+strong(prjdir+year+'/'+path+'/'+oldfilename)+' does not exist')
 		return False
+		
+def createprojectscsv(uploadfile, year):
+	try:
+		projectsdict={}
+		for line in uploadfile.file.readlines():
+			(project, student) = line.decode("utf-8").strip().split(',')
+			if project not in projectsdict.keys():
+				projectsdict[project]=[]
+			projectsdict[project].append(student)
+		for key in projectsdict:
+			createproject(key, key, year, projectsdict[key])
+		return True
+	except:
+		p(traceback.format_exc())
+		return False

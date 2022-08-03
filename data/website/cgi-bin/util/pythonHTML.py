@@ -146,6 +146,13 @@ def projectmenu():
 	invisrefresh()
 	#script('alert("ok");')
 
+def createuploadformcsv(year):
+	print('<form enctype = "multipart/form-data" action = "addprojectscsv.py" method = "post">')
+	print('<p>Year: <input type = "text" name = "year" /></p>')
+	print('<p>Upload File: <input type = "file" name = "uploadfile" /></p>')
+	print('<p><input type = "submit" value = "Upload" /></p>')
+	print('</form>')
+	
 def createuploadform(filecontextnames, filecontextvalues):
 	print('<form enctype = "multipart/form-data" action = "addfile.py" method = "post">')
 	print('<p>Upload File: <input type = "file" name = "uploadfile" /></p>')
