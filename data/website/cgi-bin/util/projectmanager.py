@@ -199,3 +199,14 @@ def addmetadata(year, projectcode, title, students, supervisor):
 	except:
 		p(traceback.format_exc())
 		return False
+		
+def zipproject(year, projectcode):
+	try:
+		path = prjdir+'../project_data/'+year+'/'+projectcode
+		if not os.path.exists(path):
+			os.makedirs(path)
+		shutil.make_archive(path+'/'+projectcode, 'zip', prjdir+year+'/'+projectcode)
+		return True
+	except:
+		p(traceback.format_exc())
+		return False		

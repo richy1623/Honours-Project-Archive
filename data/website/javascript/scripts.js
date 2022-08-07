@@ -80,7 +80,9 @@ function addmetadata(){
 	}
 }
 function viewproject(){
-	
+	let projectcode = document.getElementById("button00").innerText;
+	window.open("zipproject.py?year="+year+"&projectcode="+projectcode, "Project Zipping").close();
+	window.open("view/"+year+"/"+projectcode+"/"+projectcode+".zip/", "Project View");
 }
 
 function addfile(){
