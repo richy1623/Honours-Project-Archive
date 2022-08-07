@@ -50,6 +50,8 @@ def createproject(projectname, projectcode, year, students):
 			os.mkdir('../../data/projects/'+year)
 		if not os.path.exists(prjdir+year+'/'+projectcode):
 			os.makedirs(prjdir+year+'/'+projectcode)
+		if not os.path.exists(prjdir+'../project_data/'+year+'/'+projectcode):
+			os.makedirs(prjdir+'../project_data/'+year+'/'+projectcode)
 		
 		f = open(usrdir+'../projects/'+year+'/'+projectcode+'.txt', 'x')
 		f.close()
@@ -120,10 +122,14 @@ def checkifdir(year, path, filename):
 
 def unzipfile(path, filename):
 	try:
-		shutil.unpack_archive(path+filename, path)
-		os.remove(path+filename)
-		p('File unzipped successfully')
-		return True
+		if len(filename.split('.',1))>1 and filename.split('.',1)[1] in ['tar.bz2', 'tbz2', 'tar.gz', 'tgz', 'tar', 'tar.xz', 'txz', 'zip']:
+			shutil.unpack_archive(path+filename, path)
+			os.remove(path+filename)
+			p('File unzipped successfully')
+			return True
+		else:
+			p('Unable to unzip file')
+			return False
 	except:
 		p('Unable to unzip file')
 		p(traceback.format_exc())
@@ -135,7 +141,7 @@ def addfiletoproject(year, path, filename, uploadfile, unzip):
 		f = open(prjdir+year+'/'+path+'/'+filename+'/'+fn, 'wb')
 		f.write(uploadfile.file.read())
 		f.close()
-		if unzip and fn.split('.',1)[1] in ['tar.bz2', 'tbz2', 'tar.gz', 'tgz', 'tar', 'tar.xz', 'txz', 'zip']:
+		if unzip :
 			unzipfile(prjdir+year+'/'+path+'/'+filename+'/', fn)
 		return True
 	except:
@@ -160,6 +166,35 @@ def createprojectscsv(uploadfile, year):
 			projectsdict[project].append(student)
 		for key in projectsdict:
 			createproject(key, key, year, projectsdict[key])
+		return True
+	except:
+		p(traceback.format_exc())
+		return False
+		
+def addmetadata(year, projectcode, title, students, supervisor):
+	try:
+		if not os.path.exists(prjdir+'../project_data/'+year+'/'+projectcode):
+			os.makedirs(prjdir+'../project_data/'+year+'/'+projectcode)
+		
+		f = open(prjdir+'../project_data/'+year+'/'+projectcode+'/metadata.csv', 'w')
+		
+		f.write('<item>\n')
+		f.write('<levelOfDescription>item</levelOfDescription>\n')
+		f.write('<title>'+title+'</title>\n')
+		f.write('<date>'+year+'</date>\n')
+		f.write('<spreadsheet>/'+year+'/'+year+'.csv</spreadsheet>\n')
+		for i in students: 
+			f.write('<creator>'+i+'</creator>\n')
+		f.write('<supervisor>'+supervisor+'</supervisor>\n')
+		
+		f.write('<view>\n')
+		f.write('<title>'+title+'</title>\n')
+		f.write('<file>'+year+'/'+projectcode+'/index.html</file>\n')
+		f.write('</view>\n')
+		
+		f.write('</item>')
+			
+		f.close()
 		return True
 	except:
 		p(traceback.format_exc())

@@ -74,6 +74,14 @@ function openfile(){
 		window.open(url,"_self")
 	}
 }
+function addmetadata(){
+	if(path !== undefined && path !== null){
+		window.open("addmetadata.py?year="+year+"&path="+path+"&filename="+selectedbutton.innerText, "Add Metadata", "width="+width+",height="+height);
+	}
+}
+function viewproject(){
+	
+}
 
 function addfile(){
 	let selectfile = selectedbutton.innerText;

@@ -14,6 +14,13 @@ f.close()
 projectcount=0
 year=2020
 
+if not os.path.exists(usrdir+'../projects/'):
+	os.mkdir(usrdir+'../projects/')
+if not os.path.exists('../../db/projects/'):
+				os.makedirs('../../db/projects/')
+if not os.path.exists('../../db/project_data/'):
+				os.makedirs('../../db/project_data/')
+	
 for y in range(3):
 	year=y+2020
 	if not os.path.exists(usrdir+'../projects/'+str(year)):
@@ -26,6 +33,8 @@ for y in range(3):
 			projectcount+=1
 			if not os.path.exists('../../db/projects/'+str(year)+'/project'+str(projectcount)):
 				os.makedirs('../../db/projects/'+str(year)+'/project'+str(projectcount))
+			if not os.path.exists('../../db/project_data/'+str(year)+'/project'+str(projectcount)):
+				os.makedirs('../../db/project_data/'+str(year)+'/project'+str(projectcount))
 		i=i+20*y
 		i=str(i)
 		f = open(usrdir+usercount+'.email.xml', 'w')

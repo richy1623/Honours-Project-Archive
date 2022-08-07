@@ -9,6 +9,7 @@ import shutil
 usrdir = '../users/'
 projdir = '../projects/'
 dbproj = '../../db/projects/'
+dbprojdata = '../../db/project_data/'
 
 for filename in os.listdir(usrdir):
 	if filename.split('.')[0]!='1':
@@ -16,6 +17,9 @@ for filename in os.listdir(usrdir):
 
 for filename in os.listdir(projdir):
 	shutil.rmtree(projdir+filename) 
+	
+for filename in os.listdir(dbprojdata):
+	shutil.rmtree(dbprojdata+filename) 
 
 if os.path.exists(dbproj):
 	for filename in os.listdir(dbproj):

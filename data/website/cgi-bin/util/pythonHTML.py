@@ -139,8 +139,11 @@ def projectmenu():
 	h('Menu', 2)
 	print(makebutton('openfile', [], 'Open'))
 	print(makebutton('deletefile', [], 'Delete'))
-	print(makebutton('addfile', [], 'Add to'))
+	print(makebutton('addfile', [], 'Add File to Project'))
+	print(makebutton('addmetadata', [], 'Add Metadata to Project'))
 	print(makebutton('renamefile', [], 'Rename'))
+	br()
+	print(makebutton('viewproject', [], 'View Project'))
 	print(makebutton('submitfile', [], 'Submit'))
 	print('</div>')
 	invisrefresh()
@@ -173,4 +176,15 @@ def createrenamefileform(year, path, oldfilename):
 	print('<input type="submit" value="Rename">')
 	print('</form>')
 
-
+def createmetadataform(projectcode, year, path, filename):
+	p('Please input metadata below')
+	print('<form action="addmetadata.py" method="get">')
+	print('<label>Title of Project:</label><input type="text" name="title" /><br />')
+	for i in range(1,5):
+		print('<label>Student '+str(i)+':</label><input type="text" name="student'+str(i)+'" /><br />')
+	print('<label>Supervisor of Project:</label><input type="text" name="supervisor" /><br />')
+	print('<input type="hidden" name="year" value="'+year+'" />')
+	print('<input type="hidden" name="path" value="'+path+'" />')
+	print('<input type="hidden" name="filename" value="'+filename+'" />')
+	print('<input type = "submit" value = "Upload" />')
+	print('</form>')
