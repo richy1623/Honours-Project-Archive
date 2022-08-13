@@ -190,16 +190,17 @@ def createrenamefileform(year, path, oldfilename):
 	print('<input type="submit" value="Rename">')
 	print('</form>')
 
-def createmetadataform(projectcode, year, path, filename):
+def createmetadataform(projectcode, year):
 	p('Please input metadata below')
-	print('<form action="addmetadata.py" method="get">')
+	print('<form action="addmetadata.py" method="post" enctype = "multipart/form-data">')
 	print('<label>Title of Project:</label><input type="text" name="title" /><br />')
+	print('<label>Description of Project:</label><input type="textarea" name="description" /><br />')
 	for i in range(1,5):
 		print('<label>Student '+str(i)+':</label><input type="text" name="student'+str(i)+'" /><br />')
 	print('<label>Supervisor of Project:</label><input type="text" name="supervisor" /><br />')
+	print('<p>*Optional* Thumbnail Image for Project: <input type = "file" name = "image" accept="image/jpg" /></p>')
 	print('<input type="hidden" name="year" value="'+year+'" />')
-	print('<input type="hidden" name="path" value="'+path+'" />')
-	print('<input type="hidden" name="filename" value="'+filename+'" />')
+	print('<input type="hidden" name="projectcode" value="'+projectcode+'" />')
 	print('<input type = "submit" value = "Upload" />')
 	print('</form>')
 	

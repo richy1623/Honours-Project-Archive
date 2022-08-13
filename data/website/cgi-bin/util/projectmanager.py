@@ -172,7 +172,7 @@ def createprojectscsv(uploadfile, year):
 		p(traceback.format_exc())
 		return False
 		
-def addmetadata(year, projectcode, title, students, supervisor):
+def addmetadata(year, projectcode, title, students, supervisor, description, image):
 	try:
 		if not os.path.exists(prjdir+'../project_data/'+year+'/'+projectcode):
 			os.makedirs(prjdir+'../project_data/'+year+'/'+projectcode)
@@ -180,18 +180,36 @@ def addmetadata(year, projectcode, title, students, supervisor):
 		f = open(prjdir+'../project_data/'+year+'/'+projectcode+'/metadata.xml', 'w')
 		
 		f.write('<item>\n')
-		f.write('<levelOfDescription>item</levelOfDescription>\n')
-		f.write('<title>'+title+'</title>\n')
-		f.write('<date>'+year+'</date>\n')
-		f.write('<spreadsheet>/'+year+'/'+year+'.csv</spreadsheet>\n')
+		f.write('   <levelOfDescription>item</levelOfDescription>\n')
+		f.write('   <title>'+title+'</title>\n')
+		f.write('   <description>'+description+'</description>\n')
+		f.write('   <date>'+year+'</date>\n')
 		for i in students: 
-			f.write('<creator>'+i+'</creator>\n')
-		f.write('<supervisor>'+supervisor+'</supervisor>\n')
+			f.write('   <student>'+i+'</student>\n')
+		f.write('   <supervisor>'+supervisor+'</supervisor>\n')
 		
-		f.write('<view>\n')
-		f.write('<title>'+title+'</title>\n')
-		f.write('<file>'+year+'/'+projectcode+'/index.html</file>\n')
-		f.write('</view>\n')
+		f.write('   <digitalObjectURI>'+year+'/'+projectcode+'/'+projectcode+'.zip</digitalObjectURI>\n')
+		f.write('   <uniqueIdentifier>'+year+projectcode+'</uniqueIdentifier>\n')
+		
+		f.write('  <view>\n')
+		f.write('      <title>'+title+'</title>\n')
+		if image==None:
+			try:
+				shutil.copy(usrdir+'../res/uct-logo.jpg', prjdir+'../project_data/'+year+'/'+projectcode)
+			except:
+				p(traceback.format_exc())
+			f.write('      <file>'+year+'/'+projectcode+'/uct-logo.jpg</file>\n')
+		else:	
+			try:
+				fn = os.path.basename(image.filename)
+				imagefile = open(prjdir+'../project_data/'+year+'/'+projectcode+'/'+projectcode+'.jpg', 'wb')
+				imagefile.write(image.file.read())
+				imagefile.close()
+				f.write('      <file>'+year+'/'+projectcode+'/'+projectcode+'.jpg'+'</file>\n')
+			except:
+				p(traceback.format_exc())
+			
+		f.write('   </view>\n')
 		
 		f.write('</item>')
 			
@@ -259,6 +277,74 @@ def submitmoderation(year, projectcode):
 def approveproject(year, projectname):
 	emails = getusersemailsinproject(year, projectname)
 	#TODO move files
+	#Handle Metadata Moving and Creation
+	if not os.path.exists('../metadata/'+year):
+		try:
+			os.mkdir('../metadata/'+year)
+			f = open('../metadata/'+year+'/index.xml', 'w')
+			f.write('<collection>\n   <level>2</level>\n</collection>')
+			f.close()
+			
+			f = open('../metadata/index.xml', 'r')
+			lines = f.readlines()
+			f.close()
+			f = open('../metadata/index.xml', 'w')
+			f.write(lines[0])
+			f.write('   <item type="collection">'+year+'</item>\n')
+			for line in lines[1:]:
+				f.write(line)
+			f.close()
+		except:
+			p(traceback.format_exc())
+			return False
+	
+	if not os.path.exists('../metadata/'+year+'/'+projectname):
+		try:
+			os.mkdir('../metadata/'+year+'/'+projectname)
+			f = open('../metadata/'+year+'/'+projectname+'/index.xml', 'w')
+			f.write('<collection>\n   <level>3</level>\n   <type>item</type>\n</collection>')
+			f.close()
+			
+			f = open('../metadata/'+year+'/index.xml', 'r')
+			lines = f.readlines()
+			f.close()
+			f = open('../metadata/'+year+'/index.xml', 'w')
+			f.write(lines[0])
+			f.write('   <item type="item">'+projectname+'</item>\n')
+			for line in lines[1:]:
+				f.write(line)
+			f.close()
+		except:
+			p(traceback.format_exc())
+			return False
+			
+	try:
+		shutil.copy(prjdir+'../project_data/'+year+'/'+projectname+'/metadata.xml', '../metadata/'+year+'/'+projectname)
+	except:
+		p(traceback.format_exc())
+		return False
+	
+	#Handle File Moving
+	if not os.path.exists('../collection/'+year):
+		os.mkdir('../collection/'+year)
+	
+	if not os.path.exists('../collection/'+year+'/'+projectname):
+		os.mkdir('../collection/'+year+'/'+projectname)
+	
+	try:
+		shutil.copy(prjdir+'../project_data/'+year+'/'+projectname+'/'+projectname+'.jpg', '../collection/'+year+'/'+projectname)
+		shutil.copy(prjdir+'../project_data/'+year+'/'+projectname+'/'+projectname+'.zip', '../collection/'+year+'/'+projectname)
+	except:
+		p(traceback.format_exc())
+		return False
+	
+	try:
+		os.system('../../simpledl/bin/generate.pl > /dev/null ')
+		os.system('../../simpledl/bin/generate.pl --thumbs > /dev/null ')
+	except:
+		p(traceback.format_exc())
+		return False
+		
 	if os.path.exists(prjdir+'../project_data/'+year+'/'+projectname+'/pendingreview.txt'):
 		os.remove(prjdir+'../project_data/'+year+'/'+projectname+'/pendingreview.txt')
 	result = sendemail(emails, 'Request to add '+projectname+' - APPROVED', 'Your project has been added from the archive.')

@@ -15,14 +15,15 @@ form = cgi.FieldStorage()
 
 # Get data from fields
 year  = form.getvalue('year')
-path  = form.getvalue('path')
+projectcode  = form.getvalue('projectcode')
 filename  = form.getvalue('filename')
 title  = form.getvalue('title')
 supervisor  = form.getvalue('supervisor')
+description  = form.getvalue('description')
 students=[]
 for i in range(1,5):
 	s = form.getvalue('student'+str(i))
-	if s!=None:
+	if s!=None and s!='':
 		students.append(s)
 	else:
 		break
@@ -36,39 +37,35 @@ def printerror(error):
 #return html
 
 header()
-h('Adding file to Project')
+h('Adding Metadata to Project')
 
 if year==None:
 	printerror('Year not specified')
 
-projectcode=''
-if path==None:
-	path=''
-	if filename!=None:
-		projectcode=filename
-else:
-	projectcode=path.split('/')[0]
-	filename=''
-
-if projectcode=='':
+if projectcode==None:
 	printerror('Project not specified')
 
 if not checkifdir(year, '', projectcode):
 	printerror('Not a valid direcotry')
 
+if 'image' not in form or form['image'].filename=='':
+	image=None
+else:
+	image = form['image']
+	
 p('Adding Metadata to project '+strong(projectcode))
 
 #Get file to upload
 try:
-	if title==None or supervisor==None or students==[]:
-		if not (title==None and supervisor==None and students==[]):
-			p('Title, Supervisor and one or more students are required')
-		createmetadataform(projectcode, year, path, filename)
+	if title==None or supervisor==None or students==[] or description==None:
+		if not (title==None and supervisor==None and students==[] and description==None):
+			p('Title, Supervisor, a description and one or more students are required')
+		createmetadataform(projectcode, year)
 	else:
-		if addmetadata(year, projectcode, title, students, supervisor):
+		if addmetadata(year, projectcode, title, students, supervisor, description, image):
 			p('Metadata added Successfuly')
 		else:
 			p('Failed to add Metadata')
-except Exception as e:
-	p(e)
+except:
+	p(traceback.format_exc())
 close()

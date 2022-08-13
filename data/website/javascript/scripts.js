@@ -4,6 +4,11 @@ var selectedbutton;
 var oldcolor;
 var path;
 var year;
+var projectcode;
+
+function setproject(prjcode){
+	projectcode=prjcode;
+}
 
 function showrefresh() {
 	elem=document.getElementById("refresh-invis")
@@ -75,9 +80,7 @@ function openfile(){
 	}
 }
 function addmetadata(){
-	if(path !== undefined && path !== null){
-		window.open("addmetadata.py?year="+year+"&path="+path+"&filename="+selectedbutton.innerText, "Add Metadata", "width="+width+",height="+height);
-	}
+	window.open("addmetadata.py?year="+year+"&projectcode="+projectcode, "Add Metadata", "width="+width+",height="+height);
 }
 function viewgivenproject(year, projectcode){
 	window.open("view/"+year+"/"+projectcode+"/"+projectcode+".zip/", "Project View");
