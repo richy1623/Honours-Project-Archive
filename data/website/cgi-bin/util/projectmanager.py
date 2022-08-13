@@ -347,7 +347,7 @@ def approveproject(year, projectname):
 		
 	if os.path.exists(prjdir+'../project_data/'+year+'/'+projectname+'/pendingreview.txt'):
 		os.remove(prjdir+'../project_data/'+year+'/'+projectname+'/pendingreview.txt')
-	result = sendemail(emails, 'Request to add '+projectname+' - APPROVED', 'Your project has been added from the archive.')
+	result = sendemail(emails, 'Request to add '+projectname+' - APPROVED', 'Your project has been added to the archive.')
 	return result		
 	
 def denyproject(year, projectname, reason):
