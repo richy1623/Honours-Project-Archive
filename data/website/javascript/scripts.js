@@ -79,10 +79,20 @@ function addmetadata(){
 		window.open("addmetadata.py?year="+year+"&path="+path+"&filename="+selectedbutton.innerText, "Add Metadata", "width="+width+",height="+height);
 	}
 }
+function viewgivenproject(year, projectcode){
+	window.open("view/"+year+"/"+projectcode+"/"+projectcode+".zip/", "Project View");
+}
 function viewproject(){
 	let projectcode = document.getElementById("button00").innerText;
 	window.open("zipproject.py?year="+year+"&projectcode="+projectcode, "Project Zipping").close();
 	window.open("view/"+year+"/"+projectcode+"/"+projectcode+".zip/", "Project View");
+}
+function submitfile(){
+	if (window.confirm("Are you ready to submit your project for moderation?")) {
+		let projectcode = document.getElementById("button00").innerText;
+		window.open("submitproject.py?year="+year+"&projectcode="+projectcode, "Submitting Project", "width="+width+",height="+height)
+	}
+	
 }
 
 function addfile(){
@@ -100,3 +110,16 @@ function highlightdir(identity2){
 		console.log(identity2+' not found')
 	}
 } 
+function approveproject(year, project){
+	if (window.confirm("Approve "+project+" to be added to archive?")) {
+		window.open("approveprojects.py?year="+year+"&projectapprove="+project, "Approve Project", "width="+width+",height="+height);
+		showrefresh();
+	}
+}
+function denyproject(year, project){
+	let reason=window.prompt("Reason for rejecting project "+project);
+	if (reason !== null) {
+		window.open("approveprojects.py?year="+year+"&projectdeny="+project+"&reason="+reason, "Deny Project", "width="+width+",height="+height);
+		showrefresh();
+	}
+}

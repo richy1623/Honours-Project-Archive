@@ -133,6 +133,20 @@ def tablegen3(arr, selected):
 	table = modtable(arr)
 	tablegen(table)
 	highlightpath(selected)
+
+def tablegen4(projects):
+	tableform=[[strong('Projects'), strong('View'), strong('Approve'), strong('Deny')]]
+	for year in projects:
+		tableform.append([strong(year[0])])
+		for project in year[1]:
+			projects=[]
+			projects.append(project)
+			projects.append(makebutton('viewgivenproject', [year[0], project], 'View'))
+			projects.append(makebutton('approveproject', [year[0], project], 'Approve'))
+			projects.append(makebutton('denyproject',  [year[0], project], 'Deny'))
+			tableform.append(projects)
+	tablegen(tableform)
+	invisrefresh()
 	
 def projectmenu():
 	print('<div class="menu">')
@@ -188,3 +202,6 @@ def createmetadataform(projectcode, year, path, filename):
 	print('<input type="hidden" name="filename" value="'+filename+'" />')
 	print('<input type = "submit" value = "Upload" />')
 	print('</form>')
+	
+def displayprojectapprovalpage(projects):
+	tablegen4(projects)

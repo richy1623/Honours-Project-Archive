@@ -4,6 +4,7 @@ import shutil
 
 from util.pythonHTML import *
 from util.usermanager import *
+from util.misc import sendemail
 
 usrdir = '../../data/users/'
 prjdir = '../../db/projects/'
@@ -27,7 +28,7 @@ def addusertoproject(studentnumber, studentid, year, project):
 		return True
 	except:
 		h('Failed to add student to project '+project)
-		p(str(traceback.format_exc()))
+		p(traceback.format_exc())
 		return False
 	
 def createproject(projectname, projectcode, year, students):
@@ -176,7 +177,7 @@ def addmetadata(year, projectcode, title, students, supervisor):
 		if not os.path.exists(prjdir+'../project_data/'+year+'/'+projectcode):
 			os.makedirs(prjdir+'../project_data/'+year+'/'+projectcode)
 		
-		f = open(prjdir+'../project_data/'+year+'/'+projectcode+'/metadata.csv', 'w')
+		f = open(prjdir+'../project_data/'+year+'/'+projectcode+'/metadata.xml', 'w')
 		
 		f.write('<item>\n')
 		f.write('<levelOfDescription>item</levelOfDescription>\n')
@@ -210,3 +211,64 @@ def zipproject(year, projectcode):
 	except:
 		p(traceback.format_exc())
 		return False		
+	
+def getpendingprojects():
+	years=[]
+	if not os.path.exists(prjdir+'../project_data/'):
+		return []
+	for year in os.listdir(prjdir+'../project_data/'):
+		projects=[]
+		for project in os.listdir(prjdir+'../project_data/'+year):
+			if os.path.exists(prjdir+'../project_data/'+year+'/'+project+'/pendingreview.txt'):
+				projects.append(project)
+		if len(projects)>0:
+			years.append([year, sorted(projects)])
+	return sorted(years)
+
+def getusersemailsinproject(year, project):
+	if os.path.exists(usrdir+'../projects/'+year+'/'+project+'.txt'):
+		try:
+			emails=[]
+			f = open(usrdir+'../projects/'+year+'/'+project+'.txt', 'r')
+			for line in f.readlines():
+				emails.append(getstudentemail(line.strip()))
+			f.close()
+			return emails
+		except:
+			p(traceback.format_exc())
+			return []
+	else:
+		return []
+		
+def submitmoderation(year, projectcode):
+	try:
+		if os.path.exists(prjdir+'../project_data/'+year+'/'+projectcode):
+			if os.path.exists(prjdir+'../project_data/'+year+'/'+projectcode+'/metadata.xml'):
+				zipproject(year, projectcode)
+				f = open(prjdir+'../project_data/'+year+'/'+projectcode+'/pendingreview.txt', 'a')
+				f.close()
+				return True
+			else:
+				p('Metadata for project not found. Please upload metadata then try again.')
+		else:
+			p('No such project code exists')
+		return False
+	except:
+		return False
+		
+def approveproject(year, projectname):
+	emails = getusersemailsinproject(year, projectname)
+	#TODO move files
+	if os.path.exists(prjdir+'../project_data/'+year+'/'+projectname+'/pendingreview.txt'):
+		os.remove(prjdir+'../project_data/'+year+'/'+projectname+'/pendingreview.txt')
+	result = sendemail(emails, 'Request to add '+projectname+' - APPROVED', 'Your project has been added from the archive.')
+	return result		
+	
+def denyproject(year, projectname, reason):
+	emails = getusersemailsinproject(year, projectname)
+	if os.path.exists(prjdir+'../project_data/'+year+'/'+projectname+'/pendingreview.txt'):
+		os.remove(prjdir+'../project_data/'+year+'/'+projectname+'/pendingreview.txt')
+	if reason==None:
+		reason = 'No Reason Provided'
+	result = sendemail(emails, 'Request to add '+projectname+' - DECLINED', 'Your project has been rejected from the archive.\nReason provided: '+reason)
+	return result
