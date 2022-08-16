@@ -71,11 +71,16 @@ def createproject(projectname, projectcode, year, students):
 		p(traceback.format_exc())
 		return False
 
-
-
+def getdirarr(col, path):
+	dircol = []
+	for c in col:
+		dircol.append(os.path.isdir(path+'/'+c))
+	return dircol
+	
 def displayprojectfiles(year, project, openpath):
 	try:
 		table = []
+		dirs=[[True]]
 		path='../../db/projects/'+year+'/'+project+'/'
 		selected = []
 		table.append([project])
@@ -89,17 +94,16 @@ def displayprojectfiles(year, project, openpath):
 			col = sorted(os.listdir(path+'/'.join(openpath[:directory])))
 			selected.append(col.index(openpath[directory]))
 			table.append(col)
+			dirs.append(getdirarr(col, path+'/'.join(openpath[:directory])))
 		
 		#Handle the last selected file
-		if not os.path.isdir(path+'/'.join(openpath)):
-				#TODO is file
-				p('Building')
-		else:
+		if os.path.isdir(path+'/'.join(openpath)):
 			col = sorted(os.listdir(path+'/'.join(openpath)))
 			table.append(col)
+			dirs.append(getdirarr(col, path+'/'.join(openpath)))
 		
 		script('setyear('+year+')')
-		tablegen3(table, selected)
+		tablegen3(table, dirs, selected)
 	except:
 		p(traceback.format_exc())
 

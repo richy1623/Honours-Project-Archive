@@ -6,6 +6,16 @@ def header(scripts=[]):
 	print('<script src="/javascript/scripts.js"></script>')
 	for i in scripts:
 		print('<script>'+i+'</script>')
+		
+	print('<meta name="viewport" content="width=device-width, initial-scale=1" />')
+	print('<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" />')
+	print('<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>')
+	print('<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>')
+	print('<link rel="stylesheet" type="text/css" href="../styles/bootstrapstyle.css"/>')
+	print('')
+	print('<!-- Font Awsome -->')
+	print('<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />')
+
 	print("</head>")
 	print("<body>")
 
@@ -96,14 +106,15 @@ def highlightpath(selected)	:
 	for index, s in enumerate(selected):
 		highlightprojectdir('button'+str(index)+str(s))
 
-def modbuttons(arr, selected):
+def modbuttons(arr, dirs, selected):
 	path=[]
 	for i in range(len(arr)):
 		if i<len(selected):
 			path.append(arr[i][selected[i]])
 		for index, item in enumerate(arr[i]):
+			foldericon = ' <i class="fa fa-folder"></i>' if dirs[i][index] else ''
 			identity='button'+str(i)+str(index) #to set the id html property
-			arr[i][index] = makebuttonidentity('selectfile', [identity, '/'.join(path[:i])], arr[i][index], identity)
+			arr[i][index] = makebuttonidentity('selectfile', [identity, '/'.join(path[:i])], arr[i][index]+foldericon, identity)
 
 def modlinks(arr, yearindex, projectindex):
 	for i in range(len(arr[2])):
@@ -125,11 +136,11 @@ def tablegen2(arr, yearindex, projectindex):
 	table = modtable(arr)
 	tablegen(table)
 
-def tablegen3(arr, selected):
+def tablegen3(arr, dirs, selected):
 	if arr == []:
 		p('No files in directory')
 		return
-	modbuttons(arr, selected)
+	modbuttons(arr, dirs, selected)
 	table = modtable(arr)
 	tablegen(table)
 	highlightpath(selected)

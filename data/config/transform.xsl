@@ -14,7 +14,7 @@
 
 <xsl:template name="htmlheader">
    <head>
-      <title>UCT - CS Honours Archive</title>
+      <title>Honours Archive</title>
       <!-- Google sign-in -->
       <script src="https://apis.google.com/js/platform.js?onload=renderLoginButton" async="async" defer="defer">;</script>
       <meta name="google-signin-client_id" content="198962743816-7sdscou4pllp182nesibfg9e1281jn6a.apps.googleusercontent.com"/>

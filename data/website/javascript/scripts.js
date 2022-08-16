@@ -6,6 +6,10 @@ var path;
 var year;
 var projectcode;
 
+function getSelectedButtonText(){
+	return selectedbutton.innerText.trim();
+}
+
 function setproject(prjcode){
 	projectcode=prjcode;
 }
@@ -48,20 +52,20 @@ function resetcolor(){
 }
 function deletefile(){
 	if(path !== undefined && path !== null){
-		if (window.confirm("Do you really want to delete "+selectedbutton.innerText+"?")) {
-			window.open("deletefile.py?year="+year+"&path="+path+"&filename="+selectedbutton.innerText, "Delete File", "width="+width+",height="+height);
+		if (window.confirm("Do you really want to delete "+getSelectedButtonText()+"?")) {
+			window.open("deletefile.py?year="+year+"&path="+path+"&filename="+getSelectedButtonText(), "Delete File", "width="+width+",height="+height);
 			showrefresh();
 		}
 	}
 }
 function renamefile(){
 	if(path !== undefined && path !== null){
-		window.open("renamefile.py?year="+year+"&path="+path+"&oldfilename="+selectedbutton.innerText, "Rename File", "width="+width+",height="+height);
+		window.open("renamefile.py?year="+year+"&path="+path+"&oldfilename="+getSelectedButtonText(), "Rename File", "width="+width+",height="+height);
 		showrefresh();
 	}
 }
 function openfile(){
-	let selectfile = selectedbutton.innerText;
+	let selectfile = getSelectedButtonText();
 	if(path !== undefined && path !== null && selectfile !== undefined && selectfile !== null){
 		url="manageproject.py?";
 		var pathdir
@@ -86,7 +90,6 @@ function viewgivenproject(year, projectcode){
 	window.open("view/"+year+"/"+projectcode+"/"+projectcode+".zip/", "Project View");
 }
 function viewproject(){
-	let projectcode = document.getElementById("button00").innerText;
 	window.open("zipproject.py?year="+year+"&projectcode="+projectcode, "Project Zipping").close();
 	window.open("view/"+year+"/"+projectcode+"/"+projectcode+".zip/", "Project View");
 }
@@ -99,7 +102,7 @@ function submitfile(){
 }
 
 function addfile(){
-	let selectfile = selectedbutton.innerText;
+	let selectfile = getSelectedButtonText();
 	if(path !== undefined && path !== null && selectfile !== undefined && selectfile !== null){
 		window.open("addfile.py?year="+year+"&path="+path+"&filename="+selectfile, "Add File", "width="+width+",height="+height);
 		showrefresh();
