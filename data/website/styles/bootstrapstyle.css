@@ -1,0 +1,49 @@
+.navbar {
+  margin-bottom: 0;
+  background-color: #aaaaaa;
+  z-index: 9999;
+  border: 0;
+  font-size: 12px !important;
+  line-height: 1.42857143 !important;
+  letter-spacing: 4px;
+  border-radius: 0;
+}
+
+.navbar li a, .navbar .navbar-brand {
+  color: #fff !important;
+  color: #2050ff !important;
+}
+
+.navbar-nav li a:hover, .navbar-nav li.active a , .dropdown-item-p:hover{
+  color: #2050ff !important;
+  background-color: #fff !important;
+}
+
+.navbar-default .navbar-toggle {
+  border-color: transparent;
+  color: #fff !important;
+}
+
+#uct-logo {
+	height: 150px;
+}
+
+#login {
+	padding: 15px;
+}
+
+.dropdown-item-p {
+	background-color: #fff !important;
+  	color: #2050ff !important;
+	text-align: center;
+}
+
+#dropdownMenuLink{
+	padding: 15px;
+	display: inline;
+	border-radius: 0;
+}
+
+.login-link {
+	padding: 15px;
+}

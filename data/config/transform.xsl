@@ -14,7 +14,7 @@
 
 <xsl:template name="htmlheader">
    <head>
-      <title>NDLTD Document Archive</title>
+      <title>UCT - CS Honours Archive</title>
       <!-- Google sign-in -->
       <script src="https://apis.google.com/js/platform.js?onload=renderLoginButton" async="async" defer="defer">;</script>
       <meta name="google-signin-client_id" content="198962743816-7sdscou4pllp182nesibfg9e1281jn6a.apps.googleusercontent.com"/>
@@ -41,6 +41,16 @@
       <meta http-equiv="Expires" content="0"/> -->
       <meta charset="UTF-8"/>
       <link href="https://fonts.googleapis.com/css2?family=Merriweather+Sans:ital,wght@0,300;0,400;0,700;1,400&amp;display=swap" rel="stylesheet"/>
+      
+      <!-- Bootstrap -->
+      <meta name="viewport" content="width=device-width, initial-scale=1" />
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" />
+	  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+      <link rel="stylesheet" type="text/css" href="{concat ($basedir, 'styles/bootstrapstyle.css')}"/>
+      
+      <!-- Font Awsome -->
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
    </head>
 </xsl:template>
 
@@ -66,20 +76,29 @@
 </xsl:template>
 
 <xsl:template name="banner">
-   <div class="banner">
-      <div class="banner-logo"><a href="{concat ($basedir, 'index.html')}"><img src="{concat ($basedir, 'images/docs.jpg')}"/></a></div>
-      <div class="banner-logins">
-         <div class="banner-login"><div id="login"><a href="{concat ($basedir, 'login.html')}" onClick="login1(this.href); return false">Login / Register</a></div></div>
-      </div>
-      <div class="banner-links">
-         <a href="{concat ($basedir, 'index.html')}">Home</a> | 
-         <a href="{concat ($basedir, 'about.html')}">About</a> | 
-         <a href="{concat ($basedir, 'users.html')}">Authors</a> | 
-         <a href="{concat ($basedir, 'search.html')}">Search</a> | 
-         <a href="{concat ($basedir, 'contact.html')}">Contact Us</a> | 
-         <a href="{concat ($basedir, 'createprojects.html')}">Assign Project(Admin)</a> | 
-         <a href="{concat ($basedir, 'cgi-bin/manageproject.py')}">Manage Project</a></div>
-   </div>
+	 <nav class="navbar navbar-default">
+	  <div class="container">
+		<div class="navbar-header">
+		  <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+		    <span class="icon-bar"></span>
+		    <span class="icon-bar"></span>
+		    <span class="icon-bar"></span>
+		  </button>
+		  <a class="navbar-brand" href="#"><div class="banner-logo"><a href="{concat ($basedir, 'index.html')}"><img id="uct-logo" src="{concat ($basedir, 'images/logo.png')}"/></a></div></a>
+		</div>
+		<div class="collapse navbar-collapse" id="myNavbar">
+		  <ul class="nav navbar-nav navbar-right">
+		    <li><div id="login"><a class="login-link" href="login.html" onClick="login1(this.href); return false">Login / Register</a></div></li>
+		    <li><a href="{concat ($basedir, 'index.html')}">Home</a></li>
+		    <li><a href="{concat ($basedir, 'about.html')}">About</a></li>
+		    <li><a href="{concat ($basedir, 'users.html')}">Authors</a></li>
+		    <li><a href="{concat ($basedir, 'search.html')}">Search</a></li>
+		    <li><a href="{concat ($basedir, 'contact.html')}">Contact Us</a></li>
+		    <li><a href="{concat ($basedir, 'cgi-bin/manageproject.py')}"><strong>Manage Project</strong></a></li>
+		  </ul>
+		</div>
+	  </div>
+	</nav> 
 </xsl:template>
 
 <xsl:template name="adminbanner">
