@@ -61,6 +61,7 @@ sub displayAdminHeader
    print $header;
    print "<div class=\"content\">\n".
          "<div class=\"manageroptions\"><b>Manager Options</b>: \n".
+         "<div class=\"manageroption\"><form action=\"modifyprojectsselect.py\"><input type=\"submit\" value=\"Add New Projects\"/> |</form></div>\n".
          "<div class=\"manageroption\"><form action=\"approveprojects.py\"><input type=\"submit\" value=\"Approve Projects\"/> |</form></div>\n".
          "<div class=\"manageroption\"><form action=\"moderate.pl\"><input type=\"submit\" value=\"Moderate\"/> |</form></div>\n".
          "<div class=\"manageroption\"><form action=\"manage.pl\"><input type=\"submit\" value=\"Manage\"/> |</form></div>\n".

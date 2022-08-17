@@ -1,6 +1,6 @@
 def banner():
 	print('<nav class="navbar navbar-expand-md navbar-dark bg-dark">')
-	print('<a class="navbar-brand" href="index.html"><img id="logo-small" src="../images/logo-small.png" />Univercity of Cape Town - Computer Science Honours Achive</a>')
+	print('<a class="navbar-brand" href="../index.html"><img id="logo-small" src="../images/logo-small.png" />Univercity of Cape Town - Computer Science Honours Achive</a>')
 	print('<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">')
 	print('<span class="navbar-toggler-icon"></span>')
 	print('</button>')
@@ -96,6 +96,25 @@ def tablegen(table):
 		print('</tr>')
 	print('</table>')
 
+def tablegenstyed(table, error=''):
+	print('<table class="table table-hover">')
+	#table Header
+	print('<thead class="thead-light">\n<tr>')
+	for item in table[0]:
+		print('<th scope="col">'+item+'</th>')
+	print('</tr>\n</thead>')
+	#rest of table
+	for row in table[1:]:
+		print('<tr>')
+		for item in row:
+			if len(item)==2:
+				print('<td align="center" colspan="'+str(item[1])+'">'+item[0]+'</td>')
+			else:
+				print('<td>'+item+'</td>')
+		print('</tr>')
+	print(error)
+	print('</table>')
+
 def formlist(ls, action, multiple='', hidden=[]):
 	print('<form action="'+action+'">')
 	print('<label for="items">Choose an item:</label>')
@@ -177,15 +196,18 @@ def tablegen3(arr, dirs, selected):
 def tablegen4(projects):
 	tableform=[[strong('Projects'), strong('View'), strong('Approve'), strong('Deny')]]
 	for year in projects:
-		tableform.append([strong(year[0])])
+		tableform.append([[strong(year[0]), 4]])
 		for project in year[1]:
-			projects=[]
-			projects.append(project)
-			projects.append(makebutton('viewgivenproject', [year[0], project], 'View'))
-			projects.append(makebutton('approveproject', [year[0], project], 'Approve'))
-			projects.append(makebutton('denyproject',  [year[0], project], 'Deny'))
-			tableform.append(projects)
-	tablegen(tableform)
+			projectlist=[]
+			projectlist.append(project)
+			projectlist.append(makebutton('viewgivenproject', [year[0], project], 'View'))
+			projectlist.append(makebutton('approveproject', [year[0], project], 'Approve'))
+			projectlist.append(makebutton('denyproject',  [year[0], project], 'Deny'))
+			tableform.append(projectlist)
+	if len(projects)==0:
+		tablegenstyed(tableform, error='<tr class="table-danger"> <td class="table-danger" align="center" colspan="4">No projects pending moderation</td></tr>')
+	else:
+		tablegenstyed(tableform)
 	invisrefresh()
 	
 def projectmenu():
