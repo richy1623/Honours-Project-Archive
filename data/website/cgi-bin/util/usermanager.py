@@ -104,6 +104,20 @@ def getstudentemail(studentnumber):
 		except Exception as e:
 			print(e)
 	return ''
+		
+def getstudentname(studentnumber):
+	sid = getstudentid(studentnumber)
+	if sid=='':
+		return 'null'
+	if os.path.exists(usrdir+sid+'.name.xml'):
+		try:
+			f = open(usrdir+sid+'.name.xml', 'r')
+			name = f.readline()[6:-7]
+			f.close()
+			return name
+		except Exception as e:
+			print(e)
+	return sid
 
 def getallstudents():
 	students=[]

@@ -4,6 +4,7 @@
 import cgi, cgitb 
 import os
 import traceback
+from util.cookiemanager import *
 from util.pythonHTML import *
 from util.projectmanager import approveproject, denyproject, getpendingprojects
 
@@ -24,6 +25,8 @@ year = form.getvalue('year')
 
 #return output
 header()
+banner()
+setuser(getusername2())
 h('Manage Projects')		
 br()
 

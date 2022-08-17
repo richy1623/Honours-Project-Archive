@@ -14,8 +14,7 @@ def getUserID():
 		cookies=getcookies()
 		if cookies!={}:
 			uid = cookies['userID']
-			verify = cookies['verify']
-			return cookies['userID']
+			return uid
 		else:
 			return ''
 	except:
@@ -32,6 +31,20 @@ def isadmin():
 	except:
 		p(str(traceback.format_exc()))
 		return False
+
+def getusername():
+	try:
+		cookies=getcookies()
+		if cookies!={}:
+			name = cookies['username']
+			return name
+		else:
+			return ''
+	except:
+		p(str(traceback.format_exc()))
+		return ''
 		
+def getusername2():
+	return 'Admin'
 def getUserID2():
 	return '1'

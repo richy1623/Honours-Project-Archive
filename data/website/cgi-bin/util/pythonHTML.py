@@ -1,16 +1,42 @@
+def banner():
+	print('<nav class="navbar navbar-expand-md navbar-dark bg-dark">')
+	print('<a class="navbar-brand" href="index.html"><img id="logo-small" src="../images/logo-small.png" />Univercity of Cape Town - Computer Science Honours Achive</a>')
+	print('<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">')
+	print('<span class="navbar-toggler-icon"></span>')
+	print('</button>')
+	print('')
+	print('<div class="collapse navbar-collapse mr-auto" id="navbarsExampleDefault">')
+	print('<ul class="navbar-nav mr-auto">')
+	print('<li class="nav-item"><div id="login"><a class="login-link" href="../login.html" onClick="login1(this.href); return false">Login / Register</a></div></li>')
+	print('<li class="nav-item"><a class="nav-link" href="../index.html">Home</a></li>')
+	print('<li class="nav-item"><a class="nav-link" href="../about.html">About</a></li>')
+	print('<li class="nav-item"><a class="nav-link" href="../users.html">Authors</a></li>')
+	print('<li class="nav-item"><a class="nav-link" href="../search.html">Search</a></li>')
+	print('<li class="nav-item"><a class="nav-link" href="../contact.html">Contact Us</a></li>')
+	print('<li class="nav-item"><a class="nav-link" href="cgi-bin/manageproject.py"><strong>Manage Project</strong></a></li>')
+	print('</ul>')
+	print('</div>')
+	print('</nav>')
+
+def setuser(user):
+	script('showUsername("'+user+'")')
+
 def header(scripts=[]):
 	print("Content-type:text/html\r\n\r\n")
+	print('<!DOCTYPE html>')
 	print("<html>")
 	print("<head>")
 	print("<title>Honours Archive</title>")
 	print('<script src="/javascript/scripts.js"></script>')
+	print('<script src="/scripts/login.js"></script>')
 	for i in scripts:
 		print('<script>'+i+'</script>')
 		
 	print('<meta name="viewport" content="width=device-width, initial-scale=1" />')
-	print('<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" />')
-	print('<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>')
-	print('<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>')
+	print('<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">')
+	print('<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>')
+	print('<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>')
+	print('<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>')
 	print('<link rel="stylesheet" type="text/css" href="../styles/bootstrapstyle.css"/>')
 	print('')
 	print('<!-- Font Awsome -->')
@@ -44,11 +70,14 @@ def makelinkonclick(link, onclick, text):
 def strong(string):
 	return '<strong>'+string+'</strong>'
 
+def makebuttonclass(function, params, cssclass, text):
+	return '<button onclick="'+function+'('+','.join(['\''+str(i).strip()+'\'' for i in params])+')" class="'+cssclass+'">'+text+'</button>'
+
 def makebutton(function, params, text):
-	return '<button onclick="'+function+'('+','.join(['\''+str(i).strip()+'\'' for i in params])+')">'+text+'</button>'
+	return makebuttonclass(function, params, 'btn btn-outline-primary', text)
 
 def makebuttonidentity(function, params, text, identity):
-	return '<button id="'+identity+'" onclick="'+function+'('+','.join(['\''+str(i).strip()+'\'' for i in params])+')">'+text+'</button>'
+	return '<button id="'+identity+'" onclick="'+function+'('+','.join(['\''+str(i).strip()+'\'' for i in params])+')" class="btn btn-outline-primary">'+text+'</button>'
 
 def script(function):
 	print('<script type="text/javascript">')
@@ -56,7 +85,7 @@ def script(function):
 	print('</script>')
 
 def invisrefresh():
-	print('<button id="refresh-invis" onClick="window.location.reload();" style="display:none">Refresh Page</button>')
+	print('<button id="refresh-invis" class="btn btn-warning" onClick="window.location.reload();" style="display:none">Refresh Page</button>')
 	
 def tablegen(table):
 	print('<table>')
@@ -168,8 +197,8 @@ def projectmenu():
 	print(makebutton('addmetadata', [], 'Add Metadata to Project'))
 	print(makebutton('renamefile', [], 'Rename'))
 	br()
-	print(makebutton('viewproject', [], 'View Project'))
-	print(makebutton('submitfile', [], 'Submit'))
+	print(makebuttonclass('viewproject', [], 'btn btn-primary', 'View Project'))
+	print(makebuttonclass('submitfile', [], 'btn btn-primary', 'Submit'))
 	print('</div>')
 	invisrefresh()
 	#script('alert("ok");')

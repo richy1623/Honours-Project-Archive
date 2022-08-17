@@ -44,9 +44,10 @@
       
       <!-- Bootstrap -->
       <meta name="viewport" content="width=device-width, initial-scale=1" />
-      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" />
-	  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-	  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous" />
+	  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+	  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+	  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
       <link rel="stylesheet" type="text/css" href="{concat ($basedir, 'styles/bootstrapstyle.css')}"/>
       
       <!-- Font Awsome -->
@@ -72,10 +73,40 @@
       </script>
       <script language="Javascript" src="{concat ($basedir, 'scripts/login.js')}">;</script>
       <link rel="stylesheet" title="mainstyle" type="text/css" href="{concat ($basedir, 'styles/adminstyle.css')}"/>
+      
+      <!-- Bootstrap -->
+      <meta name="viewport" content="width=device-width, initial-scale=1" />
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous" />
+	  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+	  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+	  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+      <link rel="stylesheet" type="text/css" href="{concat ($basedir, 'styles/bootstrapstyle.css')}"/>
+      
+      <!-- Font Awsome -->
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
    </head>
 </xsl:template>
 
 <xsl:template name="banner">
+	<nav class="navbar navbar-expand-md navbar-dark bg-dark">
+      <a class="navbar-brand" href="index.html"><img id="logo-small" src="images/logo-small.png" />Univercity of Cape Town - Computer Science Honours Achive</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse mr-auto" id="navbarsExampleDefault">
+        <ul class="navbar-nav mr-auto">
+          	<li class="nav-item"><div id="login"><a class="login-link" href="login.html" onClick="login1(this.href); return false">Login / Register</a></div></li>
+			<li class="nav-item"><a class="nav-link" href="{concat ($basedir, 'index.html')}">Home</a></li>
+			<li class="nav-item"><a class="nav-link" href="{concat ($basedir, 'about.html')}">About</a></li>
+			<li class="nav-item"><a class="nav-link" href="{concat ($basedir, 'users.html')}">Authors</a></li>
+			<li class="nav-item"><a class="nav-link" href="{concat ($basedir, 'search.html')}">Search</a></li>
+			<li class="nav-item"><a class="nav-link" href="{concat ($basedir, 'contact.html')}">Contact Us</a></li>
+			<li class="nav-item"><a class="nav-link" href="{concat ($basedir, 'cgi-bin/manageproject.py')}"><strong>Manage Project</strong></a></li>
+        </ul>
+      </div>
+    </nav>
+    <!-- 
 	 <nav class="navbar navbar-default">
 	  <div class="container">
 		<div class="navbar-header">
@@ -84,26 +115,46 @@
 		    <span class="icon-bar"></span>
 		    <span class="icon-bar"></span>
 		  </button>
-		  <a class="navbar-brand" href="#"><div class="banner-logo"><a href="{concat ($basedir, 'index.html')}"><img id="uct-logo" src="{concat ($basedir, 'images/logo.png')}"/></a></div></a>
+		  <a class="navbar-brand" href="#"><a href="{concat ($basedir, 'index.html')}"><img id="uct-logo" src="{concat ($basedir, 'images/logo.png')}"/></a></a>
 		</div>
 		<div class="collapse navbar-collapse" id="myNavbar">
 		  <ul class="nav navbar-nav navbar-right">
-		    <li><div id="login"><a class="login-link" href="login.html" onClick="login1(this.href); return false">Login / Register</a></div></li>
-		    <li><a href="{concat ($basedir, 'index.html')}">Home</a></li>
-		    <li><a href="{concat ($basedir, 'about.html')}">About</a></li>
-		    <li><a href="{concat ($basedir, 'users.html')}">Authors</a></li>
-		    <li><a href="{concat ($basedir, 'search.html')}">Search</a></li>
-		    <li><a href="{concat ($basedir, 'contact.html')}">Contact Us</a></li>
-		    <li><a href="{concat ($basedir, 'cgi-bin/manageproject.py')}"><strong>Manage Project</strong></a></li>
+		    <li class="nav-item"><div id="login"><a class="login-link" href="login.html" onClick="login1(this.href); return false">Login / Register</a></div></li>
+		    <li class="nav-item"><a class="nav-link" href="{concat ($basedir, 'index.html')}">Home</a></li>
+		    <li class="nav-item"><a class="nav-link" href="{concat ($basedir, 'about.html')}">About</a></li>
+		    <li class="nav-item"><a class="nav-link" href="{concat ($basedir, 'users.html')}">Authors</a></li>
+		    <li class="nav-item"><a class="nav-link" href="{concat ($basedir, 'search.html')}">Search</a></li>
+		    <li class="nav-item"><a class="nav-link" href="{concat ($basedir, 'contact.html')}">Contact Us</a></li>
+		    <li class="nav-item"><a class="nav-link" href="{concat ($basedir, 'cgi-bin/manageproject.py')}"><strong>Manage Project</strong></a></li>
 		  </ul>
 		</div>
 	  </div>
 	</nav> 
+	-->
 </xsl:template>
 
 <xsl:template name="adminbanner">
+	<nav class="navbar navbar-expand-md navbar-dark bg-dark">
+      <a class="navbar-brand" href="{concat ($basedir, 'index.html')}"><img id="logo-small" src="{concat ($basedir, 'images/logo-small.png')}" />Univercity of Cape Town - Computer Science Honours Achive</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse mr-auto" id="navbarsExampleDefault">
+        <ul class="navbar-nav mr-auto">
+          	<li class="nav-item"><div id="login"><a class="login-link" href="login.html" onClick="login1(this.href); return false">Login / Register</a></div></li>
+			<li class="nav-item"><a class="nav-link" href="{concat ($basedir, 'index.html')}">Home</a></li>
+			<li class="nav-item"><a class="nav-link" href="{concat ($basedir, 'about.html')}">About</a></li>
+			<li class="nav-item"><a class="nav-link" href="{concat ($basedir, 'users.html')}">Authors</a></li>
+			<li class="nav-item"><a class="nav-link" href="{concat ($basedir, 'search.html')}">Search</a></li>
+			<li class="nav-item"><a class="nav-link" href="{concat ($basedir, 'contact.html')}">Contact Us</a></li>
+			<li class="nav-item"><a class="nav-link" href="{concat ($basedir, 'cgi-bin/manageproject.py')}"><strong>Manage Project</strong></a></li>
+        </ul>
+      </div>
+    </nav>
+    <!--
    <div class="banner">
-      <div class="banner-logo"><a href="{concat ($basedir, 'cgi-bin/manage.pl')}"><img src="{concat ($basedir, 'images/simpledl.png')}"/></a></div>
+      <div class="banner-logo"><a href="c"><img src="{concat ($basedir, 'images/simpledl.png')}"/></a></div>
       <div class="banner-logins">
          <div class="banner-login"><div id="login"><a href="{concat ($basedir, 'login.html')}" onClick="login1(this.href); return false">Login / Register</a></div></div>
       </div>
@@ -111,6 +162,7 @@
          <a href="{concat ($basedir, 'index.html')}">Site Home</a>
       </div>
    </div>
+   -->
 </xsl:template>
 
 <xsl:template match="adminheader">

@@ -32,6 +32,8 @@ uid = getUserID2()
 #return html
 
 header()
+banner()
+setuser(getusername2())
 h('Manage Projects')		
 br()
 h('Files', 2)
@@ -40,6 +42,5 @@ displayprojectfiles(year, project, opendirs)
 projectmenu()
 br()
 br()
-print(makelink('http://docs.simpledl.net','Home'))
 
 close()

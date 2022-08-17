@@ -6,6 +6,11 @@ var path;
 var year;
 var projectcode;
 
+function showUsername(username){
+	elem=document.getElementById("login").innerHTML = '<a class="login-link disabled" href="../login.html" onClick="login1(this.href); return false">Logged in: '+username+'</a>'
+	//document.getElementsByClassName("login-link")[0].innerHTML= username;
+}
+
 function getSelectedButtonText(){
 	return selectedbutton.innerText.trim();
 }
@@ -40,14 +45,14 @@ function selectfile(identity, newpath){
 	resetcolor()
 	selectedbutton=document.getElementById(identity);
 	if(selectedbutton !== undefined && selectedbutton !== null){
-		oldcolor=selectedbutton.style.backgroundColor;
-		selectedbutton.style.backgroundColor='#0AA1DD';
+		oldcolor=selectedbutton.className;
+		selectedbutton.className='btn btn-info';
 		path=newpath
 	}
 }
 function resetcolor(){
 	if(selectedbutton !== undefined && selectedbutton !== null){
-		selectedbutton.style.backgroundColor=oldcolor;
+		selectedbutton.className=oldcolor;
 	}
 }
 function deletefile(){
@@ -111,7 +116,7 @@ function addfile(){
 function highlightdir(identity2){
 	let pathbutton=document.getElementById(identity2);
 	if(pathbutton !== undefined && pathbutton !== null){
-		pathbutton.style.backgroundColor='#79DAE8';
+		pathbutton.className='btn btn-secondary';
 	}else{
 		console.log(identity2+' not found')
 	}
