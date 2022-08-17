@@ -7,7 +7,7 @@ var year;
 var projectcode;
 
 function showUsername(username){
-	elem=document.getElementById("login").innerHTML = '<a class="login-link disabled" href="../login.html" onClick="login1(this.href); return false">Logged in: '+username+'</a>'
+	elem=document.getElementById("login").innerHTML = '<a class="login-link disabled" href="../login.html" onClick="login1(this.href); return false">Logged in: '+username+'</a>';
 	//document.getElementsByClassName("login-link")[0].innerHTML= username;
 }
 
@@ -33,7 +33,10 @@ function deleteuser(user, year, project){
 	}
 }
 function adduser(year, project){
-	window.open("addusertoproject.py?year="+year+"&project="+project, "delete", "width="+width+",height="+height);
+	let student=window.prompt("Enter the student number to be added to the project "+project+":");
+	if (student!==null && student!==""){
+		window.open("addusertoproject.py?year="+year+"&project="+project+"&student="+student, "Add User", "width="+width+",height="+height);
+	}
 	showrefresh();
 }
 
@@ -101,7 +104,7 @@ function viewproject(){
 function submitfile(){
 	if (window.confirm("Are you ready to submit your project for moderation?")) {
 		let projectcode = document.getElementById("button00").innerText;
-		window.open("submitproject.py?year="+year+"&projectcode="+projectcode, "Submitting Project", "width="+width+",height="+height)
+		window.open("submitproject.py?year="+year+"&projectcode="+projectcode, "Submitting Project", "width="+width+",height="+height);
 	}
 	
 }
@@ -133,4 +136,14 @@ function denyproject(year, project){
 		window.open("approveprojects.py?year="+year+"&projectdeny="+project+"&reason="+reason, "Deny Project", "width="+width+",height="+height);
 		showrefresh();
 	}
+}
+function openprojectselectyp(year, projectcode){
+	window.open("modifyprojectsselect.py?year="+year+"&projectcode="+projectcode, "_self");
+}
+function openprojectselecty(year){
+	window.open("modifyprojectsselect.py?year="+year, "_self");
+}
+function addprojectscsv(){
+	window.open("addprojectscsv.py?", "Add Projects with CSV", "width="+width+",height="+height);
+	showrefresh();
 }

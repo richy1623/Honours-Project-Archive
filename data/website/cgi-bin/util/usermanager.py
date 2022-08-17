@@ -28,7 +28,7 @@ def createuser(studentnumber):
 			f.write('<name>'+studentnumber+'</name>')
 			f.close()
 			
-			p('User: ' + studentnumber + ' has been added successfully.')
+			p('User: ' + studentnumber + ' has been created successfully.')
 			return counter
 		except IOError as err:
 			h('unable to create user files: '+str(err))

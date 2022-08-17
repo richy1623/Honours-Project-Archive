@@ -58,11 +58,14 @@ def h(string, level=1):
 def br():
 	print('<br />')
 	
+def hr():
+	print('<hr />')
+
 def a(string):
 	print(makelink(string, string))
 	
-def makelink(link, text):
-	return '<a href="'+link+'">'+str(text)+'</a>'	
+def makelink(link, text, classes=[]):
+	return '<a href="'+link+'" class="'+' '.join(classes)+'">'+str(text)+'</a>'	
 	
 def makelinkonclick(link, onclick, text):
 	return '<a onclick="'+onclick+'"href="'+link+'" target="_blank">'+text+'</a>'
@@ -85,7 +88,7 @@ def script(function):
 	print('</script>')
 
 def invisrefresh():
-	print('<button id="refresh-invis" class="btn btn-warning" onClick="window.location.reload();" style="display:none">Refresh Page</button>')
+	print('<button id="refresh-invis" class="btn btn-warning ml-3" onClick="window.location.reload();" style="display:none">Refresh Page</button>')
 	
 def tablegen(table):
 	print('<table>')
@@ -96,8 +99,8 @@ def tablegen(table):
 		print('</tr>')
 	print('</table>')
 
-def tablegenstyed(table, error=''):
-	print('<table class="table table-hover">')
+def tablegenstyled(table, error='', hover=False):
+	print('<table class="table'+(' table-hover' if hover else '')+'">')
 	#table Header
 	print('<thead class="thead-light">\n<tr>')
 	for item in table[0]:
@@ -160,29 +163,39 @@ def modbuttons(arr, dirs, selected):
 		if i<len(selected):
 			path.append(arr[i][selected[i]])
 		for index, item in enumerate(arr[i]):
-			foldericon = ' <i class="fa fa-folder"></i>' if dirs[i][index] else ''
+			foldericon = ' <i class="fa fa-folder"></i>' if len(dirs)>0 and dirs[i][index] else ''
 			identity='button'+str(i)+str(index) #to set the id html property
 			arr[i][index] = makebuttonidentity('selectfile', [identity, '/'.join(path[:i])], arr[i][index]+foldericon, identity)
 
-def modlinks(arr, yearindex, projectindex):
+def modbuttons2(arr, yearindex, projectindex):
 	for i in range(len(arr[2])):
-		arr[2][i] = makebutton('deleteuser',[arr[2][i], arr[0][yearindex], arr[1][projectindex]], arr[2][i])
+		arr[2][i] = makebuttonclass('deleteuser', [arr[2][i], arr[0][yearindex], arr[1][projectindex]], 'btn btn-outline-danger', 'Remove '+arr[2][i])
 		#arr[2][i] = makebutton('showrefresh',[], arr[2][i])
 	if len(arr[2])!=0:
-		arr[2].append(makebutton('adduser',[arr[0][yearindex], arr[1][projectindex]], 'Add user'))
+		arr[2].append(makebuttonclass('adduser', [arr[0][yearindex], arr[1][projectindex]], 'btn btn-outline-success', 'Add user'))
 	for i in range(len(arr[1])):
-		arr[1][i]= makelink('modifyprojectsselect.py?year='+arr[0][yearindex]+'&projectcode='+arr[1][i], arr[1][i])
+		if i == projectindex:
+			arr[1][i]= makebuttonclass('openprojectselectyp', [arr[0][yearindex], arr[1][i]], 'btn btn-outline-primary', arr[1][i])
+		else:
+			arr[1][i]= makebutton('openprojectselectyp', [arr[0][yearindex], arr[1][i]], arr[1][i])
 	for i in range(len(arr[0])):
-		arr[0][i]= makelink('modifyprojectsselect.py?year='+arr[0][i], arr[0][i])
+		if i == yearindex:
+			arr[0][i]= makebuttonclass('openprojectselecty', [arr[0][i]], 'btn btn-outline-primary', arr[0][i])
+		else:
+			arr[0][i]= makebutton('openprojectselecty', [arr[0][i]], arr[0][i])
 
 def tablegen2(arr, yearindex, projectindex):
-	modlinks(arr, yearindex, projectindex)
+	modbuttons2(arr, yearindex, projectindex)
 	if yearindex!=-1:
 		arr[0][yearindex] = strong(arr[0][yearindex])
 	if projectindex!=-1:
 		arr[1][projectindex] = strong(arr[1][projectindex])
 	table = modtable(arr)
-	tablegen(table)
+	table.insert(0, ['Year', 'Project Code', 'Students'])
+	tablegenstyled(table)
+	
+def tablegenn(arr, yearindex, projectindex):
+	p(arr)
 
 def tablegen3(arr, dirs, selected):
 	if arr == []:
@@ -205,7 +218,7 @@ def tablegen4(projects):
 			projectlist.append(makebutton('denyproject',  [year[0], project], 'Deny'))
 			tableform.append(projectlist)
 	if len(projects)==0:
-		tablegenstyed(tableform, error='<tr class="table-danger"> <td class="table-danger" align="center" colspan="4">No projects pending moderation</td></tr>')
+		tablegenstyled(tableform, error='<tr class="table-danger"> <td class="table-danger" align="center" colspan="4">No projects pending moderation</td></tr>', hover=True)
 	else:
 		tablegenstyed(tableform)
 	invisrefresh()

@@ -19,8 +19,11 @@ student = form.getvalue('student')
 #return html
 
 header()
-if student== None:
-	h('Adding user to '+str(project))
+if student==None:
+	p('User not specified')
+	a('http://docs.simpledl.net/modifyprojectsselect.py')
+	close()
+	exit()
 else:
 	h('Adding '+student+' to '+str(project))
 	
@@ -31,17 +34,13 @@ if year==None or project==None:
 	exit()
 	
 try:
-	if student==None:
-		formlist(getallstudents(), 'addusertoproject.py', hidden=[['year',year],['project',project]])
+	studentid=getstudentid(student)
+	if studentid=='':
+		createuser(student)
+	if addusertoproject(student, studentid, year, project):
+		p('Successfuly added '+student)
 	else:
-		studentid=getstudentid(student)
-		if studentid!='':
-			if addusertoproject(student, studentid, year, project):
-				p('Successfuly added '+student)
-			else:
-				p('Failed to add '+student)
-		else:
-			p('Invalid student number')
+		p('Failed to add '+student)
 except Exception as e:
 	p(str(traceback.format_exc()))
 close()

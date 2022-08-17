@@ -5,6 +5,7 @@ import cgi, cgitb
 import os
 import traceback
 from util.pythonHTML import *
+from util.cookiemanager import *
 
 # Create instance of FieldStorage 
 form = cgi.FieldStorage() 
@@ -16,7 +17,11 @@ projectcode  = form.getvalue('projectcode')
 #return html
 
 header()
+banner()
+setuser(getusername2())
+br()
 h('Modify Projects')		
+br()
 
 try:
 	table = []
@@ -50,9 +55,11 @@ try:
 	table.append(projects)
 	table.append(students)
 	tablegen2(table, yearindex, projectindex)
-	invisrefresh()
 	br()
-	a('http://docs.simpledl.net')
+	print(makebuttonclass('addprojectscsv', [], 'float-right btn btn-primary btn-lg mr-5', 'Upload CSV'))
+	invisrefresh()
+	
+	
 except Exception as e:
 	p(str(traceback.format_exc()))
 
