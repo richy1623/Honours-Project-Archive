@@ -19,7 +19,7 @@ student = form.getvalue('student')
 #return html
 
 header()
-smallbanner()
+bannersmall()
 if student==None:
 	s('User not specified')
 	a('http://docs.simpledl.net/modifyprojectsselect.py')
