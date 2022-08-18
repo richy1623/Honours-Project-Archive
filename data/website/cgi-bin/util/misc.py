@@ -7,8 +7,7 @@ def sendemail(recipient, subject, body):
 	recipient = recipient if isinstance(recipient, list) else [recipient]
 	#TODO remove
 	recipient = ['newhonoursarchive+'+i.split('@')[0]+'@gmail.com' for i in recipient]
-	p('Sending emails to:')
-	p(recipient)
+	p('Sending emails to: '+', '.join(recipient))
 	
 	pwd='pnwuuewsvnmybvgd'
 	

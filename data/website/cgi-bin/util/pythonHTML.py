@@ -219,18 +219,19 @@ def tablegen3(arr, dirs, selected):
 	highlightpath(selected)
 
 def tablegen4(projects):
-	tableform=[[strong('Projects'), strong('View'), strong('Approve'), strong('Deny')]]
+	tableform=[[strong('Projects'), strong('View Webpage'), strong('View Metadata'), strong('Approve'), strong('Deny')]]
 	for year in projects:
-		tableform.append([[strong(year[0]), 4]])
+		tableform.append([[strong(year[0]), 5]])
 		for project in year[1]:
 			projectlist=[]
 			projectlist.append(project)
-			projectlist.append(makebutton('viewgivenproject', [year[0], project], 'View'))
+			projectlist.append(makebutton('viewgivenproject', [year[0], project], 'Webpage'))
+			projectlist.append(makebutton('viewspecificmetadata', [year[0], project], 'Metadata'))
 			projectlist.append(makebutton('approveproject', [year[0], project], 'Approve'))
 			projectlist.append(makebutton('denyproject',  [year[0], project], 'Deny'))
 			tableform.append(projectlist)
 	if len(projects)==0:
-		tablegenstyled(tableform, error='<tr class="table-danger"> <td class="table-danger" align="center" colspan="4">No projects pending moderation</td></tr>', hover=True)
+		tablegenstyled(tableform, error='<tr class="table-danger"> <td class="table-danger" align="center" colspan="5">No projects pending moderation</td></tr>', hover=True)
 	else:
 		tablegenstyled(tableform)
 	invisrefresh()
