@@ -151,3 +151,10 @@ function createprojectmanual(){
 	window.open("createproject.py", "Add Project Manual", "width="+width+",height="+height);
 	showrefresh();
 }
+function viewmetadata(){
+	viewspecificmetadata(year, projectcode);
+}
+function viewspecificmetadata(year, projectcode){
+	window.open("showmetadata.py?year="+year+"&projectcode="+projectcode, "View Metadata", "width="+width+",height="+height);
+}	
+

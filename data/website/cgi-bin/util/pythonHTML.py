@@ -2,7 +2,7 @@ from datetime import date
 
 def banner():
 	print('<nav class="navbar navbar-expand-md navbar-dark bg-dark">')
-	print('<a class="navbar-brand" href="../index.html"><img id="logo-small" src="../images/logo-small.png" />Univercity of Cape Town - Computer Science Honours Achive</a>')
+	print('<a class="navbar-brand" href="../index.html"><img id="logo-small" src="../images/logo-small.png" />University of Cape Town - Computer Science Honours Archive</a>')
 	print('<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">')
 	print('<span class="navbar-toggler-icon"></span>')
 	print('</button>')
@@ -245,6 +245,7 @@ def projectmenu():
 	print(makebutton('renamefile', [], 'Rename'))
 	br()
 	print(makebuttonclass('viewproject', [], 'btn btn-primary', 'View Project'))
+	print(makebuttonclass('viewmetadata', [], 'btn btn-primary', 'View Metadata'))
 	print(makebuttonclass('submitfile', [], 'btn btn-primary', 'Submit'))
 	print('</div>')
 	invisrefresh()
@@ -314,3 +315,15 @@ def createprojectform():
 
 def displayprojectapprovalpage(projects):
 	tablegen4(projects)
+	
+def getnamefield(line):
+	name = line[line.index('<')+1:line.index('>')]
+	field = line[line.index('>')+1:line.rindex('<')]
+	return [name, field]
+	
+def printmetadata(metadata, fields):
+	for index in range(len(metadata)):
+		metadata[index] = getnamefield(metadata[index])
+	for line in metadata:
+		if line[0] in fields:
+			p(line[0].capitalize()+': '+strong(line[1]))

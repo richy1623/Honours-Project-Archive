@@ -362,3 +362,15 @@ def denyproject(year, projectname, reason):
 		reason = 'No Reason Provided'
 	result = sendemail(emails, 'Request to add '+projectname+' - DECLINED', 'Your project has been rejected from the archive.\nReason provided: '+reason)
 	return result
+
+def viewmetadata(year, projectcode):
+	try:
+		f = open('../../db/project_data/'+year+'/'+projectcode+'/metadata.xml', 'r')
+		metadata = f.readlines()
+		f.close()
+		printmetadata(metadata, ['title', 'description', 'date', 'student', 'supervisor'])
+		return True
+	except:
+		p(traceback.format_exc())
+		return False
+		
