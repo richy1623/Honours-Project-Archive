@@ -290,7 +290,7 @@ def createmetadataform(projectcode, year):
 	print('<p>*Optional* Thumbnail Image for Project: <input type = "file" name = "image" accept="image/jpg" /></p>')
 	print('<input type="hidden" name="year" value="'+year+'" />')
 	print('<input type="hidden" name="projectcode" value="'+projectcode+'" />')
-	print('<input type = "submit" value = "Upload" />')
+	print('<input type = "submit" value = "Submit" />')
 	print('</form>')
 
 def createprojectform():
