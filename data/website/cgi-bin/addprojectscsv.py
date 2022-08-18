@@ -24,29 +24,30 @@ def printerror(error):
 #return html
 
 header()
-h('Adding projects with CSV upload')
+bannersmall()
+smallh('Adding projects with CSV upload')
 
 
 
 #Get file to upload
 try:
 	if 'uploadfile' not in form or form['uploadfile'].filename=='':
-		p('Please upload a file below')
+		smallp('Please upload a file below')
 		createuploadformcsv(year)
 	elif year==None:
-		p('Please enter the year')
+		smallp('Please enter the year')
 		createuploadformcsv(year)
 	else:
 		uploadfile = form['uploadfile']
-		p('Recieved file: '+strong(uploadfile.filename))
+		smallp('Recieved file: '+strong(uploadfile.filename))
 		try:
 			result = createprojectscsv(uploadfile, year)
 			if result:
-				p('Upload Successful')
+				smallp('Upload Successful')
 			else:
-				p('Upload Failed')
+				smallp('Upload Failed')
 		except:
-			p(traceback.format_exc())
+			smallp(traceback.format_exc())
 except Exception as e:
-	p(e)
+	smallp(e)
 close()

@@ -25,11 +25,14 @@ for i in range(4):
 #return html
 
 header()
-h('Attempting to create project...')		
+bannersmall()
+h('Create Project')		
+p('Enter each Project and add the students in the project team')
 
 if projectname==None or projectcode==None or year==None:
-	h('Please fill in all project fields')
-	a('http://docs.simpledl.net/createprojects.html')
+	if not (projectname==None and projectcode==None and year==None):
+		h('Please fill in all project fields', level=2)
+	createprojectform()
 	close()
 	exit()
 
@@ -38,8 +41,6 @@ if success:
 	p('Project: ' + projectname + ' has been added successfully.')
 else:
 	p('Project: ' + projectname + ' was unable to be added.')
-
-a('http://docs.simpledl.net/')
 
 close()
 

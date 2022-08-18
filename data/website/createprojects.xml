@@ -7,40 +7,30 @@
     <p>Enter each Project and add the students in the project team.</p>
 
     <form name="projectform" class="projectformclass" method="post" action="cgi-bin/createproject.py">
-
       <h2>Project Details</h2>
-      <span class="">Project Name:
-      </span>
-      <input class="textbox" name="projectname" type="text" size="60"/>
+      <span class="">Project Name:</span>
+      <input class="textbox" name="projectname" type="text"/>
       <br/>
-      <span class="">Project Code:
-      </span>
-      <input class="textbox" name="projectcode" type="text" size="60"/>
+      <span class="">Project Code:</span>
+      <input class="textbox" name="projectcode" type="text"/>
       <br/>
-      <span class="">Project Year:
-      </span>
-      <input class="textbox" name="projectyear" type="text" size="60"/>
+      <span class="">Project Year:</span>
+      <input class="textbox" name="projectyear" type="text"/>
       <br/>
       <hr/>
       <h2>Student Details</h2>
-      <span class="">Student Number 1:
-      </span>
-      <input class="textbox" name="student1" type="text" size="60"/>
+      <span class="">Student Number 1:</span>
+      <input class="textbox" name="student1" type="text"/>
       <br/>
-      <span class="">Student Number 2:
-      </span>
-      <input class="textbox" name="student2" type="text" size="60"/>
+      <span class="">Student Number 2:</span>
+      <input class="textbox" name="student2" type="text"/>
       <br/>
-      <span class="">Student Number 3:
-      </span>
-      <input class="textbox" name="student3" type="text" size="60"/>
+      <span class="">Student Number 3:</span>
+      <input class="textbox" name="student3" type="text"/>
       <br/>
-      <span class="">Student Number 4:
-      </span>
-      <input class="textbox" name="student4" type="text" size="60"/>
-
+      <span class="">Student Number 4:</span>
+      <input class="textbox" name="student4" type="text"/>
       <button class="" type="submit">Submit</button>
-
     </form>
 
     <hr/>

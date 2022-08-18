@@ -8,6 +8,7 @@ import shutil
 
 usrdir = '../users/'
 projdir = '../projects/'
+publicdir = '../../public_html/'
 dbproj = '../../db/projects/'
 dbprojdata = '../../db/project_data/'
 
@@ -23,7 +24,14 @@ for filename in os.listdir(dbprojdata):
 
 if os.path.exists(dbproj):
 	for filename in os.listdir(dbproj):
-		shutil.rmtree(dbproj+filename) 
+		shutil.rmtree(dbproj+filename)
+		 
+if os.path.exists(publicdir+'collection/2020'):
+	shutil.rmtree(publicdir+'collection/2020')
+			 
+if os.path.exists(publicdir+'metadata/2020'):
+	os.remove(publicdir+'metadata/index.xml')
+	shutil.rmtree(publicdir+'metadata/2020')
 
 f = open(usrdir+'../../db/counter/users.counter', 'w')
 f.write('10')

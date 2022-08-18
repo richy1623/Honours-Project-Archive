@@ -18,7 +18,8 @@ project  = form.getvalue('project')
 #return html
 
 header()
-h('Deleting User... '+str(student))
+bannersmall()
+h('Deleting User '+str(student))
 	
 if student==None or year==None or project==None:
 	h('Student not specified')

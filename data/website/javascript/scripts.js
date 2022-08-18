@@ -98,8 +98,8 @@ function viewgivenproject(year, projectcode){
 	window.open("view/"+year+"/"+projectcode+"/"+projectcode+".zip/", "Project View");
 }
 function viewproject(){
-	window.open("zipproject.py?year="+year+"&projectcode="+projectcode, "Project Zipping").close();
-	window.open("view/"+year+"/"+projectcode+"/"+projectcode+".zip/", "Project View");
+	window.open("zipproject.py?year="+year+"&projectcode="+projectcode, "Project Zipping");
+	//window.open("view/"+year+"/"+projectcode+"/"+projectcode+".zip/", "Project View");
 }
 function submitfile(){
 	if (window.confirm("Are you ready to submit your project for moderation?")) {
@@ -144,6 +144,10 @@ function openprojectselecty(year){
 	window.open("modifyprojectsselect.py?year="+year, "_self");
 }
 function addprojectscsv(){
-	window.open("addprojectscsv.py?", "Add Projects with CSV", "width="+width+",height="+height);
+	window.open("addprojectscsv.py", "Add Projects with CSV", "width="+width+",height="+height);
+	showrefresh();
+}
+function createprojectmanual(){
+	window.open("createproject.py", "Add Project Manual", "width="+width+",height="+height);
 	showrefresh();
 }

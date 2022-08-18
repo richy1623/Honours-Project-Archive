@@ -25,6 +25,7 @@ def printerror(error):
 #return html
 
 header()
+bannersmall()
 h('Adding file to Project')
 
 if projectcode==None or year==None:

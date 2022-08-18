@@ -26,7 +26,8 @@ def printerror(error):
 #return html
 
 header()
-h('Adding file to Project')
+bannersmall()
+h('Zipping to Project')
 
 if projectcode==None or year==None:
 	printerror('File not specified')
@@ -35,6 +36,7 @@ if projectcode==None or year==None:
 try:
 	if zipproject(year, projectcode):
 		p('Successfully zipped project')
+		script('window.open("view/'+year+'/'+projectcode+'/'+projectcode+'.zip/", "Project View");this.close();')
 	else:
 		p('Failed to zip project')
 except Exception as e:

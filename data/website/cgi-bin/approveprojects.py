@@ -24,15 +24,18 @@ reason = form.getvalue('reason')
 year = form.getvalue('year')
 
 #return output
-header()
-banner()
-setuser(getusername2())
-h('Manage Projects')		
-br()
+header()		
 
 if projectapprove==None and projectdeny==None:
+	banner()
+	setuser(getusername2())
+	br()
+	h('Manage Projects')
 	displayprojectapprovalpage(getpendingprojects())
 else:
+	bannersmall()
+	br()
+	h('Manage Projects')
 	if year==None:
 		printerror('Year is missing. Please try again')
 	if projectapprove!=None:

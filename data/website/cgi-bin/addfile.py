@@ -20,14 +20,15 @@ filename  = form.getvalue('filename')
 
 #Helper functions
 def printerror(error):
-	p(error)
+	smallp(error)
 	close()
 	exit()
 
 #return html
 
 header()
-h('Adding file to Project')
+bannersmall()
+smallh('Adding file to Project')
 
 if filename==None or year==None:
 	printerror('File not specified')
@@ -44,19 +45,19 @@ p('Inserting file into directory: '+strong(path+'/'+filename))
 #Get file to upload
 try:
 	if 'uploadfile' not in form or form['uploadfile'].filename=='':
-		p('Please upload a file below')
+		smallp('Please upload a file below')
 		createuploadform(['year', 'path', 'filename'],[year, path, filename])
 	else:
 		uploadfile = form['uploadfile']
-		p('Recieved file: '+strong(uploadfile.filename))
+		smallp('Recieved file: '+strong(uploadfile.filename))
 		unzip  = form.getvalue('unzip')
 		try:
 			if addfiletoproject(year, path, filename, uploadfile, unzip!=None):
-				p('Upload Successful')
+				smallp('Upload Successful')
 			else:
-				p('Upload Failed')
+				smallp('Upload Failed')
 		except:
-			p(traceback.format_exc())
+			smallp(traceback.format_exc())
 except Exception as e:
-	p(e)
+	smallp(e)
 close()

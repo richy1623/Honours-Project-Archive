@@ -1,3 +1,5 @@
+from datetime import date
+
 def banner():
 	print('<nav class="navbar navbar-expand-md navbar-dark bg-dark">')
 	print('<a class="navbar-brand" href="../index.html"><img id="logo-small" src="../images/logo-small.png" />Univercity of Cape Town - Computer Science Honours Achive</a>')
@@ -13,9 +15,16 @@ def banner():
 	print('<li class="nav-item"><a class="nav-link" href="../users.html">Authors</a></li>')
 	print('<li class="nav-item"><a class="nav-link" href="../search.html">Search</a></li>')
 	print('<li class="nav-item"><a class="nav-link" href="../contact.html">Contact Us</a></li>')
-	print('<li class="nav-item"><a class="nav-link" href="cgi-bin/manageproject.py"><strong>Manage Project</strong></a></li>')
+	print('<li class="nav-item"><a class="nav-link" href="/cgi-bin/manageproject.py"><strong>Manage Project</strong></a></li>')
 	print('</ul>')
 	print('</div>')
+	print('</nav>')
+
+def bannersmall():
+	print('<nav class="navbar navbar-dark bg-dark">')
+	print('<img id="logo-small" style="height: 75px" src="../images/logo-small.png" />')
+	print('<span class="navbar-brand float-right mr-5">Computer Science Honours Archive</span>')
+	print('<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">')
 	print('</nav>')
 
 def setuser(user):
@@ -49,8 +58,14 @@ def close():
 	print("</body>")
 	print("</html>")
 
+def smallp(string):
+	print('<p class="smalltext">'+str(string)+'</p>')
+
 def p(string):
 	print('<p>'+str(string)+'</p>')
+
+def smallh(string, level=1):
+	print('<h'+str(level)+' class="smalltext">'+str(string)+'</h'+str(level)+'>')
 
 def h(string, level=1):
 	print('<h'+str(level)+'>'+str(string)+'</h'+str(level)+'>')
@@ -193,9 +208,6 @@ def tablegen2(arr, yearindex, projectindex):
 	table = modtable(arr)
 	table.insert(0, ['Year', 'Project Code', 'Students'])
 	tablegenstyled(table)
-	
-def tablegenn(arr, yearindex, projectindex):
-	p(arr)
 
 def tablegen3(arr, dirs, selected):
 	if arr == []:
@@ -220,7 +232,7 @@ def tablegen4(projects):
 	if len(projects)==0:
 		tablegenstyled(tableform, error='<tr class="table-danger"> <td class="table-danger" align="center" colspan="4">No projects pending moderation</td></tr>', hover=True)
 	else:
-		tablegenstyed(tableform)
+		tablegenstyled(tableform)
 	invisrefresh()
 	
 def projectmenu():
@@ -240,9 +252,9 @@ def projectmenu():
 
 def createuploadformcsv(year):
 	print('<form enctype = "multipart/form-data" action = "addprojectscsv.py" method = "post">')
-	print('<p>Year: <input type = "text" name = "year" /></p>')
-	print('<p>Upload File: <input type = "file" name = "uploadfile" /></p>')
-	print('<p><input type = "submit" value = "Upload" /></p>')
+	print('<p>Year: <input class="form-control" type = "text" name = "year" placeholder="'+str(date.today().year)+'" required /></p>')
+	print('<p>Upload File: <input type="file" class="form-control-file"  name="uploadfile" required /></p>')
+	print('<p><input type="submit" class="btn btn-primary" value = "Upload" /></p>')
 	print('</form>')
 	
 def createuploadform(filecontextnames, filecontextvalues):
@@ -278,6 +290,27 @@ def createmetadataform(projectcode, year):
 	print('<input type="hidden" name="projectcode" value="'+projectcode+'" />')
 	print('<input type = "submit" value = "Upload" />')
 	print('</form>')
-	
+
+def createprojectform():
+	print('<form name="projectform" class="projectformclass" method="post" action="createproject.py">')
+	print('<h2>Project Details</h2>')
+	print('<span class="">Project Name:</span>')
+	print('<input class="textbox" name="projectname" type="text"/>')
+	print('<br/>')
+	print('<span class="">Project Code:</span>')
+	print('<input class="textbox" name="projectcode" type="text"/>')
+	print('<br/>')
+	print('<span class="">Project Year:</span>')
+	print('<input class="textbox" name="projectyear" type="text"/>')
+	print('<br/>')
+	print('<hr/>')
+	print('<h2>Student Details</h2>')
+	for i in range(1,5):
+		print('<span class="">Student Number '+str(i)+':</span>')
+		print('<input class="textbox" name="student'+str(i)+'" type="text"/>')
+		print('<br/>')
+	print('<button class="" type="submit">Submit</button>')
+	print('</form>')
+
 def displayprojectapprovalpage(projects):
 	tablegen4(projects)

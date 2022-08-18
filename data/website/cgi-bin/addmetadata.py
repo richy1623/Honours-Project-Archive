@@ -30,14 +30,15 @@ for i in range(1,5):
 
 #Helper functions
 def printerror(error):
-	p(error)
+	smallp(error)
 	close()
 	exit()
 
 #return html
 
 header()
-h('Adding Metadata to Project')
+bannersmall()
+smallh('Adding Metadata to Project')
 
 if year==None:
 	printerror('Year not specified')
@@ -59,13 +60,13 @@ p('Adding Metadata to project '+strong(projectcode))
 try:
 	if title==None or supervisor==None or students==[] or description==None:
 		if not (title==None and supervisor==None and students==[] and description==None):
-			p('Title, Supervisor, a description and one or more students are required')
+			smallp('Title, Supervisor, a description and one or more students are required')
 		createmetadataform(projectcode, year)
 	else:
 		if addmetadata(year, projectcode, title, students, supervisor, description, image):
-			p('Metadata added Successfuly')
+			smallp('Metadata added Successfuly')
 		else:
-			p('Failed to add Metadata')
+			smallp('Failed to add Metadata')
 except:
-	p(traceback.format_exc())
+	smallp(traceback.format_exc())
 close()

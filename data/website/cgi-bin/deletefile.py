@@ -18,11 +18,11 @@ filename  = form.getvalue('filename')
 #return html
 
 header()
+bannersmall()
 h('Deleting File from Project')
 
 if filename==None or year==None:
 	h('File not specified')
-	a('http://docs.simpledl.net/manageproject.py')
 	close()
 	exit()
 

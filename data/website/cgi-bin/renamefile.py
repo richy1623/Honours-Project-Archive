@@ -19,6 +19,7 @@ newfilename  = form.getvalue('newfilename')
 #return html
 
 header()
+bannersmall()
 h('Renaming File')
 
 if oldfilename==None or year==None:

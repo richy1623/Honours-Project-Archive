@@ -57,6 +57,7 @@ try:
 	tablegen2(table, yearindex, projectindex)
 	br()
 	print(makebuttonclass('addprojectscsv', [], 'float-right btn btn-primary btn-lg mr-5', 'Upload CSV'))
+	print(makebuttonclass('createprojectmanual', [], 'float-right btn btn-primary btn-lg mr-5', 'Add New Project'))
 	invisrefresh()
 	
 	
