@@ -41,7 +41,7 @@ def createproject(projectname, projectcode, year, students):
 
 		for line in f:
 			if line.split(',')[0]==(projectcode+year):
-				h('Project Already Exists')
+				p('Project '+projectcode+' Already Exists')
 				return False
 		f.close()
 		
@@ -200,9 +200,10 @@ def addmetadata(year, projectcode, title, students, supervisor, description, ima
 		if image==None:
 			try:
 				shutil.copy(usrdir+'../res/uct-logo.jpg', prjdir+'../project_data/'+year+'/'+projectcode)
+				os.rename(prjdir+'../project_data/'+year+'/'+projectcode+'/uct-logo.jpg', prjdir+'../project_data/'+year+'/'+projectcode+'/'+projectcode+'.jpg')
 			except:
 				p(traceback.format_exc())
-			f.write('      <file>'+year+'/'+projectcode+'/uct-logo.jpg</file>\n')
+			f.write('      <file>'+year+'/'+projectcode+'/'+projectcode+'.jpg'+'</file>\n')
 		else:	
 			try:
 				fn = os.path.basename(image.filename)
@@ -280,15 +281,16 @@ def submitmoderation(year, projectcode):
 		
 def approveproject(year, projectname):
 	emails = getusersemailsinproject(year, projectname)
-	#TODO move files
-	#Handle Metadata Moving and Creation
 	if not os.path.exists('../metadata/'+year):
 		try:
 			os.mkdir('../metadata/'+year)
 			f = open('../metadata/'+year+'/index.xml', 'w')
 			f.write('<collection>\n   <level>2</level>\n</collection>')
 			f.close()
-			
+			if not os.path.exists('../metadata/index.xml'):
+				f = open('../metadata/index.xml', 'w')
+				f.write('<collection>\n    <level>1</level>\n</collection>')
+				f.close()
 			f = open('../metadata/index.xml', 'r')
 			lines = f.readlines()
 			f.close()

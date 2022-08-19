@@ -102,7 +102,7 @@
 			<li class="nav-item"><a class="nav-link" href="{concat ($basedir, 'users.html')}">Authors</a></li>
 			<li class="nav-item"><a class="nav-link" href="{concat ($basedir, 'search.html')}">Search</a></li>
 			<li class="nav-item"><a class="nav-link" href="{concat ($basedir, 'contact.html')}">Contact Us</a></li>
-			<li class="nav-item"><a class="nav-link" href="{concat ($basedir, 'cgi-bin/manageproject.py')}"><strong>Manage Project</strong></a></li>
+			<li class="nav-item"><a class="nav-link" href="{concat ($basedir, 'cgi-bin/manageproject.py')}"><strong>Upload/Manage Project</strong></a></li>
         </ul>
       </div>
     </nav>

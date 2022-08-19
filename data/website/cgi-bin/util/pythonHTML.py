@@ -15,7 +15,7 @@ def banner():
 	print('<li class="nav-item"><a class="nav-link" href="../users.html">Authors</a></li>')
 	print('<li class="nav-item"><a class="nav-link" href="../search.html">Search</a></li>')
 	print('<li class="nav-item"><a class="nav-link" href="../contact.html">Contact Us</a></li>')
-	print('<li class="nav-item"><a class="nav-link" href="/cgi-bin/manageproject.py"><strong>Manage Project</strong></a></li>')
+	print('<li class="nav-item"><a class="nav-link" href="/cgi-bin/manageproject.py"><strong>Upload/Manage Project</strong></a></li>')
 	print('</ul>')
 	print('</div>')
 	print('</nav>')
