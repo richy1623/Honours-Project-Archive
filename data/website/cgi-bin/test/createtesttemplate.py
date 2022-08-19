@@ -35,13 +35,14 @@ from test import cleardl, filldl
 for line in filetotest:
 	if line[:3]=='def':
 		print('\tcreating method for '+line[4:line.index('(')])
-		testfile.write('\n\ndef test_'+line[4:line.index('(')]+'(unittest.TestCase):\n')
+		testfile.write('\nclass test_'+line[4:line.index('(')]+'(unittest.TestCase):\n')
 		testfile.write('\t@classmethod\n')
 		testfile.write('\tdef setUpClass(cls):\n')
 		testfile.write('\t\t#setup any data structures for class\n\t\tTrue\n\n')
 		
 		testfile.write('\tdef test_normal_case(self):\n')
 		testfile.write('\t\t#code goes here\n')
+		testfile.write('\t\tself.assertTrue(True)\n')
 
 print('finished writing to file '+testfile.name)
 filetotest.close()
