@@ -69,7 +69,7 @@ def deleteuser(studentnumber, year, project):
 		return False
 	if userid==-1:
 		return True
-	for filename in ['.name.xml', '.email.xml', '.password.xml', '.permissions.xml', 'profile.xml', '.token.txt']:
+	for filename in ['.name.xml', '.email.xml', '.password.xml', '.permissions.xml', '.profile.xml', '.token.txt']:
 		if os.path.exists(usrdir+userid+filename):
 			os.remove(usrdir+userid+filename)
 	return True
