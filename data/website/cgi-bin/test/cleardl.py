@@ -21,11 +21,13 @@ def clearusers():
 	f.close()
 
 def clearprojects():
-	for filename in os.listdir(projdir):
-		shutil.rmtree(projdir+filename) 
+	if os.path.exists(projdir):
+		for filename in os.listdir(projdir):
+			shutil.rmtree(projdir+filename) 
 		
-	for filename in os.listdir(dbprojdata):
-		shutil.rmtree(dbprojdata+filename) 
+	if os.path.exists(dbprojdata):
+		for filename in os.listdir(dbprojdata):
+			shutil.rmtree(dbprojdata+filename) 
 
 	if os.path.exists(dbproj):
 		for filename in os.listdir(dbproj):

@@ -12,15 +12,18 @@ publicdir = '../../public_html/'
 dbproj = '../../db/projects/'
 dbprojdata = '../../db/project_data/'
 
-for filename in os.listdir(usrdir):
-	if filename.split('.')[0]!='1':
-		os.remove(usrdir+filename)
-
-for filename in os.listdir(projdir):
-	shutil.rmtree(projdir+filename) 
-	
-for filename in os.listdir(dbprojdata):
-	shutil.rmtree(dbprojdata+filename) 
+if os.path.exists(usrdir):
+	for filename in os.listdir(usrdir):
+		if filename.split('.')[0]!='1':
+			os.remove(usrdir+filename)
+		
+if os.path.exists(projdir):
+	for filename in os.listdir(projdir):
+		shutil.rmtree(projdir+filename)
+	 
+if os.path.exists(dbprojdata):
+	for filename in os.listdir(dbprojdata):
+		shutil.rmtree(dbprojdata+filename) 
 
 if os.path.exists(dbproj):
 	for filename in os.listdir(dbproj):

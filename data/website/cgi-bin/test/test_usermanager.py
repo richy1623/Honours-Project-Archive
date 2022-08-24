@@ -10,6 +10,7 @@ if sys.path[0].split('/')[-1]=='test':
 from test import cleardl, filldl
 
 from util.usermanager import *
+from util.projectmanager import createproject, addusertoproject
 
 class test_createuser(unittest.TestCase):
 	@classmethod
@@ -36,6 +37,11 @@ class test_createuser(unittest.TestCase):
 		name = f.readline()
 		f.close()
 		self.assertEqual(name, '<name>PTRRIC011</name>', "incorrect name")
+		
+		f = open(usrdir+counter+'.permissions.xml', 'r')
+		permissionlines = f.readlines()
+		f.close()
+		self.assertEqual(permissionlines, [], "incorrect permissions")
 
 class test_deleteuser(unittest.TestCase):
 	@classmethod
@@ -73,52 +79,85 @@ class test_deleteuser(unittest.TestCase):
 class test_getstudentid(unittest.TestCase):
 	@classmethod
 	def setUpClass(cls):
-		#setup any data structures for class
-		True
+		cleardl.clearusers()
 
 	def test_normal_case(self):
-		#code goes here
-		self.assertTrue(True)
+		counter = createuser('PTRRIC011')
+		self.assertNotEqual(counter, '', 'Failed to create user')
+		
+		self.assertEqual(getstudentid('PTRRIC011'), counter, 'Incorrect student ID returned')
+		
+	def test_user_doesnt_exist(self):
+		self.assertEqual(getstudentid('NoSuchStudent'), '', 'Incorrect student ID returned')
 
 class test_getstudentemail(unittest.TestCase):
 	@classmethod
 	def setUpClass(cls):
-		#setup any data structures for class
-		True
+		cleardl.clearusers()
 
 	def test_normal_case(self):
 		#code goes here
-		self.assertTrue(True)
+		counter = createuser('PTRRIC011')
+		self.assertNotEqual(counter, '', 'Failed to create user')
+		
+		result = getstudentemail('PTRRIC011')
+		self.assertEqual(result, 'PTRRIC011@myuct.ac.za', 'Incorrect student email returned')
+		
+	def test_user_doesnt_exist(self):
+		self.assertEqual(getstudentemail('NoSuchStudent'), '', 'Incorrect student email returned')
+
 
 class test_getstudentname(unittest.TestCase):
 	@classmethod
 	def setUpClass(cls):
-		#setup any data structures for class
-		True
+		cleardl.clearusers()
 
 	def test_normal_case(self):
-		#code goes here
-		self.assertTrue(True)
-
+		counter = createuser('PTRRIC011')
+		self.assertNotEqual(counter, '', 'Failed to create user')
+		
+		result = getstudentname(counter)
+		self.assertEqual(result, 'PTRRIC011', 'Incorrect student name returned')
+		
+	def test_user_doesnt_exist(self):
+		self.assertEqual(getstudentname('NoSuchStudent'), '', 'Incorrect student name returned')
+		
 class test_getallstudents(unittest.TestCase):
 	@classmethod
 	def setUpClass(cls):
-		#setup any data structures for class
-		True
+		cleardl.clearusers()
 
 	def test_normal_case(self):
-		#code goes here
-		self.assertTrue(True)
+		counter = createuser('PTRRIC011')
+		self.assertNotEqual(counter, '', 'Failed to create user')
+		counter = createuser('LVZMON001')
+		self.assertNotEqual(counter, '', 'Failed to create user')
+		counter = createuser('NGLTAO001')
+		self.assertNotEqual(counter, '', 'Failed to create user')
+		
+		result = getallstudents()
+		if 'Admin' in result:
+			result.remove('Admin')
+		
+		self.assertEqual(result, ['LVZMON001', 'NGLTAO001', 'PTRRIC011'], 'Incorrect student list returned')
+		
+		
 
 class test_getYearAndProject(unittest.TestCase):
 	@classmethod
 	def setUpClass(cls):
-		#setup any data structures for class
-		True
+		cleardl.main()
 
-	def test_normal_case(self):
-		#code goes here
-		self.assertTrue(True)
+	def test_normal_case(self):		
+		project = createproject('PROJECTS', 'PROJECTS', '2022', ['PTRRIC011'])		
+		self.assertTrue(project, 'Failed to create project')
+		
+		studentid = getstudentid('PTRRIC011')
+		self.assertNotEqual(studentid, '', 'Unable to find student')
+		
+		(resultyear, resultproject) = getYearAndProject(studentid)
+		self.assertEqual( resultyear, '2022' , 'Failed to return year given student ID')
+		self.assertEqual( resultproject, 'PROJECTS', 'Failed to return project given student ID')
 
 class test_getYearAndProject2(unittest.TestCase):
 	@classmethod

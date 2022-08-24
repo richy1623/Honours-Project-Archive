@@ -28,6 +28,9 @@ def createuser(studentnumber):
 			f.write('<name>'+studentnumber+'</name>')
 			f.close()
 			
+			f = open(usrdir+counter+'.permissions.xml', 'a')
+			f.close()
+			
 			p('User: ' + studentnumber + ' has been created successfully.')
 			return counter
 		except IOError as err:
@@ -105,19 +108,18 @@ def getstudentemail(studentnumber):
 			print(e)
 	return ''
 		
-def getstudentname(studentnumber):
-	sid = getstudentid(studentnumber)
-	if sid=='':
-		return 'null'
-	if os.path.exists(usrdir+sid+'.name.xml'):
+def getstudentname(userid):
+	if userid == '':
+		return ''
+	if os.path.exists(usrdir+userid+'.name.xml'):
 		try:
-			f = open(usrdir+sid+'.name.xml', 'r')
+			f = open(usrdir+userid+'.name.xml', 'r')
 			name = f.readline()[6:-7]
 			f.close()
 			return name
 		except Exception as e:
 			print(e)
-	return sid
+	return ''
 
 def getallstudents():
 	students=[]
@@ -143,7 +145,7 @@ def getYearAndProject(userid):
 		project=f.readline().strip()
 		year=f.readline().strip()
 		f.close()
-		return (project[6:-7], year[6:-7])
+		return (year[6:-7], project[6:-7])
 	except:
 		p('Cannot find user permission file')
 		return ('','')
