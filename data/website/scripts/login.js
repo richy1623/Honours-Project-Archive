@@ -92,7 +92,9 @@ function doLogin ()
    adminLink = "";
    if (administrator == "1")
    {
-      adminLink = "<a class=\"dropdown-item\" href=\"/cgi-bin/manage.pl\"><p class=\"dropdown-item-p\">Admin</p></a> "
+      adminLink = "<a class=\"dropdown-item\" href=\"/cgi-bin/modifyprojectsselect.py\"><p class=\"dropdown-item-p\">(Admin) Add New Projects</p></a> "+
+      	"<a class=\"dropdown-item\" href=\"/cgi-bin/approveprojects.py\"><p class=\"dropdown-item-p\">(Admin) Approve Projects</p></a> "+
+      	"<a class=\"dropdown-item\" href=\"/cgi-bin/manage.pl\"><p class=\"dropdown-item-p\">(Admin) Archive Management</p></a> ";
    }
    document.getElementById ("login").innerHTML = 
       "<div class=\"dropdown show\">"+
@@ -101,9 +103,9 @@ function doLogin ()
 		  "</a>"+
 
 		  "<div class=\"dropdown-menu\" aria-labelledby=\"dropdownMenuLink\">"+
+			adminLink+
 			"<a class=\"dropdown-item\" href=\"/cgi-bin/editprofile.pl?userID="+userID+"\"><p class=\"dropdown-item-p\">Edit Profile</p></a>"+
 			"<a class=\"dropdown-item\" href=\"#\" onClick=\"doLogout (); return false\"><p class=\"dropdown-item-p\">Logout</p></a>"+
-			adminLink+
 		  "</div>"+
 	  "</div>"
    if (document.getElementById("addcomment"))
