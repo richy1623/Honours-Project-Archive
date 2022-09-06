@@ -11,6 +11,15 @@ prjdir = '../../db/projects/'
 
 def addusertoproject(studentnumber, studentid, year, project):
 	try:
+		year = str(year)
+		
+		if not os.path.exists(usrdir+'../projects/'+year+'/'+project+'.txt'):
+			p('Project does not exist')
+			return False
+		if studentid=='':
+			p('No student ID given for student '+ str(studentnumber))
+			return False
+			
 		f = open(usrdir+'../projects/'+year+'/'+project+'.txt', 'r')
 		for line in f.readlines():
 			if line.strip()==studentnumber:
@@ -36,17 +45,18 @@ def createproject(projectname, projectcode, year, students):
 		if not os.path.exists(usrdir+'../projects/'):
 			os.mkdir(usrdir+'../projects/')
 		
-		f = open('../../data/spreadsheets/collections.csv', 'r')
-		f.readline()
-
-		for line in f:
-			if line.split(',')[0]==(projectcode+year):
-				p('Project '+projectcode+' Already Exists')
-				return False
-		f.close()
+		#f = open('../../data/spreadsheets/collections.csv', 'r')
+		#f.readline()
+		#
+		#for line in f:
+		#	if line.split(',')[0]==(projectcode+year):
+		#		p('Project '+projectcode+' Already Exists')
+		#		return False
+		#f.close()
+		#
+		#if not os.path.exists('../../data/spreadsheets/'+year):
+		#	os.mkdir('../../data/spreadsheets/'+year)
 		
-		if not os.path.exists('../../data/spreadsheets/'+year):
-			os.mkdir('../../data/spreadsheets/'+year)
 		if not os.path.exists('../../data/projects/'+year):
 			os.mkdir('../../data/projects/'+year)
 		if not os.path.exists(prjdir+year+'/'+projectcode):
@@ -57,9 +67,9 @@ def createproject(projectname, projectcode, year, students):
 		f = open(usrdir+'../projects/'+year+'/'+projectcode+'.txt', 'x')
 		f.close()
 		
-		f= open('../../data/spreadsheets/collections.csv', 'a')
-		f.write(projectcode+str(year)+',\n')
-		f.close()
+		#f= open('../../data/spreadsheets/collections.csv', 'a')
+		#f.write(projectcode+str(year)+',\n')
+		#f.close()
 		
 		for student in students:
 			studentid = createuser(student)
@@ -70,12 +80,16 @@ def createproject(projectname, projectcode, year, students):
 		h('Unable to find file:')
 		p(traceback.format_exc())
 		return False
-
-def getdirarr(col, path):
-	dircol = []
-	for c in col:
-		dircol.append(os.path.isdir(path+'/'+c))
-	return dircol
+		
+#checks through a list of file names to see which files are directories
+#returns a list of booleans for which file names are directories
+def getdirarr(files, path):
+	if not os.path.exists(path):
+		return [False for i in files]
+	dirfiles = []
+	for f in files:
+		dirfiles.append(os.path.isdir(path+'/'+ f))
+	return dirfiles
 	
 def displayprojectfiles(year, project, openpath):
 	try:
@@ -108,6 +122,8 @@ def displayprojectfiles(year, project, openpath):
 		p(traceback.format_exc())
 
 def deletefile(year, path, filename):
+	year = str(year)
+	filename = str(filename)
 	try:
 		if os.path.exists(prjdir+year+'/'+path+'/'+filename):
 			if os.path.isdir(prjdir+year+'/'+path+'/'+filename):
