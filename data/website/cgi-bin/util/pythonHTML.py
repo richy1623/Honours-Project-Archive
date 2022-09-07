@@ -174,6 +174,7 @@ def highlightpath(selected)	:
 
 def modbuttons(arr, dirs, selected):
 	path=[]
+	scripttocall=''
 	for i in range(len(arr)):
 		if i<len(selected):
 			path.append(arr[i][selected[i]])
@@ -181,6 +182,9 @@ def modbuttons(arr, dirs, selected):
 			foldericon = ' <i class="fa fa-folder"></i>' if len(dirs)>0 and dirs[i][index] else ''
 			identity='button'+str(i)+str(index) #to set the id html property
 			arr[i][index] = makebuttonidentity('selectfile', [identity, '/'.join(path[:i])], arr[i][index]+foldericon, identity)
+			if i==len(arr)-2 and index==selected[-1]:
+				scripttocall = 'selectfile("'+identity+'","'+'/'.join(path[:i])+'")'
+	return scripttocall
 
 def modbuttons2(arr, yearindex, projectindex):
 	for i in range(len(arr[2])):
@@ -213,10 +217,11 @@ def tablegen3(arr, dirs, selected):
 	if arr == []:
 		p('No files in directory')
 		return
-	modbuttons(arr, dirs, selected)
+	scripttocall = modbuttons(arr, dirs, selected)
 	table = modtable(arr)
 	tablegen(table)
 	highlightpath(selected)
+	script(scripttocall)
 
 def tablegen4(projects):
 	tableform=[[strong('Projects'), strong('View Webpage'), strong('View Metadata'), strong('Approve'), strong('Deny')]]

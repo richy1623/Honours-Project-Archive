@@ -1,0 +1,15 @@
+<item>
+   <levelOfDescription>item</levelOfDescription>
+   <title>New Honours Archive</title>
+   <description>A very captivating description</description>
+   <date>2022</date>
+   <student>PTRRIC011</student>
+   <student>MNZSIM001</student>
+   <supervisor>Hussein</supervisor>
+   <digitalObjectURI>2022/PROJECTS/PROJECTS.zip</digitalObjectURI>
+   <uniqueIdentifier>2022PROJECTS</uniqueIdentifier>
+  <view>
+      <title>New Honours Archive</title>
+      <file>2022/PROJECTS/PROJECTS.jpg</file>
+   </view>
+</item>

@@ -93,15 +93,21 @@ def getdirarr(files, path):
 	
 def displayprojectfiles(year, project, openpath):
 	try:
+		year=str(year)
+		project=str(project)
 		table = []
 		dirs=[[True]]
 		path='../../db/projects/'+year+'/'+project+'/'
 		selected = []
 		table.append([project])
 		selected.append(0)
+		if not os.path.exists(path):
+			return (table, dirs, selected)
 		
 		#Handle path to the selected file
 		for directory in range(len(openpath)):
+			if not os.path.exists(path+'/'.join(openpath[:directory])):
+				break
 			if not os.path.isdir(path+'/'.join(openpath[:directory])):
 				#TODO is file
 				break
@@ -111,15 +117,17 @@ def displayprojectfiles(year, project, openpath):
 			dirs.append(getdirarr(col, path+'/'.join(openpath[:directory])))
 		
 		#Handle the last selected file
-		if os.path.isdir(path+'/'.join(openpath)):
-			col = sorted(os.listdir(path+'/'.join(openpath)))
-			table.append(col)
-			dirs.append(getdirarr(col, path+'/'.join(openpath)))
+		if os.path.exists(path+'/'.join(openpath)):
+			if os.path.isdir(path+'/'.join(openpath)):
+				col = sorted(os.listdir(path+'/'.join(openpath)))
+				table.append(col)
+				dirs.append(getdirarr(col, path+'/'.join(openpath)))
 		
 		script('setyear('+year+')')
-		tablegen3(table, dirs, selected)
+		return (table, dirs, selected)
 	except:
 		p(traceback.format_exc())
+		return (table, dirs, selected)
 
 def deletefile(year, path, filename):
 	year = str(year)
@@ -156,14 +164,14 @@ def unzipfile(path, filename):
 		p(traceback.format_exc())
 		return False
 		
-def addfiletoproject(year, path, filename, uploadfile, unzip):
+def addfiletoproject(year, path, targetlocation, uploadfile, unzip):
 	try:
 		fn = os.path.basename(uploadfile.filename)
-		f = open(prjdir+year+'/'+path+'/'+filename+'/'+fn, 'wb')
+		f = open(prjdir+year+'/'+path+'/'+targetlocation+'/'+fn, 'wb')
 		f.write(uploadfile.file.read())
 		f.close()
 		if unzip :
-			unzipfile(prjdir+year+'/'+path+'/'+filename+'/', fn)
+			unzipfile(prjdir+year+'/'+path+'/'+targetlocation+'/', fn)
 		return True
 	except:
 		p(traceback.format_exc())
