@@ -25,7 +25,9 @@ import unittest
 
 #set system path
 import sys
+oldsyspath=''
 if sys.path[0].split('/')[-1]=='test':
+	oldsyspath=sys.path[0]
 	sys.path[0]='/'.join(sys.path[0].split('/')[:-1])
 	print('set path to: '+sys.path[0])
 	
@@ -43,6 +45,11 @@ for line in filetotest:
 		testfile.write('\tdef test_normal_case(self):\n')
 		testfile.write('\t\t#code goes here\n')
 		testfile.write('\t\tself.assertTrue(True)\n')
+
+testfile.write('''
+if oldsyspath!='':
+	sys.path[0]=oldsyspath
+''')
 
 print('finished writing to file '+testfile.name)
 filetotest.close()

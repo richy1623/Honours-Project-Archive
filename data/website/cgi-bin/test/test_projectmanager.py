@@ -423,5 +423,3 @@ class test_viewmetadata(unittest.TestCase):
 
 if oldsyspath!='':
 	sys.path[0]=oldsyspath
-	print('reverting sys path')
-		

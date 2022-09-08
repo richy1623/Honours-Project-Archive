@@ -3,7 +3,9 @@ import unittest
 
 #set system path
 import sys
+oldsyspath=''
 if sys.path[0].split('/')[-1]=='test':
+	oldsyspath=sys.path[0]
 	sys.path[0]='/'.join(sys.path[0].split('/')[:-1])
 	print('set path to: '+sys.path[0])
 	
@@ -168,3 +170,6 @@ class test_getYearAndProject2(unittest.TestCase):
 	def test_normal_case(self):
 		#code goes here
 		self.assertTrue(True)
+		
+if oldsyspath!='':
+	sys.path[0]=oldsyspath
