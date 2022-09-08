@@ -4,7 +4,9 @@ from unittest.mock import patch, call
 
 #set system path
 import sys
+oldsyspath=''
 if sys.path[0].split('/')[-1]=='test':
+	oldsyspath=sys.path[0]
 	sys.path[0]='/'.join(sys.path[0].split('/')[:-1])
 	print('set path to: '+sys.path[0])
 	
@@ -20,6 +22,7 @@ testdata = '../../data/test_data/'
 usrdir = '../../data/users/'
 dbprjdir = '../../db/projects/'
 dbprjdatadir = '../../db/project_data/'
+pubhtmldir = '../'
 
 class test_addusertoproject(unittest.TestCase):
 	def setUp(self):
@@ -229,8 +232,7 @@ class test_createprojectscsv(unittest.TestCase):
 		self.assertEqual(students, [' BSSETH002', ' DMZCAT001', ' HTHSAM007', ' PTRRIC011'], 'Incorrect list of students created')
 
 class test_addmetadata(unittest.TestCase):
-	@classmethod
-	def setUpClass(cls):
+	def setUp(self):
 		cleardl.main()
 		createproject('PROJECTS', 'PROJECTS', '2022', [])
 
@@ -245,72 +247,181 @@ class test_addmetadata(unittest.TestCase):
 		self.assertEquals(f.readlines(), fexpected.readlines())
 		self.assertTrue(os.path.exists(prjdir+'../project_data/2022/PROJECTS/PROJECTS.jpg'))
 
+	def test_no_image(self):
+		result = addmetadata('2022', 'PROJECTS', 'New Honours Archive', ['PTRRIC011', 'MNZSIM001'], 'Hussein', 'A very captivating description', None)
+		self.assertTrue(result, 'Self reported fail to add metadata')
+		f = open(prjdir+'../project_data/2022/PROJECTS/metadata.xml', 'r')
+		fexpected = open(testdata+'metadata.xml', 'r')
+		self.assertEquals(f.readlines(), fexpected.readlines())
+		self.assertTrue(os.path.exists(prjdir+'../project_data/2022/PROJECTS/PROJECTS.jpg'))
+
 class test_zipproject(unittest.TestCase):
 	@classmethod
 	def setUpClass(cls):
-		#setup any data structures for class
-		True
+		cleardl.main()
+		os.mkdir(dbprjdir+'2022')
+		shutil.copytree(testdata+'project/PROJECTS', dbprjdir+'2022/PROJECTS')
 
 	def test_normal_case(self):
-		#code goes here
-		self.assertTrue(True)
-
+		result = zipproject('2022', 'PROJECTS')
+		self.assertTrue(result, 'Self reported fail to zip project')
+		self.assertTrue(os.path.exists(dbprjdatadir+'2022/PROJECTS/PROJECTS.zip'))
+		
 class test_getpendingprojects(unittest.TestCase):
 	@classmethod
 	def setUpClass(cls):
-		#setup any data structures for class
-		True
+		cleardl.main()
 
 	def test_normal_case(self):
-		#code goes here
-		self.assertTrue(True)
+		filldl.main()
+		for i in range(1, 9):
+			f = open(dbprjdatadir+'2020/project'+str(i)+'/pendingreview.txt', 'x')
+			f.close()
+		result = getpendingprojects()
+		self.assertEquals(len(result), 1)
+		self.assertEquals(result, [['2020', ['project'+str(i) for i in range(1, 9)]]])
+	
+	def test_no_projects(self):
+		cleardl.main()
+		result = getpendingprojects()
+		self.assertEquals(len(result), 0)
+		self.assertEquals(result, [])
 
 class test_getusersemailsinproject(unittest.TestCase):
 	@classmethod
 	def setUpClass(cls):
-		#setup any data structures for class
-		True
+		cleardl.main()
+		filldl.main()
 
 	def test_normal_case(self):
-		#code goes here
-		self.assertTrue(True)
+		result = getusersemailsinproject('2020', 'project2')
+		self.assertEquals(result, ['user2@myuct.ac.za', 'user3@myuct.ac.za'])
+		
+	def test_no_such_project(self):
+		result = getusersemailsinproject('2020', 'NoSuchProject')
+		self.assertEquals(result, [])
 
 class test_submitmoderation(unittest.TestCase):
-	@classmethod
-	def setUpClass(cls):
-		#setup any data structures for class
-		True
+	def setUp(self):
+		cleardl.main()
+		os.mkdir(dbprjdir+'2022')
+		os.mkdir(dbprjdatadir+'2022')
+		os.mkdir(dbprjdatadir+'2022/PROJECTS')
 
 	def test_normal_case(self):
-		#code goes here
-		self.assertTrue(True)
-
+		shutil.copytree(testdata+'project/PROJECTS', dbprjdir+'2022/PROJECTS')
+		shutil.copyfile(testdata+'metadata.xml', dbprjdatadir+'2022/PROJECTS/metadata.xml')
+		
+		result = submitmoderation('2022', 'PROJECTS')
+		self.assertTrue(result, 'Self reported fail to submit project')
+		self.assertTrue(os.path.exists(dbprjdatadir+'2022/PROJECTS/PROJECTS.zip'))
+		self.assertTrue(os.path.exists(dbprjdatadir+'2022/PROJECTS/pendingreview.txt'))
+		
+	def test_valid_project_no_metadata(self):
+		shutil.copytree(testdata+'project/PROJECTS', dbprjdir+'2022/PROJECTS')
+		
+		result = submitmoderation('2022', 'PROJECTS')
+		self.assertFalse(result, 'Self reported fail to submit project')
+		self.assertFalse(os.path.exists(dbprjdatadir+'2022/PROJECTS/PROJECTS.zip'))
+		self.assertFalse(os.path.exists(dbprjdatadir+'2022/PROJECTS/pendingreview.txt'))
+		
+	def test_valid_project_no_metadata(self):
+		result = submitmoderation('2022', 'NoSuchProject')
+		self.assertFalse(result, 'Self reported fail to submit project')
+		self.assertFalse(os.path.exists(dbprjdatadir+'2022/NoSuchProject/NoSuchProject.zip'))
+		self.assertFalse(os.path.exists(dbprjdatadir+'2022/NoSuchProject/pendingreview.txt'))
+		
 class test_approveproject(unittest.TestCase):
 	@classmethod
 	def setUpClass(cls):
-		#setup any data structures for class
-		True
+		cleardl.main()
 
 	def test_normal_case(self):
-		#code goes here
-		self.assertTrue(True)
+		#create project to deny
+		project = createproject('PROJECTS', 'PROJECTS', '2022', ['PTRRIC011'])
+		self.assertTrue(project, 'Self reported fail to create project')
+		shutil.rmtree(dbprjdir+'2022/PROJECTS')
+		shutil.copytree(testdata+'project/PROJECTS', dbprjdir+'2022/PROJECTS')
+		metadata = addmetadata('2022', 'PROJECTS', 'New Honours Archive', ['PTRRIC011', 'MNZSIM001'], 'Hussein', 'A very captivating description', None)
+		self.assertTrue(metadata, 'Self reported fail to add metadata')
+		#submit project for moderation
+		submit = submitmoderation('2022', 'PROJECTS')
+		self.assertTrue(submit, 'Self reported fail to submit project')
+		
+		result = approveproject('2022', 'PROJECTS')
+		self.assertTrue(result, 'Self reported fail to accept project')
+		self.assertFalse(os.path.exists(dbprjdatadir+'2022/NoSuchProject/pendingreview.txt'))
+		
+		#check year in collection
+		path = pubhtmldir+'metadata/index.xml'
+		self.assertTrue(os.path.exists(path), path+' not created')
+		f = open(path, 'r')
+		text = f.read()
+		f.close()
+		self.assertIn('<item type="collection">2022</item>', text)
+		
+		#check project in year
+		path = pubhtmldir+'metadata/2022/index.xml'
+		self.assertTrue(os.path.exists(path), path+' not created')
+		f = open(path, 'r')
+		text = f.read()
+		f.close()
+		self.assertIn('<item type="item">PROJECTS</item>', text)
+		
+		#check project in year
+		path = pubhtmldir+'metadata/2022/PROJECTS/index.xml'
+		self.assertTrue(os.path.exists(path), path+' not created')
+		f = open(path, 'r')
+		text = f.read()
+		f.close()
+		self.assertEquals('<collection>\n   <level>3</level>\n   <type>item</type>\n</collection>', text)
+		
+		#check metadata in project
+		self.assertTrue(os.path.exists(pubhtmldir+'metadata/2022/PROJECTS/metadata.xml'))
+		
+		#check project files in collection
+		self.assertTrue(os.path.exists(pubhtmldir+'collection/2022/PROJECTS/PROJECTS.jpg'))
+		self.assertTrue(os.path.exists(pubhtmldir+'collection/2022/PROJECTS/PROJECTS.zip'))
 
 class test_denyproject(unittest.TestCase):
 	@classmethod
 	def setUpClass(cls):
-		#setup any data structures for class
-		True
+		cleardl.main()
 
 	def test_normal_case(self):
-		#code goes here
-		self.assertTrue(True)
+		#create project to deny
+		project = createproject('PROJECTS', 'PROJECTS', '2022', ['PTRRIC011'])
+		self.assertTrue(project, 'Self reported fail to create project')
+		shutil.rmtree(dbprjdir+'2022/PROJECTS')
+		shutil.copytree(testdata+'project/PROJECTS', dbprjdir+'2022/PROJECTS')
+		metadata = addmetadata('2022', 'PROJECTS', 'New Honours Archive', ['PTRRIC011', 'MNZSIM001'], 'Hussein', 'A very captivating description', None)
+		self.assertTrue(metadata, 'Self reported fail to add metadata')
+		#submit project for moderation
+		submit = submitmoderation('2022', 'PROJECTS')
+		self.assertTrue(submit, 'Self reported fail to submit project')
+		
+		#test denial
+		result = denyproject('2022', 'PROJECTS', 'Reason to deny')
+		self.assertTrue(result, 'Self reported fail to deny project')
+		self.assertFalse(os.path.exists(dbprjdatadir+'2022/NoSuchProject/pendingreview.txt'))
 
 class test_viewmetadata(unittest.TestCase):
-	@classmethod
-	def setUpClass(cls):
-		#setup any data structures for class
-		True
+	def setUp(self):
+		cleardl.main()
+		os.mkdir(dbprjdatadir+'2022')
+		os.mkdir(dbprjdatadir+'2022/PROJECTS')
 
 	def test_normal_case(self):
-		#code goes here
-		self.assertTrue(True)
+		shutil.copyfile(testdata+'metadata.xml', dbprjdatadir+'2022/PROJECTS/metadata.xml')
+		result = viewmetadata('2022', 'PROJECTS')
+		self.assertEquals(result, [['title', 'New Honours Archive'], ['description', 'A very captivating description'], ['date', '2022'], 
+			['student', 'PTRRIC011'], ['student', 'MNZSIM001'], ['supervisor', 'Hussein']])
+	
+	def test_no_such_project(self):
+		result = viewmetadata('2022', 'NoSuchProject')
+		self.assertFalse(result)
+
+if oldsyspath!='':
+	sys.path[0]=oldsyspath
+	print('reverting sys path')
+		

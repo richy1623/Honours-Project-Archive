@@ -38,8 +38,11 @@ if not os.path.exists('../../db/project_data/'+year+'/'+projectcode+'/metadata.x
 
 #Get file to upload
 try:
-	if not viewmetadata(year, projectcode):
+	metadata = viewmetadata(year, projectcode)
+	if not metadata:
 		p('Failed to display metadata for project')
+	else:
+		printmetadata(metadata)
 except Exception as e:
 	p(e)
 close()

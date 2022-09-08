@@ -28,12 +28,12 @@ if os.path.exists(dbprojdata):
 if os.path.exists(dbproj):
 	for filename in os.listdir(dbproj):
 		shutil.rmtree(dbproj+filename)
-		 
-if os.path.exists(publicdir+'collection/2020'):
-	shutil.rmtree(publicdir+'collection/2020')
-			 
-if os.path.exists(publicdir+'metadata/2020'):
-	shutil.rmtree(publicdir+'metadata/2020')
+for i in ['2020', '2021', '2022', '2023']: 
+	if os.path.exists(publicdir+'collection/'+i):
+		shutil.rmtree(publicdir+'collection/'+i)
+				 
+	if os.path.exists(publicdir+'metadata/'+i):
+		shutil.rmtree(publicdir+'metadata/'+i)
 
 if os.path.exists(publicdir+'metadata/index.xml'):
 	os.remove(publicdir+'metadata/index.xml')

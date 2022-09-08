@@ -322,14 +322,6 @@ def createprojectform():
 def displayprojectapprovalpage(projects):
 	tablegen4(projects)
 	
-def getnamefield(line):
-	name = line[line.index('<')+1:line.index('>')]
-	field = line[line.index('>')+1:line.rindex('<')]
-	return [name, field]
-	
-def printmetadata(metadata, fields):
-	for index in range(len(metadata)):
-		metadata[index] = getnamefield(metadata[index])
+def printmetadata(metadata):
 	for line in metadata:
-		if line[0] in fields:
-			p(line[0].capitalize()+': '+strong(line[1]))
+		p(line[0].capitalize()+': '+strong(line[1]))

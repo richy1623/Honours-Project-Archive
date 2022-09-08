@@ -17,9 +17,14 @@ year=2020
 if not os.path.exists(usrdir+'../projects/'):
 	os.mkdir(usrdir+'../projects/')
 if not os.path.exists('../../db/projects/'):
-				os.makedirs('../../db/projects/')
+	os.makedirs('../../db/projects/')
 if not os.path.exists('../../db/project_data/'):
-				os.makedirs('../../db/project_data/')
+	os.makedirs('../../db/project_data/')
+	
+if not os.path.exists('../../public_html/metadata/index.xml'):
+	f = open('../../public_html/metadata/index.xml', 'w')
+	f.write('<collection>\n   <level>1</level>\n</collection>')
+	f.close()
 	
 for y in range(3):
 	year=y+2020

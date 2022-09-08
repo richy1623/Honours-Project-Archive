@@ -259,6 +259,9 @@ def zipproject(year, projectcode):
 		p(traceback.format_exc())
 		return False		
 	
+#fetches all of the projects awaitng moderation
+#returns a 3D list in the form [[year, [projects for year]]]
+#if there are no projects returns an empty list []
 def getpendingprojects():
 	years=[]
 	if not os.path.exists(prjdir+'../project_data/'):
@@ -313,7 +316,7 @@ def approveproject(year, projectname):
 			f.close()
 			if not os.path.exists('../metadata/index.xml'):
 				f = open('../metadata/index.xml', 'w')
-				f.write('<collection>\n    <level>1</level>\n</collection>')
+				f.write('<collection>\n   <level>1</level>\n</collection>')
 				f.close()
 			f = open('../metadata/index.xml', 'r')
 			lines = f.readlines()
@@ -348,12 +351,16 @@ def approveproject(year, projectname):
 			p(traceback.format_exc())
 			return False
 			
-	try:
-		shutil.copy(prjdir+'../project_data/'+year+'/'+projectname+'/metadata.xml', '../metadata/'+year+'/'+projectname)
-	except:
-		p(traceback.format_exc())
-		return False
 	
+	if os.path.exists(prjdir+'../project_data/'+year+'/'+projectname+'/metadata.xml'):
+		try:
+			shutil.copy(prjdir+'../project_data/'+year+'/'+projectname+'/metadata.xml', '../metadata/'+year+'/'+projectname)
+		except:
+			p(traceback.format_exc())
+			return False
+	else:
+		return False
+
 	#Handle File Moving
 	if not os.path.exists('../collection/'+year):
 		os.mkdir('../collection/'+year)
@@ -369,7 +376,7 @@ def approveproject(year, projectname):
 		return False
 	
 	try:
-		os.system('../../simpledl/bin/generate.pl > /dev/null ')
+		os.system('../../simpledl/bin/generate.pl > /dev/null 2>&1 ')
 		os.system('../../simpledl/bin/generate.pl --thumbs > /dev/null ')
 	except:
 		p(traceback.format_exc())
@@ -389,13 +396,26 @@ def denyproject(year, projectname, reason):
 	result = sendemail(emails, 'Request to add '+projectname+' - DECLINED', 'Your project has been rejected from the archive.\nReason provided: '+reason)
 	return result
 
+def getnamefield(line):
+	name = line[line.index('<')+1:line.index('>')]
+	field = line[line.index('>')+1:line.rindex('<')]
+	return [name, field]
+
 def viewmetadata(year, projectcode):
 	try:
+		fields = ['title', 'description', 'date', 'student', 'student', 'student', 'student', 'supervisor']
+		if not os.path.exists('../../db/project_data/'+year+'/'+projectcode+'/metadata.xml'):
+			return False
 		f = open('../../db/project_data/'+year+'/'+projectcode+'/metadata.xml', 'r')
-		metadata = f.readlines()
+		metadatalines = f.readlines()
 		f.close()
-		printmetadata(metadata, ['title', 'description', 'date', 'student', 'supervisor'])
-		return True
+		metadata=[]
+		for line in metadatalines:
+			namefield = getnamefield(line)
+			if namefield[0] in fields:
+				fields.remove(namefield[0])
+				metadata.append(namefield)
+		return metadata
 	except:
 		p(traceback.format_exc())
 		return False
