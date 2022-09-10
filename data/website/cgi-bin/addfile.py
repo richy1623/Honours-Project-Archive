@@ -56,6 +56,7 @@ try:
 				smallp('Upload Successful')
 			else:
 				smallp('Upload Failed')
+			closebutton()
 		except:
 			smallp(traceback.format_exc())
 except Exception as e:

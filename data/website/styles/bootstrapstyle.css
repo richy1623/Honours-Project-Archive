@@ -27,4 +27,12 @@ form{
 
 .smalltext{
 	padding:0 10px;
-]
+}
+
+.close-button{
+	text-align: center;
+	margin: 10px auto;
+	display: block;
+}
+
+

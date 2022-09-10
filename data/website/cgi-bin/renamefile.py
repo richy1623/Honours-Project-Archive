@@ -40,6 +40,7 @@ else:
 			p('Successfuly renamed '+strong(oldfilename)+' to '+strong(newfilename))
 		else:
 			p('Failed to rename '+oldfilename)
+		closebutton()
 	except:
 		p(traceback.format_exc())
 close()

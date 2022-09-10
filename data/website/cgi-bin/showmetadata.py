@@ -21,6 +21,7 @@ projectcode  = form.getvalue('projectcode')
 #Helper functions
 def printerror(error):
 	p(error)
+	closebutton()
 	close()
 	exit()
 
@@ -34,7 +35,7 @@ if projectcode==None or year==None:
 	printerror('Project not specified')
 
 if not os.path.exists('../../db/project_data/'+year+'/'+projectcode+'/metadata.xml'):
-	printerrorcode('No Metadata added for project')
+	printerror('No Metadata added for project')
 
 #Get file to upload
 try:
@@ -43,6 +44,7 @@ try:
 		p('Failed to display metadata for project')
 	else:
 		printmetadata(metadata)
+	closebutton()
 except Exception as e:
 	p(e)
 close()

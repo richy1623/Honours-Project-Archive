@@ -190,7 +190,7 @@ def modbuttons2(arr, yearindex, projectindex):
 	for i in range(len(arr[2])):
 		arr[2][i] = makebuttonclass('deleteuser', [arr[2][i], arr[0][yearindex], arr[1][projectindex]], 'btn btn-outline-danger', 'Remove '+arr[2][i])
 		#arr[2][i] = makebutton('showrefresh',[], arr[2][i])
-	if len(arr[2])!=0:
+	if projectindex!=-1:
 		arr[2].append(makebuttonclass('adduser', [arr[0][yearindex], arr[1][projectindex]], 'btn btn-outline-success', 'Add user'))
 	for i in range(len(arr[1])):
 		if i == projectindex:
@@ -325,3 +325,6 @@ def displayprojectapprovalpage(projects):
 def printmetadata(metadata):
 	for line in metadata:
 		p(line[0].capitalize()+': '+strong(line[1]))
+		
+def closebutton():
+	print(makebuttonclass('window.close', [], 'btn btn-outline-danger close-button', 'Close'))

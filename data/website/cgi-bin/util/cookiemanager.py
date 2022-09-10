@@ -9,8 +9,6 @@ def getcookies():
 		for cookie in os.environ['HTTP_COOKIE'].split('; '):
 			(key, value) = cookie.split('=')
 			cookies[key]=value
-	else:
-		p('no cookie')
 	return cookies
 	
 def getUserID():

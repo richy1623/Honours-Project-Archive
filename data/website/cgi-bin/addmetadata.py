@@ -31,6 +31,7 @@ for i in range(1,5):
 #Helper functions
 def printerror(error):
 	smallp(error)
+	closebutton()
 	close()
 	exit()
 
@@ -67,6 +68,7 @@ try:
 			smallp('Metadata added Successfuly')
 		else:
 			smallp('Failed to add Metadata')
+		closebutton()
 except:
 	smallp(traceback.format_exc())
 close()

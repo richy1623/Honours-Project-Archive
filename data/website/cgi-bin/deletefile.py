@@ -35,6 +35,8 @@ else:
 			p('Successfuly deleted '+filename)
 		else:
 			p('Failed to delete '+filename)
+		closebutton()
 	except:
 		p(traceback.format_exc())
+
 close()

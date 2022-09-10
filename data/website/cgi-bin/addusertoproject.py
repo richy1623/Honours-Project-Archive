@@ -42,6 +42,7 @@ try:
 		p('Successfuly added '+student)
 	else:
 		p('Failed to add '+student)
+	closebutton()
 except Exception as e:
 	p(str(traceback.format_exc()))
 close()

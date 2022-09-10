@@ -18,6 +18,7 @@ year  = form.getvalue('year')
 #Helper functions
 def printerror(error):
 	p(error)
+	closebutton()
 	close()
 	exit()
 
@@ -46,6 +47,7 @@ try:
 				smallp('Upload Successful')
 			else:
 				smallp('Upload Failed')
+			closebutton()
 		except:
 			smallp(traceback.format_exc())
 except Exception as e:

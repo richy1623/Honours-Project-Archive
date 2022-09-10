@@ -42,5 +42,7 @@ if success:
 else:
 	p('Project: ' + projectname + ' was unable to be added.')
 
+closebutton()
+
 close()
 

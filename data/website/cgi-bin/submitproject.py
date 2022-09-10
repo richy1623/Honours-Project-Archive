@@ -19,6 +19,7 @@ projectcode  = form.getvalue('projectcode')
 #Helper functions
 def printerror(error):
 	p(error)
+	closebutton()
 	close()
 	exit()
 
@@ -38,6 +39,7 @@ try:
 		p('Successfully submited project for moderation. An email will be sent after the project has been moderated informing you of the outcome.')
 	else:
 		p('Failed to submit for moderation')
+	closebutton()
 except Exception as e:
 	p(e)
 close()
