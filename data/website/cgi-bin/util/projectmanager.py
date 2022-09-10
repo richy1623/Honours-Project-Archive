@@ -178,6 +178,9 @@ def addfiletoproject(year, path, targetlocation, uploadfile, unzip):
 		return False
 		
 def renamefile(year, path, oldfilename, newfilename):
+	if path=='':
+		p('Unable to rename root directory')
+		return False
 	if os.path.exists(prjdir+year+'/'+path+'/'+oldfilename):
 		os.rename(prjdir+year+'/'+path+'/'+oldfilename, prjdir+year+'/'+path+'/'+newfilename)
 		return True

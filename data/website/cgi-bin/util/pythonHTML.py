@@ -328,3 +328,15 @@ def printmetadata(metadata):
 		
 def closebutton():
 	print(makebuttonclass('window.close', [], 'btn btn-outline-danger close-button', 'Close'))
+	
+def helpbutton(heading, text):
+	print('<div class="help">')
+	print('<div class="help-tooltip"><strong>Help</strong> <i class="fa fa-question-circle fa-2x" aria-hidden="true"></i></div>')
+	print('<div class="popup">')
+	h(heading, level=3)
+	p(text)
+	print('</div')
+	print('</div')
+
+
+

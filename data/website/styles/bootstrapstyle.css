@@ -35,4 +35,19 @@ form{
 	display: block;
 }
 
+.help-tooltip > *{
+	vertical-align: middle;
+}
+
+.popup {
+	opacity: 0;
+	overflow: hidden;
+	height: 0px;
+	transition: 1s;
+}
+
+.help:hover .popup, .help:focus .popup, .help:visited .popup{
+	opacity: 1;
+	height: 200px;
+}
 
