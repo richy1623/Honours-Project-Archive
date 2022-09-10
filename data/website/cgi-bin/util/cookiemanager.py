@@ -27,7 +27,7 @@ def isadmin():
 	try:
 		cookies=getcookies()
 		if cookies!={}:
-			return cookies['admin']==1
+			return cookies['admin']=='1'
 		else:
 			return False
 	except:

@@ -4,7 +4,7 @@ import shutil
 
 from util.pythonHTML import *
 from util.usermanager import *
-from util.misc import sendemail
+from util.emailmanager import sendemail
 
 usrdir = '../../data/users/'
 prjdir = '../../db/projects/'
