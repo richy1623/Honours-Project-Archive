@@ -1,12 +1,16 @@
 import os
 import traceback
 
+from util.pythonHTML import *
+
 def getcookies():
 	cookies={}
 	if 'HTTP_COOKIE' in os.environ:
-		for cookie in environ['HTTP_COOKIE'].split('; '):
-			(key, value) = cookie.split('=');
+		for cookie in os.environ['HTTP_COOKIE'].split('; '):
+			(key, value) = cookie.split('=')
 			cookies[key]=value
+	else:
+		p('no cookie')
 	return cookies
 	
 def getUserID():
@@ -43,8 +47,3 @@ def getusername():
 	except:
 		p(str(traceback.format_exc()))
 		return ''
-		
-def getusername2():
-	return 'Admin'
-def getUserID2():
-	return '1'

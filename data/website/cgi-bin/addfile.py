@@ -38,7 +38,7 @@ if path==None:
 	path=''
 	
 if not checkifdir(year, path, filename):
-	printerror('Not a valid direcotry')
+	printerror('Not a valid directory')
 
 p('Inserting file into directory: '+strong(path+'/'+filename))
 

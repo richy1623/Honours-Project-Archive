@@ -114,7 +114,7 @@ def getstudentname(userid):
 	if os.path.exists(usrdir+userid+'.name.xml'):
 		try:
 			f = open(usrdir+userid+'.name.xml', 'r')
-			name = f.readline()[6:-7]
+			name = f.readline().strip()[6:-7]
 			f.close()
 			return name
 		except Exception as e:
@@ -149,7 +149,3 @@ def getYearAndProject(userid):
 	except:
 		p('Cannot find user permission file')
 		return ('','')
-		
-#TODO Remove
-def getYearAndProject2(string):
-	return ('2020', 'project1')
