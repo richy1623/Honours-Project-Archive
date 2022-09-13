@@ -89,7 +89,7 @@
 
 <xsl:template name="banner">
 	<nav class="navbar navbar-expand-md navbar-dark bg-dark">
-      <a class="navbar-brand" href="index.html"><img id="logo-small" src="images/logo-small.png" />Univercity of Cape Town - Computer Science Honours Achive</a>
+      <a class="navbar-brand" href="{concat ($basedir, 'index.html')}"><img id="logo-small" src="{concat ($basedir, 'images/logo-small.png')}" />Univercity of Cape Town - Computer Science Honours Achive</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -106,31 +106,6 @@
         </ul>
       </div>
     </nav>
-    <!-- 
-	 <nav class="navbar navbar-default">
-	  <div class="container">
-		<div class="navbar-header">
-		  <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-		    <span class="icon-bar"></span>
-		    <span class="icon-bar"></span>
-		    <span class="icon-bar"></span>
-		  </button>
-		  <a class="navbar-brand" href="#"><a href="{concat ($basedir, 'index.html')}"><img id="uct-logo" src="{concat ($basedir, 'images/logo.png')}"/></a></a>
-		</div>
-		<div class="collapse navbar-collapse" id="myNavbar">
-		  <ul class="nav navbar-nav navbar-right">
-		    <li class="nav-item"><div id="login"><a class="login-link" href="login.html" onClick="login1(this.href); return false">Login / Register</a></div></li>
-		    <li class="nav-item"><a class="nav-link" href="{concat ($basedir, 'index.html')}">Home</a></li>
-		    <li class="nav-item"><a class="nav-link" href="{concat ($basedir, 'about.html')}">About</a></li>
-		    <li class="nav-item"><a class="nav-link" href="{concat ($basedir, 'users.html')}">Authors</a></li>
-		    <li class="nav-item"><a class="nav-link" href="{concat ($basedir, 'search.html')}">Search</a></li>
-		    <li class="nav-item"><a class="nav-link" href="{concat ($basedir, 'contact.html')}">Contact Us</a></li>
-		    <li class="nav-item"><a class="nav-link" href="{concat ($basedir, 'cgi-bin/manageproject.py')}"><strong>Manage Project</strong></a></li>
-		  </ul>
-		</div>
-	  </div>
-	</nav> 
-	-->
 </xsl:template>
 
 <xsl:template name="adminbanner">

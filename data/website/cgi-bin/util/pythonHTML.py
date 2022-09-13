@@ -1,5 +1,6 @@
 from datetime import date
 
+"""prints out the html for a banner"""
 def banner():
 	print('<nav class="navbar navbar-expand-md navbar-dark bg-dark">')
 	print('<a class="navbar-brand" href="../index.html"><img id="logo-small" src="../images/logo-small.png" />University of Cape Town - Computer Science Honours Archive</a>')
@@ -20,6 +21,7 @@ def banner():
 	print('</div>')
 	print('</nav>')
 
+"""prints out the html for a small banner"""
 def bannersmall():
 	print('<nav class="navbar navbar-dark bg-dark">')
 	print('<img id="logo-small" style="height: 75px" src="../images/logo-small.png" />')
@@ -27,9 +29,11 @@ def bannersmall():
 	print('<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">')
 	print('</nav>')
 
+"""sets the user as a javascript field"""
 def setuser(user):
 	script('showUsername("'+user+'")')
 
+"""prints out the html for the header"""
 def header(scripts=[]):
 	print("Content-type:text/html\r\n\r\n")
 	print('<!DOCTYPE html>')
@@ -54,57 +58,87 @@ def header(scripts=[]):
 	print("</head>")
 	print("<body>")
 
+"""prints out the html for the closing tags"""
 def close():
 	print("</body>")
 	print("</html>")
 
+"""prints out the html for a small text
+takes in a string to include in the html"""
 def smallp(string):
 	print('<p class="smalltext">'+str(string)+'</p>')
 
+"""prints out the html for text
+takes in a string to include in the html"""
 def p(string):
 	print('<p>'+str(string)+'</p>')
 
+"""prints out the html for a small header
+takes in a string to include in the html, optional level for the h tag"""
 def smallh(string, level=1):
 	print('<h'+str(level)+' class="smalltext">'+str(string)+'</h'+str(level)+'>')
 
+"""prints out the html for a small text
+takes in a string to include in the html, optional level for the h tag"""
 def h(string, level=1):
 	print('<h'+str(level)+'>'+str(string)+'</h'+str(level)+'>')
-
+	
+"""prints out the html for a page break"""
 def br():
 	print('<br />')
 	
+"""prints out the html for a horizontal rule"""
 def hr():
 	print('<hr />')
 
+"""prints out the html for a link
+takes in a string for the link"""
 def a(string):
 	print(makelink(string, string))
 	
+"""returns the html for a link
+takes in a string for the link, abd a string for the display text and an optional list of classes"""	
 def makelink(link, text, classes=[]):
 	return '<a href="'+link+'" class="'+' '.join(classes)+'">'+str(text)+'</a>'	
-	
+
+"""returns the html for a link
+takes in a string for the link, a function to call on click and a string for the display text"""		
 def makelinkonclick(link, onclick, text):
 	return '<a onclick="'+onclick+'"href="'+link+'" target="_blank">'+text+'</a>'
 
+"""returns the html for to wrap a strong tage around a string
+takes in a string for the display text"""	
 def strong(string):
 	return '<strong>'+string+'</strong>'
 
+"""returns the html for a button
+takes in a string for function, a list of paramaters for the function, a string for the classes and a string for the display text"""	
 def makebuttonclass(function, params, cssclass, text):
 	return '<button onclick="'+function+'('+','.join(['\''+str(i).strip()+'\'' for i in params])+')" class="'+cssclass+'">'+text+'</button>'
-
+	
+"""returns the html for a button
+takes in a string for function, a list of paramaters for the function, and a string for the display text"""	
 def makebutton(function, params, text):
 	return makebuttonclass(function, params, 'btn btn-outline-primary', text)
 
+"""returns the html for a button
+takes in a string for function, a list of paramaters for the function, a string for the id and a string for the display text"""	
 def makebuttonidentity(function, params, text, identity):
 	return '<button id="'+identity+'" onclick="'+function+'('+','.join(['\''+str(i).strip()+'\'' for i in params])+')" class="btn btn-outline-primary">'+text+'</button>'
 
+"""prints the html for a script
+takes in a string for function"""	
 def script(function):
 	print('<script type="text/javascript">')
 	print(function)
 	print('</script>')
-
+	
+"""prints the html for an invisible refresh button"""
 def invisrefresh():
 	print('<button id="refresh-invis" class="btn btn-warning ml-3" onClick="window.location.reload();" style="display:none">Refresh Page</button>')
 	
+"""converts a 2d list into an html tabe format
+takes in a 2d array where each inner array is a row"""
 def tablegen(table):
 	print('<table>')
 	for row in table:
@@ -113,7 +147,9 @@ def tablegen(table):
 			print('<td>'+item+'</td>')
 		print('</tr>')
 	print('</table>')
-
+	
+"""prints a styled html table
+takes in a 2d array where each inner array is a row, an html row to print if there is an error and the option to make the table show hovering"""
 def tablegenstyled(table, error='', hover=False):
 	print('<table class="table'+(' table-hover' if hover else '')+'">')
 	#table Header
@@ -132,7 +168,9 @@ def tablegenstyled(table, error='', hover=False):
 		print('</tr>')
 	print(error)
 	print('</table>')
-
+	
+"""prints out the html for a form where each item is a radio option
+takes in a list of items, an action for on forms completion, a optional field for colum size, and optiona hidden parameters to be passed in with the form """
 def formlist(ls, action, multiple='', hidden=[]):
 	print('<form action="'+action+'">')
 	print('<label for="items">Choose an item:</label>')
@@ -145,6 +183,8 @@ def formlist(ls, action, multiple='', hidden=[]):
 	print('<input type="submit">')
 	print('</form>')
 
+"""finds the maxium length of an inner array in a 2d array
+takes in a 2d array"""
 def maxarrlen(arr):
 	mx = len(arr[0])
 	for i in arr:
@@ -152,6 +192,8 @@ def maxarrlen(arr):
 			mx=len(i)
 	return mx
 
+"""inverts a 2d array by swaping the rows and collums
+takes in a 2d array where each inner array is a collum"""
 def modtable(arr):
 	maxlen = maxarrlen(arr)
 	table=[]
@@ -165,13 +207,19 @@ def modtable(arr):
 		table.append(row)
 	return table
 		
+"""calls the highlightdir method
+takes in the directry to be highlighted"""
 def highlightprojectdir(dirid):
 	script('highlightdir("'+dirid+'")')
 	
+"""highlights all of the selected items in an array
+takes in a list of items to be highlighted"""
 def highlightpath(selected)	:
 	for index, s in enumerate(selected):
 		highlightprojectdir('button'+str(index)+str(s))
 
+"""maps each item in an array to a selectfile button
+takes in a 2d array to convert, a list of which items to put a folder icon next to, and the list of the previously selected buttons to highlight"""
 def modbuttons(arr, dirs, selected):
 	path=[]
 	scripttocall=''
@@ -185,7 +233,9 @@ def modbuttons(arr, dirs, selected):
 			if i==len(arr)-2 and index==selected[-1]:
 				scripttocall = 'selectfile("'+identity+'","'+'/'.join(path[:i])+'")'
 	return scripttocall
-
+	
+"""maps each item in an array to a button for the manage project page
+takes in a 2d array to convert, the index of which year has been chosen and the index of which project has been chosen"""
 def modbuttons2(arr, yearindex, projectindex):
 	for i in range(len(arr[2])):
 		arr[2][i] = makebuttonclass('deleteuser', [arr[2][i], arr[0][yearindex], arr[1][projectindex]], 'btn btn-outline-danger', 'Remove '+arr[2][i])
@@ -203,6 +253,8 @@ def modbuttons2(arr, yearindex, projectindex):
 		else:
 			arr[0][i]= makebutton('openprojectselecty', [arr[0][i]], arr[0][i])
 
+"""converts an array to the html layout of a table of buttons
+takes in a 2d array to convert, the index of which year has been chosen and the index of which project has been chosen"""
 def tablegen2(arr, yearindex, projectindex):
 	modbuttons2(arr, yearindex, projectindex)
 	if yearindex!=-1:
@@ -212,7 +264,9 @@ def tablegen2(arr, yearindex, projectindex):
 	table = modtable(arr)
 	table.insert(0, ['Year', 'Project Code', 'Students'])
 	tablegenstyled(table)
-
+	
+"""converts an array to the html layout of a table of buttons
+takes in a 2d array to convert, a list of which items are directories and a list of previously selected items"""
 def tablegen3(arr, dirs, selected):
 	if arr == []:
 		p('No files in directory')
@@ -223,6 +277,8 @@ def tablegen3(arr, dirs, selected):
 	highlightpath(selected)
 	script(scripttocall)
 
+"""print out the html for a menu for the moderate projects page
+takes in a 2d array to convert that contains all of the projects"""
 def tablegen4(projects):
 	tableform=[[strong('Projects'), strong('View Webpage'), strong('View Metadata'), strong('Approve'), strong('Deny')]]
 	for year in projects:
@@ -241,6 +297,7 @@ def tablegen4(projects):
 		tablegenstyled(tableform)
 	invisrefresh()
 	
+"""print out the html for a menu for the manage user project page"""
 def projectmenu():
 	print('<div class="menu">')
 	h('Menu', 2)
@@ -257,13 +314,17 @@ def projectmenu():
 	invisrefresh()
 	#script('alert("ok");')
 
+"""print out the html an upload form for a csv file
+takes in the current year for a hint"""
 def createuploadformcsv(year):
 	print('<form enctype = "multipart/form-data" action = "addprojectscsv.py" method = "post">')
 	print('<p>Year: <input class="form-control" type = "text" name = "year" placeholder="'+str(date.today().year)+'" required /></p>')
 	print('<p>Upload File: <input type="file" class="form-control-file"  name="uploadfile" required /></p>')
 	print('<p><input type="submit" class="btn btn-primary" value = "Upload" /></p>')
 	print('</form>')
-	
+
+"""print out the html an upload form for a csv file
+takes in a list of hidden keys and values to include with the post request"""	
 def createuploadform(filecontextnames, filecontextvalues):
 	print('<form enctype = "multipart/form-data" action = "addfile.py" method = "post">')
 	print('<p>Upload File: <input type = "file" name = "uploadfile" /></p>')
@@ -273,6 +334,8 @@ def createuploadform(filecontextnames, filecontextvalues):
 		print(' <input type="hidden" name="'+filecontextnames[i]+'" value="'+filecontextvalues[i]+'">')
 	print('</form>')
 	
+"""print out the html form for a file rename in a project
+takes in the year of the project, the path to the file, and the name of the file"""	
 def createrenamefileform(year, path, oldfilename):
 	p('Renaming file '+oldfilename)
 	print('<form action="renamefile.py">')
@@ -284,6 +347,8 @@ def createrenamefileform(year, path, oldfilename):
 	print('<input type="submit" value="Rename">')
 	print('</form>')
 
+"""print out the html an form to add metadata to a project
+takes in the project year and project code"""	
 def createmetadataform(projectcode, year):
 	p('Please input metadata below')
 	print('<form action="addmetadata.py" method="post" enctype = "multipart/form-data">')
@@ -298,6 +363,7 @@ def createmetadataform(projectcode, year):
 	print('<input type = "submit" value = "Submit" />')
 	print('</form>')
 
+"""print out the html for a form to create a project manualy"""	
 def createprojectform():
 	print('<form name="projectform" class="projectformclass" method="post" action="createproject.py">')
 	print('<h2>Project Details</h2>')
@@ -319,16 +385,23 @@ def createprojectform():
 	print('<button class="" type="submit">Submit</button>')
 	print('</form>')
 
+"""print out the html to create the moderation page
+takes in a list of the projects pending review"""	
 def displayprojectapprovalpage(projects):
 	tablegen4(projects)
-	
+
+"""prints out the html for a weage displaying the projects metadata
+takes in a 2d list of metadata, where each item contains a key and a value"""		
 def printmetadata(metadata):
 	for line in metadata:
 		p(line[0].capitalize()+': '+strong(line[1]))
-		
+
+"""print out the html a close button"""			
 def closebutton():
 	print(makebuttonclass('window.close', [], 'btn btn-outline-danger close-button', 'Close'))
 	
+"""print out the html for a help button
+takes in the heading for the help item and a string for the help text"""	
 def helpbutton(heading, text):
 	print('<div class="help">')
 	print('<div class="help-tooltip"><strong>Help</strong> <i class="fa fa-question-circle fa-2x" aria-hidden="true"></i></div>')

@@ -18,9 +18,9 @@ projectcode  = form.getvalue('projectcode')
 
 header()
 banner()
-setuser(getusername2())
+setuser(getusername())
 br()
-h('Modify Projects')		
+h('Manage All Projects')		
 br()
 
 try:

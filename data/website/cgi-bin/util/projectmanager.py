@@ -10,7 +10,11 @@ usrdir = '../../data/users/'
 prjdir = '../../db/projects/'
 
 def addusertoproject(studentnumber, studentid, year, project):
+	"""adds a user to a project and updates the stored the details in XML files
+	takes in the students number, the user ID, the year of the project and the project code
+	returns true if it was successful and false if it failed"""
 	try:
+		studentnumber=''.join(filter(str.isalnum, studentnumber)) 
 		year = str(year)
 		
 		if not os.path.exists(usrdir+'../projects/'+year+'/'+project+'.txt'):
@@ -41,7 +45,12 @@ def addusertoproject(studentnumber, studentid, year, project):
 		return False
 	
 def createproject(projectname, projectcode, year, students):
+	"""creates a project and create XML files to store the details
+	takes in a the project name, project code, the year that the project belongs to 
+	and a list of student numbers to add to the project
+	returns true if it was successful and false if it failed"""
 	try:
+		projectcode=''.join(filter(str.isalnum, projectcode)) 
 		if not os.path.exists(usrdir+'../projects/'):
 			os.mkdir(usrdir+'../projects/')
 		
@@ -81,9 +90,10 @@ def createproject(projectname, projectcode, year, students):
 		p(traceback.format_exc())
 		return False
 		
-#checks through a list of file names to see which files are directories
-#returns a list of booleans for which file names are directories
 def getdirarr(files, path):
+	"""checks through a list of file names to see which files are directories
+	takes in a list of files to check and a root path to check from
+	returns a list of booleans for which file names are directories"""
 	if not os.path.exists(path):
 		return [False for i in files]
 	dirfiles = []
@@ -92,6 +102,10 @@ def getdirarr(files, path):
 	return dirfiles
 	
 def displayprojectfiles(year, project, openpath):
+	"""parses through a group of file directories to fetch all of the files contained within them
+	takes in the year of the project, the project code and a path listing all of the required directories to check
+	returns 2D array of each of the directories and their files, a list of which of the given files were 
+	directories and a list of all of the indexes for each of the wanted directories"""
 	try:
 		year=str(year)
 		project=str(project)
@@ -109,7 +123,6 @@ def displayprojectfiles(year, project, openpath):
 			if not os.path.exists(path+'/'.join(openpath[:directory])):
 				break
 			if not os.path.isdir(path+'/'.join(openpath[:directory])):
-				#TODO is file
 				break
 			col = sorted(os.listdir(path+'/'.join(openpath[:directory])))
 			selected.append(col.index(openpath[directory]))
@@ -130,6 +143,9 @@ def displayprojectfiles(year, project, openpath):
 		return (table, dirs, selected)
 
 def deletefile(year, path, filename):
+	"""deletes a file from a project
+	takes in the project year, the path to the file (including the project name), and the file to be deleted
+	returns true if it was deleted or if it never existed and false if it failed to delete the file"""
 	year = str(year)
 	filename = str(filename)
 	try:
@@ -147,9 +163,15 @@ def deletefile(year, path, filename):
 		return False
 
 def checkifdir(year, path, filename):
+	"""checks if a given file is a directory
+	takes in the project year, the path to the file (including the project name), and the file to be checked
+	returns true if it is a directory and false if it not"""
 	return os.path.exists(prjdir+year+'/'+path+'/'+filename) and os.path.isdir(prjdir+year+'/'+path+'/'+filename)
 
 def unzipfile(path, filename):
+	"""unzips a file from a project
+	takes in the path to the file (including the project name and year), and the file to be unzipped
+	returns true if it was unzipped and false if it failed to unzipped the file"""
 	try:
 		if len(filename.split('.',1))>1 and filename.split('.',1)[1] in ['tar.bz2', 'tbz2', 'tar.gz', 'tgz', 'tar', 'tar.xz', 'txz', 'zip']:
 			shutil.unpack_archive(path+filename, path)
@@ -165,6 +187,10 @@ def unzipfile(path, filename):
 		return False
 		
 def addfiletoproject(year, path, targetlocation, uploadfile, unzip):
+	"""adds a file to a project
+	takes in the project year, the path to the file (including the project name), the directory to add the file to, the file to add 
+	and a boolean stating whether to unzip the file
+	returns true if it was added and false if it failed to add the file"""
 	try:
 		fn = os.path.basename(uploadfile.filename)
 		f = open(prjdir+year+'/'+path+'/'+targetlocation+'/'+fn, 'wb')
@@ -178,6 +204,9 @@ def addfiletoproject(year, path, targetlocation, uploadfile, unzip):
 		return False
 		
 def renamefile(year, path, oldfilename, newfilename):
+	"""renames a file from a project
+	takes in the project year, the path to the file (including the project name), the old file's name, and the new name for the file
+	returns true if it was renamed and false if it failed to rename the file"""
 	if path=='':
 		p('Unable to rename root directory')
 		return False
@@ -189,10 +218,16 @@ def renamefile(year, path, oldfilename, newfilename):
 		return False
 		
 def createprojectscsv(uploadfile, year):
+	"""creates one or more projects based off a csv file
+	takes in a file and the year to create all the projects for
+	the file should contain PROJECTCODE,STUDENTNUMBER on each line
+	returns true if it created the projects and false if it faileds"""
 	try:
 		projectsdict={}
 		for line in uploadfile.file.readlines():
 			(project, student) = line.decode("utf-8").strip().split(',')
+			project = project.strip()
+			student=student.strip()
 			if project not in projectsdict.keys():
 				projectsdict[project]=[]
 			projectsdict[project].append(student)
@@ -204,6 +239,11 @@ def createprojectscsv(uploadfile, year):
 		return False
 		
 def addmetadata(year, projectcode, title, students, supervisor, description, image):
+	"""adds metadata to a project and an thumbnail
+	takes in the project year, the project name, the title of the project, a list of students in the project, 
+	a description for the project and a thubnail for the project
+	if no image is provided, a default image will be used
+	returns true if it was added successfully and false if it failed"""
 	try:
 		if not os.path.exists(prjdir+'../project_data/'+year+'/'+projectcode):
 			os.makedirs(prjdir+'../project_data/'+year+'/'+projectcode)
@@ -252,6 +292,9 @@ def addmetadata(year, projectcode, title, students, supervisor, description, ima
 		return False
 		
 def zipproject(year, projectcode):
+	"""zips a project and saves the zip to the project_data directory
+	takes in the project year, and the project code
+	returns true if it was zipped and false if it failed to zip the project"""
 	try:
 		path = prjdir+'../project_data/'+year+'/'+projectcode
 		if not os.path.exists(path):
@@ -262,10 +305,10 @@ def zipproject(year, projectcode):
 		p(traceback.format_exc())
 		return False		
 	
-#fetches all of the projects awaitng moderation
-#returns a 3D list in the form [[year, [projects for year]]]
-#if there are no projects returns an empty list []
 def getpendingprojects():
+	"""fetches all of the projects awaitng moderation
+	returns a 3D list in the form [[year, [projects for year]]]
+	if there are no projects returns an empty list []"""
 	years=[]
 	if not os.path.exists(prjdir+'../project_data/'):
 		return []
@@ -279,6 +322,9 @@ def getpendingprojects():
 	return sorted(years)
 
 def getusersemailsinproject(year, project):
+	"""fetches all of the users email adresses for a project
+	takes in the project year and the project code
+	returns a list of all of the emails of the students in the project and an empty list if the project does not exist"""
 	if os.path.exists(usrdir+'../projects/'+year+'/'+project+'.txt'):
 		try:
 			emails=[]
@@ -294,6 +340,9 @@ def getusersemailsinproject(year, project):
 		return []
 		
 def submitmoderation(year, projectcode):
+	"""submits a project for moderation
+	takes in the project year and the project code
+	returns true if it was added to the moderation queue and false if it failed"""
 	try:
 		if os.path.exists(prjdir+'../project_data/'+year+'/'+projectcode):
 			if os.path.exists(prjdir+'../project_data/'+year+'/'+projectcode+'/metadata.xml'):
@@ -310,6 +359,10 @@ def submitmoderation(year, projectcode):
 		return False
 		
 def approveproject(year, projectname):
+	"""approve a project and adds it to the digital library
+	takes in the project year and the project code
+	sends emails to all of the students in the project to inform them of the outcome
+	returns true if it was added to the digital library and false if it failed"""
 	emails = getusersemailsinproject(year, projectname)
 	if not os.path.exists('../metadata/'+year):
 		try:
@@ -391,6 +444,10 @@ def approveproject(year, projectname):
 	return result		
 	
 def denyproject(year, projectname, reason):
+	"""deny a project and removes it from the moderation queue
+	takes in the project year, the project code, and the reason for the denial
+	sends emails to all of the students in the project to inform them of the outcome
+	returns true if it removed from the moderation queue and false if it failed"""
 	emails = getusersemailsinproject(year, projectname)
 	if os.path.exists(prjdir+'../project_data/'+year+'/'+projectname+'/pendingreview.txt'):
 		os.remove(prjdir+'../project_data/'+year+'/'+projectname+'/pendingreview.txt')
@@ -400,13 +457,17 @@ def denyproject(year, projectname, reason):
 	return result
 
 def getnamefield(line):
+	"""get the key and value in a line of XML
+	takes in a line of xml in the form <key>value</key>"""
 	name = line[line.index('<')+1:line.index('>')]
 	field = line[line.index('>')+1:line.rindex('<')]
 	return [name, field]
 
-def viewmetadata(year, projectcode):
+def viewmetadata(year, projectcode, fields = ['title', 'description', 'date', 'student', 'student', 'student', 'student', 'supervisor']):
+	"""view the metadata of a project
+	takes in the project year, the project code, and an optional list of metadata fields
+	returns a list contaitning all of the relevant metadata fields"""
 	try:
-		fields = ['title', 'description', 'date', 'student', 'student', 'student', 'student', 'supervisor']
 		if not os.path.exists('../../db/project_data/'+year+'/'+projectcode+'/metadata.xml'):
 			return False
 		f = open('../../db/project_data/'+year+'/'+projectcode+'/metadata.xml', 'r')

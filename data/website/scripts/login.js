@@ -92,7 +92,7 @@ function doLogin ()
    adminLink = "";
    if (administrator == "1")
    {
-      adminLink = "<a class=\"dropdown-item\" href=\"/cgi-bin/modifyprojectsselect.py\"><p class=\"dropdown-item-p\">(Admin) Add New Projects</p></a> "+
+      adminLink = "<a class=\"dropdown-item\" href=\"/cgi-bin/modifyprojectsselect.py\"><p class=\"dropdown-item-p\">(Admin) Add/Manage Projects</p></a> "+
       	"<a class=\"dropdown-item\" href=\"/cgi-bin/approveprojects.py\"><p class=\"dropdown-item-p\">(Admin) Approve Projects</p></a> "+
       	"<a class=\"dropdown-item\" href=\"/cgi-bin/manage.pl\"><p class=\"dropdown-item-p\">(Admin) Archive Management</p></a> ";
    }

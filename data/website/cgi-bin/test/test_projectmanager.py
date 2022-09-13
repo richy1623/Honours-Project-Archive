@@ -67,7 +67,7 @@ class test_createproject(unittest.TestCase):
 
 	def test_normal_case(self):
 		
-		project = createproject('PROJECTS', 'PROJECTS', '2022', ['STDTES001, STDTES002'])		
+		project = createproject('PROJECTS', 'PROJECTS', '2022', ['STDTES001', 'STDTES002$$'])		
 		self.assertTrue(project, 'Self reported fail to create project')
 		
 		self.assertTrue(os.path.exists(usrdir+'../projects/'), 'Failed to create project folder')
@@ -83,7 +83,13 @@ class test_createproject(unittest.TestCase):
 		if 'Admin' in students:
 			students.remove('Admin')
 		
-		self.assertEqual(students, ['STDTES001, STDTES002'], 'Incorrect student list returned')
+		self.assertEqual(students, ['STDTES001', 'STDTES002'], 'Incorrect student list returned')
+		
+		f = open(usrdir+'../projects/2022/PROJECTS.txt')
+		lines = sorted([i.strip() for i in f.readlines()])
+		f.close()
+		
+		self.assertTrue(['STDTES001', 'STDTES002'], lines)
 		
 
 class test_getdirarr(unittest.TestCase):
@@ -229,7 +235,7 @@ class test_createprojectscsv(unittest.TestCase):
 		students = getallstudents()
 		if 'Admin' in students:
 			students.remove('Admin')
-		self.assertEqual(students, [' BSSETH002', ' DMZCAT001', ' HTHSAM007', ' PTRRIC011'], 'Incorrect list of students created')
+		self.assertEqual(students, ['BSSETH002', 'DMZCAT001', 'HTHSAM007', 'PTRRIC011'], 'Incorrect list of students created')
 
 class test_addmetadata(unittest.TestCase):
 	def setUp(self):

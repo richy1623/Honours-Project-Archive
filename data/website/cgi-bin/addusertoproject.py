@@ -37,7 +37,7 @@ if year==None or project==None:
 try:
 	studentid=getstudentid(student)
 	if studentid=='':
-		createuser(student)
+		studentid=createuser(student)
 	if addusertoproject(student, studentid, year, project):
 		p('Successfuly added '+student)
 	else:
