@@ -3,10 +3,12 @@ import traceback
 from util.pythonHTML import *
 
 def sendemail(recipient, subject, body):
+	'''sends an email to the recipients
+	takes in a list of recipients or a single recipient, a subject for the email, and the body of the message'''
 	user = 'newhonoursarchive@gmail.com'
 	recipient = recipient if isinstance(recipient, list) else [recipient]
 	#TODO remove
-	recipient = ['newhonoursarchive+'+i.split('@')[0]+'@gmail.com' for i in recipient]
+	#recipient = ['newhonoursarchive+'+i.split('@')[0]+'@gmail.com' for i in recipient]
 	p('Sending emails to: '+', '.join(recipient))
 	
 	pwd='pnwuuewsvnmybvgd'

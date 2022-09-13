@@ -5,7 +5,10 @@ from util.pythonHTML import *
 usrdir = '../../data/users/'
 
 def createuser(studentnumber):
+	"""creates a user and puts stores the details in XML files
+	returns the created users ID if it was successful and an empty string if it failed"""
 	try:
+		studentnumber=''.join(filter(str.isalnum, studentnumber)) 
 		f = open('../../db/counter/users.counter', 'r+')
 		counter = str(int(f.readline())+1)
 		f.seek(0)
@@ -41,6 +44,9 @@ def createuser(studentnumber):
 		return ''
 
 def deleteuser(studentnumber, year, project):
+	"""deletes a user and deletes the stored the details in XML files
+	returns true if it was successful and false if it failed"""
+	studentnumber=''.join(filter(str.isalnum, studentnumber)) 
 	studentnumbermod = '<name>'+studentnumber+'</name>'
 	if not os.path.exists(usrdir):
 		return False
@@ -78,6 +84,8 @@ def deleteuser(studentnumber, year, project):
 	return True
 
 def getstudentid(studentnumber):
+	"""fetches a user's ID from their student number
+	returns the ID if it was successful and an empty string if it failed"""
 	studentnumbermod = '<name>'+studentnumber+'</name>'
 	if not os.path.exists(usrdir):
 		return ''
@@ -95,6 +103,8 @@ def getstudentid(studentnumber):
 	return ''
 	
 def getstudentemail(studentnumber):
+	"""fetches a user's email address from their student number
+	returns the email address if it was successful and an empty string if it failed"""
 	sid = getstudentid(studentnumber)
 	if sid=='':
 		return ''
@@ -109,6 +119,8 @@ def getstudentemail(studentnumber):
 	return ''
 		
 def getstudentname(userid):
+	"""fetches a user's name from their user id
+	returns the user's name if it was successful and an empty string if it failed"""
 	if userid == '':
 		return ''
 	if os.path.exists(usrdir+userid+'.name.xml'):
@@ -122,6 +134,8 @@ def getstudentname(userid):
 	return ''
 
 def getallstudents():
+	"""fetches a sorted list of all users in the system
+	returns the sorted list if it was successful and an empty list there are no users"""
 	students=[]
 	if not os.path.exists(usrdir):
 		return students
@@ -137,15 +151,18 @@ def getallstudents():
 	return sorted(students)
 
 def getYearAndProject(userid):
+	"""fetches a the year and project code that a specific user is assigned to
+	returns the year and project code if it was successful and two empty strings if the user does not exist or the user has no permissions"""
 	if userid=='':
 		p('No user ID provided')
 		return ('','')
 	try:
+		if not os.path.exists(usrdir+userid+'.permissions.xml'):
+			return ('','')
 		f = open(usrdir+userid+'.permissions.xml', 'r')
 		project=f.readline().strip()
 		year=f.readline().strip()
 		f.close()
 		return (year[6:-7], project[6:-7])
 	except:
-		p('Cannot find user permission file')
 		return ('','')
